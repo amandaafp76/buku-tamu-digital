@@ -10,7 +10,7 @@ class UsersSeeder extends Seeder
     {
         $data = [
             [
-                'username'      => 'admin',
+                'username'      => 'admin@bukutamu.com',
                 'password_hash' => password_hash('Admin123!', PASSWORD_DEFAULT),
                 'role'          => 'administrator',
                 'created_at'    => date('Y-m-d H:i:s'),
@@ -18,7 +18,7 @@ class UsersSeeder extends Seeder
                 'active'        => true,
             ],
             [
-                'username'      => 'petugas',
+                'username'      => 'petugas@bukutamu.com',
                 'password_hash' => password_hash('Petugas123!', PASSWORD_DEFAULT),
                 'role'          => 'petugas',
                 'created_at'    => date('Y-m-d H:i:s'),

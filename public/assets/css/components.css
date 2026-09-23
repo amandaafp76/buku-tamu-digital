@@ -1,0 +1,115 @@
+.glass-card {
+    position: relative;
+
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-card);
+
+    background: var(--glass-white);
+
+    backdrop-filter: blur(24px) saturate(125%);
+    -webkit-backdrop-filter: blur(24px) saturate(125%);
+
+    box-shadow: var(--shadow-glass);
+
+    overflow: hidden;
+}
+
+.glass-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    pointer-events: none;
+}
+
+
+.glass-button {
+    min-height: 44px;
+
+    padding: 0 18px;
+
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: var(--radius-button);
+
+    background: rgba(255, 255, 255, 0.42);
+
+    color: var(--text-primary);
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(95, 57, 47, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65);
+
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.glass-button:hover {
+    background: rgba(255, 255, 255, 0.58);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 24px rgba(95, 57, 47, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.glass-button:active {
+    transform: translateY(0);
+}
+
+
+.glass-input {
+    width: 100%;
+    min-height: 44px;
+
+    padding: 0 16px;
+
+    border: 1px solid rgba(154, 63, 63, 0.14);
+    border-radius: var(--radius-input);
+
+    outline: none;
+
+    background: rgba(255, 255, 255, 0.58);
+
+    color: var(--text-primary);
+
+    font-family: inherit;
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.glass-input::placeholder {
+    color: rgba(118, 95, 90, 0.62);
+}
+
+.glass-input:focus {
+    border-color: rgba(154, 63, 63, 0.55);
+
+    background: rgba(255, 255, 255, 0.76);
+
+    box-shadow:
+        0 0 0 4px rgba(154, 63, 63, 0.09);
+}

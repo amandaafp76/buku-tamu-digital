@@ -1,0 +1,48 @@
+:root {
+
+    --color-primary: #9A3F3F;
+    --color-secondary: #C1856D;
+    --color-soft: #E6CFA9;
+    --color-background: #FBF9D1;
+
+    --text-primary: #3F2A2A;
+    --text-secondary: #765F5A;
+
+
+    --glass-white: rgba(255, 255, 255, 0.52);
+    --glass-border: rgba(255, 255, 255, 0.68);
+
+
+    --radius-card: 28px;
+    --radius-input: 18px;
+    --radius-button: 18px;
+
+
+    --shadow-glass:
+        0 24px 60px rgba(95, 57, 47, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-primary);
+
+    overflow-x: hidden;
+}
