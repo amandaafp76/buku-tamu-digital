@@ -343,7 +343,7 @@
                 </div>
             <?php endif; ?>
 
-            <form action="<?= site_url('login') ?>" method="post">
+            <form action="<?= site_url('bukutamu-masuk') ?>" method="post">
 
                 <?= csrf_field() ?>
 

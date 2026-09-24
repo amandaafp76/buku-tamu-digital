@@ -10,7 +10,7 @@ class AuthController extends BaseController
     public function index()
     {
         if (session()->get('logged_in')) {
-            return redirect()->to('/');
+            return redirect()->to('/admin/bukutamu-dashboard');
         }
 
         return view('auth/login');
@@ -65,13 +65,13 @@ class AuthController extends BaseController
             'logged_in' => true,
         ]);
 
-        return redirect()->to('/');
+        return redirect()->to('/admin/bukutamu-dashboard');
     }
 
     public function logout()
     {
         session()->destroy();
 
-        return redirect()->to('/login');
+        return redirect()->to('/bukutamu-masuk');
     }
 }

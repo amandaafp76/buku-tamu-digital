@@ -37,3 +37,30 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
 });
+
+
+const sidebar = document.getElementById('dashboardSidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarClose = document.getElementById('sidebarClose');
+
+if (sidebar && sidebarToggle) {
+    sidebarToggle.addEventListener('click', () => {
+        const isOpen = sidebar.classList.toggle('is-open');
+
+        sidebarToggle.setAttribute(
+            'aria-expanded',
+            String(isOpen)
+        );
+    });
+}
+
+if (sidebar && sidebarClose && sidebarToggle) {
+    sidebarClose.addEventListener('click', () => {
+        sidebar.classList.remove('is-open');
+
+        sidebarToggle.setAttribute(
+            'aria-expanded',
+            'false'
+        );
+    });
+}
