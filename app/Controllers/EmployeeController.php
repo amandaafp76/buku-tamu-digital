@@ -273,4 +273,28 @@ class EmployeeController extends BaseController
                 'Data pegawai "' . $employee['employee_name'] . '" berhasil dihapus.'
             );
     }
+
+    public function restore(int $id)
+    {
+        $employee = $this->employeeModel
+            ->withDeleted()
+            ->find($id);
+
+        if ($employee === null) {
+            return redirect()
+                ->to(base_url('admin/bukutamu-pegawai'))
+                ->with('error', 'Data pegawai tidak ditemukan.');
+        }
+
+        $this->employeeModel->update($id, [
+            'deleted_at' => null,
+        ]);
+
+        return redirect()
+            ->to(base_url('admin/bukutamu-pegawai'))
+            ->with(
+                'success',
+                'Data pegawai "' . $employee['employee_name'] . '" berhasil dipulihkan.'
+            );
+    }
 }

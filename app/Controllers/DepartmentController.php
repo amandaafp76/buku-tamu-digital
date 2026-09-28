@@ -30,7 +30,8 @@ class DepartmentController extends BaseController
             )
             ->join(
                 'employees',
-                'employees.department_id = departments.id',
+                'employees.department_id = departments.id
+                AND employees.deleted_at IS NULL',
                 'left'
             )
             ->groupBy('departments.id');

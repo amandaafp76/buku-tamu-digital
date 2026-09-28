@@ -16,10 +16,14 @@ class EmployeeModel extends Model
         'employee_name',
         'phone',
         'active',
+        'deleted_at',
     ];
 
     protected $useTimestamps = true;
 
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
+
+    protected $useSoftDeletes = true;
+    protected $deletedField   = 'deleted_at';
 }

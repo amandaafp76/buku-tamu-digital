@@ -21,4 +21,7 @@ class DepartmentModel extends Model
 
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
+
+    protected $useSoftDeletes = true;
+    protected $deletedField   = 'deleted_at';
 }
