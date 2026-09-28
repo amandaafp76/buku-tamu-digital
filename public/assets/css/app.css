@@ -1,27 +1,50 @@
 :root {
 
     --color-primary: #9A3F3F;
-    --color-secondary: #C1856D;
-    --color-soft: #E6CFA9;
-    --color-background: #FBF9D1;
 
-    --text-primary: #3F2A2A;
-    --text-secondary: #765F5A;
+    --color-primary-dark:
+        color-mix(
+            in srgb,
+            var(--color-primary) 82%,
+            #000
+        );
 
+    --color-primary-light:
+        color-mix(
+            in srgb,
+            var(--color-primary) 68%,
+            #fff
+        );
+
+    --color-primary-soft:
+        color-mix(
+            in srgb,
+            var(--color-primary) 18%,
+            #fff
+        );
+
+    --color-primary-ultra-soft:
+        color-mix(
+            in srgb,
+            var(--color-primary) 8%,
+            #fff
+        );
+
+    --color-background: #F8F9FB;
+
+    --text-primary: #2F2A2A;
+    --text-secondary: #6F6663;
 
     --glass-white: rgba(255, 255, 255, 0.52);
     --glass-border: rgba(255, 255, 255, 0.68);
-
 
     --radius-card: 28px;
     --radius-input: 18px;
     --radius-button: 18px;
 
-
     --shadow-glass:
-        0 24px 60px rgba(95, 57, 47, 0.16),
+        0 24px 60px rgba(50, 40, 40, 0.12),
         inset 0 1px 0 rgba(255, 255, 255, 0.75);
-
 
     --space-xs: 4px;
     --space-sm: 8px;
@@ -49,13 +72,51 @@ body {
     background:
         radial-gradient(
             circle at 10% 10%,
-            rgba(193, 133, 109, 0.18),
+            color-mix(
+                in srgb,
+                var(--color-primary) 12%,
+                transparent
+            ),
             transparent 32%
         ),
         radial-gradient(
             circle at 90% 15%,
-            rgba(230, 207, 169, 0.28),
+            color-mix(
+                in srgb,
+                var(--color-primary) 8%,
+                transparent
+            ),
             transparent 34%
         ),
         var(--color-background);
+}
+
+
+/* Dashboard Layout */
+
+.dashboard-shell {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    margin-left: 260px;
+    padding: 0 20px;
+
+    width: calc(100% - 260px);
+
+    transition:
+        margin-left 0.25s ease,
+        width 0.25s ease;
+    
+    position: relative;
+}
+
+body.sidebar-closed .dashboard-shell {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.dashboard-content {
+    padding: 24px 0 40px;
 }

@@ -2,13 +2,14 @@
 <html lang="id">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1">
 
-    <title><?= esc($title ?? 'Dashboard') ?></title>
+    <title><?= esc($title ?? 'Login - Buku Tamu Digital') ?></title>
 
     <link
         rel="preconnect"
@@ -41,53 +42,17 @@
 
     <link
         rel="stylesheet"
-        href="<?= base_url('assets/css/sidebar.css') ?>">
-
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/navbar.css') ?>">
-
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/admin-components..css') ?>">
-
-    <?php
-    $primaryColor = $settings['primary_color'] ?? '#9A3F3F';
-
-    log_message(
-        'debug',
-        'GLOBAL PRIMARY COLOR: ' . $primaryColor
-    );
-    ?>
-
-    <style>
-        :root {
-            --color-primary: <?= esc($primaryColor) ?>;
-        }
-    </style>
+        href="<?= base_url('assets/css/login.css') ?>">
 
     <?= $this->renderSection('pageCss') ?>
+
 </head>
 
 <body>
 
-    <?= $this->include('components/sidebar') ?>
-
-    <div class="dashboard-shell">
-
-        <?= $this->include('components/navbar') ?>
-
-        <main class="dashboard-content">
-            <?= $this->renderSection('content') ?>
-        </main>
-
-    </div>
+    <?= $this->renderSection('content') ?>
 
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script src="<?= base_url('assets/js/app.js') ?>"></script>
-    <script src="<?= base_url('assets/js/sidebar.js') ?>"></script>
 
     <?= $this->renderSection('pageJs') ?>
 

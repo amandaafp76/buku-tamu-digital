@@ -1,0 +1,110 @@
+.institution-page-title {
+    color: var(--color-primary);
+}
+
+.institution-info-item {
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(154, 63, 63, 0.08);
+}
+
+.institution-info-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.institution-info-value {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.institution-info-address {
+    white-space: normal;
+}
+
+.institution-logo-preview {
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(154, 63, 63, 0.08);
+}
+
+.institution-logo-image {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    max-height: 220px;
+    object-fit: contain;
+}
+
+.institution-logo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 180px;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.institution-logo-placeholder i {
+    font-size: 3rem;
+    color: var(--color-primary);
+}
+
+.institution-logo-placeholder span {
+    font-size: 0.82rem;
+}
+
+.institution-edit-logo-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(154, 63, 63, 0.08);
+}
+
+.institution-edit-logo-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.institution-edit-logo-image {
+    display: block;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.55);
+    padding: 10px;
+}
+
+@media (max-width: 575.98px) {
+
+    .institution-logo-preview {
+        min-height: 210px;
+        padding: 18px;
+    }
+
+    .institution-logo-image {
+        max-width: 180px;
+        max-height: 180px;
+    }
+
+}

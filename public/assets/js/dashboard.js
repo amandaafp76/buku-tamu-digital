@@ -1,5 +1,42 @@
 const dashboardData = document.getElementById('dashboard-data');
 
+const rootStyles = getComputedStyle(document.documentElement);
+
+const primaryColor =
+    rootStyles.getPropertyValue('--color-primary').trim();
+
+const primaryDarkColor =
+    rootStyles.getPropertyValue('--color-primary-dark').trim();
+
+function hexToRgba(hex, alpha = 1) {
+    hex = hex.replace('#', '');
+
+    if (hex.length === 3) {
+        hex = hex
+            .split('')
+            .map(char => char + char)
+            .join('');
+    }
+
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+const primarySoft = hexToRgba(primaryColor, 0.10);
+const primaryMedium = hexToRgba(primaryColor, 0.72);
+
+const primaryPalette = [
+    hexToRgba(primaryColor, 0.95),
+    hexToRgba(primaryColor, 0.80),
+    hexToRgba(primaryColor, 0.65),
+    hexToRgba(primaryColor, 0.50),
+    hexToRgba(primaryColor, 0.35),
+    hexToRgba(primaryColor, 0.20)
+];
+
 if (dashboardData) {
 
     const dailyVisitData = JSON.parse(
@@ -46,8 +83,14 @@ if (dashboardData) {
                     label: 'Kunjungan',
                     data: dailyVisitValues,
 
-                    borderColor: '#9A3F3F',
-                    backgroundColor: 'rgba(154, 63, 63, 0.10)',
+                    borderColor: primaryColor,
+                    backgroundColor: primarySoft,
+
+                    pointBackgroundColor: primaryColor,
+                    pointBorderColor: primaryColor,
+
+                    pointHoverBackgroundColor: primaryDarkColor,
+                    pointHoverBorderColor: primaryDarkColor,
 
                     borderWidth: 2,
 
@@ -116,8 +159,11 @@ if (dashboardData) {
                     label: 'Kunjungan',
                     data: hourlyVisitValues,
 
-                    backgroundColor: 'rgba(193, 133, 109, 0.72)',
-                    borderColor: '#C1856D',
+                    backgroundColor: primaryMedium,
+                    borderColor: primaryColor,
+
+                    hoverBackgroundColor: primaryDarkColor,
+                    hoverBorderColor: primaryDarkColor,
 
                     borderWidth: 1,
 
@@ -194,14 +240,7 @@ if (dashboardData) {
                 datasets: [{
                     data: statusChartValues,
 
-                    backgroundColor: [
-                        'rgba(193, 133, 109, 0.85)',
-                        'rgba(154, 63, 63, 0.85)',
-                        'rgba(116, 153, 117, 0.85)',
-                        'rgba(180, 102, 102, 0.85)',
-                        'rgba(150, 150, 150, 0.75)',
-                        'rgba(230, 207, 169, 0.90)'
-                    ],
+                    backgroundColor: primaryPalette,
 
                     borderColor: 'rgba(255, 255, 255, 0.70)',
                     borderWidth: 2
@@ -262,8 +301,11 @@ if (departmentVisitsChart) {
                 label: 'Kunjungan',
                 data: departmentChartValues,
 
-                backgroundColor: 'rgba(154, 63, 63, 0.72)',
-                borderColor: '#9A3F3F',
+                backgroundColor: primaryMedium,
+                borderColor: primaryColor,
+
+                hoverBackgroundColor: primaryDarkColor,
+                hoverBorderColor: primaryDarkColor,
 
                 borderWidth: 1,
 
@@ -345,8 +387,11 @@ if (employeeVisitsChart) {
                 label: 'Kunjungan',
                 data: employeeChartValues,
 
-                backgroundColor: 'rgba(193, 133, 109, 0.72)',
-                borderColor: '#C1856D',
+                backgroundColor: primaryMedium,
+                borderColor: primaryColor,
+
+                hoverBackgroundColor: primaryDarkColor,
+                hoverBorderColor: primaryDarkColor,
 
                 borderWidth: 1,
 

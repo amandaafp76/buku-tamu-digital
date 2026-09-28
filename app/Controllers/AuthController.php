@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
+use App\Validation\AuthValidation;
 
 class AuthController extends BaseController
 {
@@ -18,21 +19,7 @@ class AuthController extends BaseController
 
     public function authenticate()
     {
-        $rules = [
-            'username' => [
-                'rules' => 'required|valid_email',
-                'errors' => [
-                    'required'    => 'Email wajib diisi.',
-                    'valid_email' => 'Email harus berupa alamat email yang valid.',
-                ],
-            ],
-            'password' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Password wajib diisi.',
-                ],
-            ],
-        ];
+        $rules = AuthValidation::loginRules();
 
         if (! $this->validate($rules)) {
             return redirect()->back()
@@ -40,7 +27,9 @@ class AuthController extends BaseController
                 ->with('errors', $this->validator->getErrors());
         }
 
-        $username = trim((string) $this->request->getPost('username'));
+        $username = strtolower(
+            trim((string) $this->request->getPost('username'))
+        );
         $password = (string) $this->request->getPost('password');
 
         $userModel = new UserModel();

@@ -6,9 +6,7 @@ $currentUri = uri_string();
     id="dashboardSidebar">
 
     <div class="sidebar-brand">
-        <a
-            href="<?= base_url('admin/bukutamu-dashboard') ?>"
-            class="sidebar-brand-link">
+        <div class="sidebar-brand-link">
 
             <span class="sidebar-brand-icon">
                 <i class="bi bi-journal-bookmark"></i>
@@ -18,7 +16,7 @@ $currentUri = uri_string();
                 Buku Tamu
             </span>
 
-        </a>
+        </div>
 
         <button
             type="button"
@@ -50,19 +48,84 @@ $currentUri = uri_string();
 
         </a>
 
-        <a
-            href="#"
-            class="sidebar-nav-item">
+        <div class="sidebar-nav-group">
 
-            <span class="sidebar-nav-icon">
-                <i class="bi bi-database"></i>
-            </span>
+            <button
+                type="button"
+                class="sidebar-nav-item sidebar-nav-toggle"
+                id="masterDataToggle"
+                aria-expanded="false"
+                aria-controls="masterDataSubmenu">
 
-            <span class="sidebar-nav-text">
-                Data Master
-            </span>
+                <span class="sidebar-nav-icon">
+                    <i class="bi bi-database"></i>
+                </span>
 
-        </a>
+                <span class="sidebar-nav-text">
+                    Data Master
+                </span>
+
+                <span class="sidebar-nav-arrow">
+                    <i class="bi bi-chevron-down"></i>
+                </span>
+
+            </button>
+
+            <div
+                class="sidebar-submenu"
+                id="masterDataSubmenu">
+
+                <a
+                    href="<?= base_url('admin/bukutamu-pegawai') ?>"
+                    class="sidebar-submenu-item <?= $currentUri === 'admin/bukutamu-pegawai' ? 'active' : '' ?>">
+
+                    <span class="sidebar-submenu-dot"></span>
+
+                    <span>
+                        Pegawai
+                    </span>
+
+                </a>
+
+                <a
+                    href="<?= base_url('admin/bukutamu-departemen') ?>"
+                    class="sidebar-submenu-item <?= $currentUri === 'admin/bukutamu-departemen' ? 'active' : '' ?>">
+
+                    <span class="sidebar-submenu-dot"></span>
+
+                    <span>
+                        Bagian/Departemen
+                    </span>
+
+                </a>
+
+                <a
+                    href="<?= base_url('admin/bukutamu-tujuan') ?>"
+                    class="sidebar-submenu-item <?= $currentUri === 'admin/bukutamu-tujuan' ? 'active' : '' ?>">
+
+                    <span class="sidebar-submenu-dot"></span>
+
+                    <span>
+                        Tujuan Kunjungan
+                    </span>
+
+                </a>
+
+                <a
+                    href="<?= base_url('admin/bukutamu-pengguna') ?>"
+                    class="sidebar-submenu-item <?= url_is('admin/bukutamu-pengguna*') ? 'active' : '' ?>">
+
+                    <span class="sidebar-submenu-dot"></span>
+
+                    <span>
+                        Pengguna
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
 
         <a
             href="#"
@@ -106,19 +169,88 @@ $currentUri = uri_string();
 
         </a>
 
-        <a
-            href="#"
-            class="sidebar-nav-item">
+        <div class="sidebar-nav-group">
 
-            <span class="sidebar-nav-icon">
-                <i class="bi bi-gear"></i>
-            </span>
+            <button
+                type="button"
+                class="sidebar-nav-item sidebar-nav-toggle"
+                id="pengaturanToggle"
+                aria-expanded="false"
+                aria-controls="pengaturanSubmenu">
 
-            <span class="sidebar-nav-text">
-                Pengaturan
-            </span>
+                <span class="sidebar-nav-icon">
+                    <i class="bi bi-gear"></i>
+                </span>
 
-        </a>
+                <span class="sidebar-nav-text">
+                    Pengaturan
+                </span>
+
+                <span class="sidebar-nav-arrow">
+                    <i class="bi bi-chevron-down"></i>
+                </span>
+
+            </button>
+
+
+            <div
+                class="sidebar-submenu"
+                id="pengaturanSubmenu">
+
+                <a
+                    href="<?= base_url('admin/bukutamu-konfigurasi') ?>"
+                    class="sidebar-submenu-item <?= url_is('admin/bukutamu-konfigurasi*') ? 'active' : '' ?>">
+
+                    <span class="sidebar-submenu-dot"></span>
+
+                    <span>
+                        Konfigurasi Sistem
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="<?= base_url('admin/bukutamu-wakita') ?>"
+                    class="sidebar-submenu-item <?= url_is('admin/bukutamu-wakita*') ? 'active' : '' ?>">
+
+                    <span class="sidebar-submenu-dot"></span>
+
+                    <span>
+                        WAKITA
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="<?= base_url('admin/bukutamu-template-pesan') ?>"
+                    class="sidebar-submenu-item <?= url_is('admin/bukutamu-template-pesan*') ? 'active' : '' ?>">
+
+                    <span class="sidebar-submenu-dot"></span>
+
+                    <span>
+                        Template Pesan
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="<?= base_url('admin/bukutamu-identitas-institusi') ?>"
+                    class="sidebar-submenu-item <?= url_is('admin/bukutamu-identitas-institusi*') ? 'active' : '' ?>">
+
+                    <span class="sidebar-submenu-dot"></span>
+
+                    <span>
+                        Identitas Institusi
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
 
     </nav>
 

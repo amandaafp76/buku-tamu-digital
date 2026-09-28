@@ -3,8 +3,6 @@
 .dashboard-shell {
     min-height: 100vh;
     min-height: 100dvh;
-
-    padding-left: 280px;
 }
 
 /* dashboard content */
