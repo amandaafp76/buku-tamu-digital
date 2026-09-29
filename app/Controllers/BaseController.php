@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\SettingModel;
+use App\Models\ActivityLogModel;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -22,6 +23,7 @@ use Psr\Log\LoggerInterface;
 abstract class BaseController extends Controller
 {
     protected $settings;
+    protected ActivityLogModel $activityLogModel;
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -48,7 +50,40 @@ abstract class BaseController extends Controller
 
         service('renderer')->setVar('settings', $this->settings);
 
+        $this->activityLogModel = new ActivityLogModel();
+
         // Preload any models, libraries, etc, here.
         // $this->session = service('session');
+    }
+
+    protected function logActivity(
+        string $action,
+        string $entity,
+        ?int $entityId,
+        string $activity
+    ): void {
+        $userId = session()->get('user_id');
+
+        if (
+            ! $userId ||
+            ! session()->get('logged_in')
+        ) {
+            return;
+        }
+
+        try {
+            $this->activityLogModel->insert([
+                'user_id'   => (int) $userId,
+                'action'    => $action,
+                'entity'    => $entity,
+                'entity_id' => $entityId,
+                'activity'  => $activity,
+            ]);
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                'Gagal mencatat activity log: ' . $e->getMessage()
+            );
+        }
     }
 }

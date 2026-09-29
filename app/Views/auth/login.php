@@ -2,6 +2,10 @@
 
 <?= $this->section('content') ?>
 
+<?php
+$errors = session()->getFlashdata('errors') ?? [];
+?>
+
 <main class="login-wrapper container-fluid d-flex align-items-center justify-content-center">
 
     <section class="login-card glass-card">
@@ -26,7 +30,7 @@
             </div>
         <?php endif; ?>
 
-        <form action="<?= site_url('bukutamu-masuk') ?>" method="post">
+        <form action="<?= site_url('bukutamu-masuk') ?>" method="post" novalidate>
 
             <?= csrf_field() ?>
 
@@ -38,16 +42,16 @@
 
                 <div class="input-wrapper">
                     <input
-                        type="text"
+                        type="email"
                         id="username"
                         name="username"
                         value="<?= old('username') ?>"
-                        placeholder="Masukkan email"
+                        placeholder="Masukkan alamat email"
                         autocomplete="username"
-                        class="glass-input login-input">
+                        inputmode="email"
+                        maxlength="100"
+                        class="glass-input login-input <?= ! empty($errors['username'] ?? null) ? 'is-invalid' : '' ?>">
                 </div>
-
-                <?php $errors = session()->getFlashdata('errors') ?? []; ?>
 
                 <?php if (! empty($errors['username'])): ?>
                     <small class="field-error">
@@ -71,7 +75,8 @@
                         name="password"
                         placeholder="Masukkan password"
                         autocomplete="current-password"
-                        class="glass-input login-input password-input">
+                        maxlength="72"
+                        class="glass-input login-input password-input <?= ! empty($errors['password'] ?? null) ? 'is-invalid' : '' ?>">
 
                     <button
                         type="button"

@@ -127,6 +127,17 @@ class EmployeeController extends BaseController
             'active'        => (int) $this->request->getPost('active'),
         ]);
 
+        $employeeId = $this->employeeModel->getInsertID();
+
+        $this->logActivity(
+            'create',
+            'employee',
+            (int) $employeeId,
+            'Menambahkan pegawai "' .
+                trim($this->request->getPost('employee_name')) .
+                '".'
+        );
+
         return redirect()
             ->to(base_url('admin/bukutamu-pegawai'))
             ->with('success', 'Data pegawai berhasil ditambahkan.');
@@ -227,6 +238,15 @@ class EmployeeController extends BaseController
             'active'        => (int) $this->request->getPost('active'),
         ]);
 
+        $this->logActivity(
+            'update',
+            'employee',
+            $id,
+            'Memperbarui data pegawai "' .
+                trim($this->request->getPost('employee_name')) .
+                '".'
+        );
+
         return redirect()
             ->to(base_url('admin/bukutamu-pegawai'))
             ->with('success', 'Data pegawai berhasil diperbarui.');
@@ -266,6 +286,15 @@ class EmployeeController extends BaseController
 
         $this->employeeModel->delete($id);
 
+        $this->logActivity(
+            'delete',
+            'employee',
+            $id,
+            'Menghapus pegawai "' .
+                $employee['employee_name'] .
+                '".'
+        );
+
         return redirect()
             ->to(base_url('admin/bukutamu-pegawai'))
             ->with(
@@ -289,6 +318,15 @@ class EmployeeController extends BaseController
         $this->employeeModel->update($id, [
             'deleted_at' => null,
         ]);
+
+        $this->logActivity(
+            'restore',
+            'employee',
+            $id,
+            'Memulihkan pegawai "' .
+                $employee['employee_name'] .
+                '".'
+        );
 
         return redirect()
             ->to(base_url('admin/bukutamu-pegawai'))

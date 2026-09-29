@@ -129,8 +129,27 @@ class SettingController extends BaseController
                 $existingSetting['id'],
                 $data
             );
+            $this->logActivity(
+                'update',
+                'setting',
+                (int) $existingSetting['id'],
+                'Memperbarui konfigurasi sistem untuk institusi "' .
+                    $institution['name'] .
+                    '".'
+            );
         } else {
             $this->settingModel->insert($data);
+
+            $settingId = $this->settingModel->getInsertID();
+
+            $this->logActivity(
+                'create',
+                'setting',
+                (int) $settingId,
+                'Menambahkan konfigurasi sistem untuk institusi "' .
+                    $institution['name'] .
+                    '".'
+            );
         }
 
         return redirect()

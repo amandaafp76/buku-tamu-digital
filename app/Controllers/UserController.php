@@ -88,7 +88,7 @@ class UserController extends BaseController
                 'title' => 'Tambah Pengguna',
                 'pageTitle' => 'Tambah Pengguna',
                 'errors' => [
-                    'username' => 'Username sudah digunakan.',
+                    'username' => 'Email sudah digunakan.',
                 ],
                 'formData' => $this->request->getPost(),
             ]);
@@ -105,6 +105,15 @@ class UserController extends BaseController
             'role' => (string) $this->request->getPost('role'),
             'active' => (int) $this->request->getPost('active'),
         ]);
+
+        $userId = $this->userModel->getInsertID();
+
+        $this->logActivity(
+            'create',
+            'user',
+            (int) $userId,
+            'Menambahkan pengguna "' . $username . '".'
+        );
 
         return redirect()
             ->to(base_url('admin/bukutamu-pengguna'))
@@ -275,6 +284,13 @@ class UserController extends BaseController
             ]);
         }
 
+        $this->logActivity(
+            'update',
+            'user',
+            $id,
+            'Memperbarui data pengguna "' . $username . '".'
+        );
+
         return redirect()
             ->to(base_url('admin/bukutamu-pengguna'))
             ->with(
@@ -334,6 +350,13 @@ class UserController extends BaseController
             ),
         ]);
 
+        $this->logActivity(
+            'update',
+            'user',
+            $id,
+            'Mereset password pengguna "' . $user['username'] . '".'
+        );
+
         return redirect()
             ->to(base_url('admin/bukutamu-pengguna'))
             ->with(
@@ -385,6 +408,15 @@ class UserController extends BaseController
         $this->userModel->update($id, [
             'active' => $newStatus,
         ]);
+
+        $this->logActivity(
+            'update',
+            'user',
+            $id,
+            $newStatus === 1
+                ? 'Mengaktifkan pengguna "' . $user['username'] . '".'
+                : 'Menonaktifkan pengguna "' . $user['username'] . '".'
+        );
 
         return redirect()
             ->to(base_url('admin/bukutamu-pengguna'))
@@ -451,6 +483,13 @@ class UserController extends BaseController
         }
 
         $this->userModel->delete($id);
+
+        $this->logActivity(
+            'delete',
+            'user',
+            $id,
+            'Menghapus pengguna "' . $user['username'] . '".'
+        );
 
         return redirect()
             ->to(base_url('admin/bukutamu-pengguna'))

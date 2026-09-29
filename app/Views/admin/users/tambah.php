@@ -67,19 +67,20 @@ $formData = $formData ?? [];
                             for="username"
                             class="form-label employee-form-label">
 
-                            Username
+                            Email
 
                         </label>
 
                         <input
-                            type="text"
+                            type="email"
                             id="username"
                             name="username"
                             class="form-control employee-form-input <?= isset($errors['username']) ? 'is-invalid' : '' ?>"
                             placeholder="Masukkan username"
                             value="<?= esc(old('username', $formData['username'] ?? '')) ?>"
                             maxlength="100"
-                            autocomplete="username">
+                            autocomplete="username"
+                            inputmode="email">
 
                         <?php if (isset($errors['username'])): ?>
 

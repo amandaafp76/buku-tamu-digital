@@ -127,6 +127,14 @@ class VisitPurposeController extends BaseController
             'active'       => (int) $this->request->getPost('active'),
         ]);
 
+        $purposeId = $this->visitPurposeModel->getInsertID();
+
+        $this->logActivity(
+            'create',
+            'visit_purpose',
+            (int) $purposeId,
+            'Menambahkan Tujuan Kunjungan "' . $purposeName . '".'
+        );
 
         return redirect()
             ->to(base_url('admin/bukutamu-tujuan'))
@@ -222,6 +230,13 @@ class VisitPurposeController extends BaseController
             'active'       => (int) $this->request->getPost('active'),
         ]);
 
+        $this->logActivity(
+            'update',
+            'visit_purpose',
+            $id,
+            'Memperbarui Tujuan Kunjungan "' . $purposeName . '".'
+        );
+
         return redirect()
             ->to(base_url('admin/bukutamu-tujuan'))
             ->with(
@@ -290,6 +305,15 @@ class VisitPurposeController extends BaseController
         }
 
         $this->visitPurposeModel->delete($id);
+
+        $this->logActivity(
+            'delete',
+            'visit_purpose',
+            $id,
+            'Menghapus Tujuan Kunjungan "' .
+                $visitPurpose['purpose_name'] .
+                '".'
+        );
 
         return redirect()
             ->to(base_url('admin/bukutamu-tujuan'))

@@ -14,7 +14,7 @@ $userRole = session()->get('role');
         content="width=device-width, initial-scale=1.0">
 
     <title>
-        404 - Halaman Tidak Ditemukan
+        500 - Terjadi Kesalahan
     </title>
 
     <link
@@ -44,22 +44,23 @@ $userRole = session()->get('role');
             <div class="error-icon">
 
                 <i
-                    class="bi bi-file-earmark-x"
+                    class="bi bi-exclamation-triangle"
                     aria-hidden="true">
                 </i>
 
             </div>
 
             <h1 class="error-code">
-                404
+                500
             </h1>
 
             <h2 class="error-title">
-                Halaman Tidak Ditemukan
+                Terjadi Kesalahan
             </h2>
 
             <p class="error-description">
-                Halaman yang Anda cari tidak tersedia atau alamat yang Anda masukkan tidak ditemukan.
+                Terjadi kesalahan pada server.
+                Silakan coba lagi beberapa saat kemudian.
             </p>
 
             <?php if (session()->get('logged_in')): ?>

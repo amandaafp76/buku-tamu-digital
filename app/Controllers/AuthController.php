@@ -8,10 +8,35 @@ use App\Validation\AuthValidation;
 
 class AuthController extends BaseController
 {
+    protected UserModel $userModel;
+
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+    }
+
     public function index()
     {
         if (session()->get('logged_in')) {
-            return redirect()->to('/admin/bukutamu-dashboard');
+            $role = session()->get('role');
+
+            if ($role === 'administrator') {
+                return redirect()->to(
+                    site_url('admin/bukutamu-dashboard')
+                );
+            }
+
+            if ($role === 'petugas') {
+                return redirect()->to(
+                    site_url('petugas/bukutamu-dashboard')
+                );
+            }
+
+            session()->destroy();
+
+            return redirect()
+                ->to(site_url('bukutamu-masuk'))
+                ->with('error', 'Role pengguna tidak valid.');
         }
 
         return view('auth/login');
@@ -32,11 +57,9 @@ class AuthController extends BaseController
         );
         $password = (string) $this->request->getPost('password');
 
-        $userModel = new UserModel();
-
-        $user = $userModel
+        $user = $this->userModel
             ->where('username', $username)
-            ->where('active', true)
+            ->where('active', 1)
             ->first();
 
         if ($user === null || ! password_verify($password, $user['password_hash'])) {
@@ -54,11 +77,46 @@ class AuthController extends BaseController
             'logged_in' => true,
         ]);
 
-        return redirect()->to('/admin/bukutamu-dashboard');
+        $this->logActivity(
+            'login',
+            'auth',
+            (int) $user['id'],
+            'Pengguna "' . $user['username'] . '" berhasil login.'
+        );
+
+        if ($user['role'] === 'administrator') {
+            return redirect()->to(
+                site_url('admin/bukutamu-dashboard')
+            );
+        }
+
+        if ($user['role'] === 'petugas') {
+            return redirect()->to(
+                site_url('petugas/bukutamu-dashboard')
+            );
+        }
+
+        session()->destroy();
+
+        return redirect()
+            ->to(site_url('bukutamu-masuk'))
+            ->with('error', 'Role pengguna tidak valid.');
     }
 
     public function logout()
     {
+        $userId = (int) session()->get('user_id');
+        $username = (string) session()->get('username');
+
+        if ($userId > 0) {
+            $this->logActivity(
+                'logout',
+                'auth',
+                $userId,
+                'Pengguna "' . $username . '" berhasil logout.'
+            );
+        }
+
         session()->destroy();
 
         return redirect()->to('/bukutamu-masuk');

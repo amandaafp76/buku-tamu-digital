@@ -102,6 +102,20 @@ class NotificationTemplateController extends BaseController
             (int) $this->request->getPost('active'),
         ]);
 
+        $templateId = $this->notificationTemplateModel->getInsertID();
+
+        $this->logActivity(
+            'create',
+            'notification_template',
+            (int) $templateId,
+            'Menambahkan template pesan "' .
+                $this->request->getPost('notification_type') .
+                '" untuk penerima "' .
+                $this->request->getPost('recipient_type') .
+                '".'
+        );
+
+
         return redirect()
             ->to(base_url('admin/bukutamu-template-pesan'))
             ->with(
@@ -172,6 +186,17 @@ class NotificationTemplateController extends BaseController
                 'active' =>
                 (int) $this->request->getPost('active'),
             ]
+        );
+
+        $this->logActivity(
+            'update',
+            'notification_template',
+            $id,
+            'Memperbarui template pesan "' .
+                $this->request->getPost('notification_type') .
+                '" untuk penerima "' .
+                $this->request->getPost('recipient_type') .
+                '".'
         );
 
         return redirect()

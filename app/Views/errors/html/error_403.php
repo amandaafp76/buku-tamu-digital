@@ -1,7 +1,3 @@
-<?php
-$userRole = session()->get('role');
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -14,7 +10,7 @@ $userRole = session()->get('role');
         content="width=device-width, initial-scale=1.0">
 
     <title>
-        404 - Halaman Tidak Ditemukan
+        403 - Akses Ditolak
     </title>
 
     <link
@@ -44,27 +40,27 @@ $userRole = session()->get('role');
             <div class="error-icon">
 
                 <i
-                    class="bi bi-file-earmark-x"
+                    class="bi bi-shield-lock"
                     aria-hidden="true">
                 </i>
 
             </div>
 
             <h1 class="error-code">
-                404
+                403
             </h1>
 
             <h2 class="error-title">
-                Halaman Tidak Ditemukan
+                Akses Ditolak
             </h2>
 
             <p class="error-description">
-                Halaman yang Anda cari tidak tersedia atau alamat yang Anda masukkan tidak ditemukan.
+                Anda tidak memiliki hak akses untuk membuka halaman ini.
             </p>
 
             <?php if (session()->get('logged_in')): ?>
 
-                <?php if ($userRole === 'administrator'): ?>
+                <?php if (session()->get('role') === 'administrator'): ?>
 
                     <a
                         href="<?= site_url('admin/bukutamu-dashboard') ?>"
@@ -79,7 +75,7 @@ $userRole = session()->get('role');
 
                     </a>
 
-                <?php elseif ($userRole === 'petugas'): ?>
+                <?php elseif (session()->get('role') === 'petugas'): ?>
 
                     <a
                         href="<?= site_url('petugas/bukutamu-dashboard') ?>"

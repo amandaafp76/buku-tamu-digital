@@ -67,19 +67,20 @@ $formData = $formData ?? [];
                             for="username_edit"
                             class="form-label employee-form-label">
 
-                            Username
+                            Email
 
                         </label>
 
                         <input
-                            type="text"
+                            type="email"
                             id="username_edit"
                             name="username"
                             class="form-control employee-form-input <?= isset($errors['username']) ? 'is-invalid' : '' ?>"
-                            placeholder="Masukkan username"
+                            placeholder="Masukkan alamat email"
                             value="<?= esc(old('username', $formData['username'] ?? $user['username'])) ?>"
                             maxlength="100"
-                            autocomplete="username">
+                            autocomplete="username"
+                            inputmode="email">
 
                         <?php if (isset($errors['username'])): ?>
 
@@ -150,8 +151,10 @@ $formData = $formData ?? [];
                             class="form-select employee-form-input <?= isset($errors['active']) ? 'is-invalid' : '' ?>">
 
                             <option
-                                value="1"
-                                <?= old('active', $formData['active'] ?? $user['active']) === '1' ? 'selected' : '' ?>>
+                                value="1"><?= (string) old(
+                                                'active',
+                                                $formData['active'] ?? $user['active']
+                                            ) === '1' ? 'selected' : '' ?>
 
                                 Aktif
 
@@ -159,7 +162,10 @@ $formData = $formData ?? [];
 
                             <option
                                 value="0"
-                                <?= old('active', $formData['active'] ?? $user['active']) === '0' ? 'selected' : '' ?>>
+                                <?= (string) old(
+                                    'active',
+                                    $formData['active'] ?? $user['active']
+                                ) === '0' ? 'selected' : '' ?>>
 
                                 Nonaktif
 

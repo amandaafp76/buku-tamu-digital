@@ -27,8 +27,16 @@ class RoleFilter implements FilterInterface
     {
         $userRole = session()->get('role');
 
-        if (empty($arguments) || ! in_array($userRole, $arguments, true)) {
-            return redirect()->to('/403');
+        if (
+            empty($userRole) ||
+            empty($arguments) ||
+            ! in_array($userRole, $arguments, true)
+        ) {
+            return response()
+                ->setStatusCode(403)
+                ->setBody(
+                    view('errors/html/error_403')
+                );
         }
     }
 

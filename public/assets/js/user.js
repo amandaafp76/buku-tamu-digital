@@ -195,6 +195,12 @@ function focusFirstUserInvalidField(form) {
     form?.querySelector('.is-invalid')?.focus();
 }
 
+function isValidUserPassword(password) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/.test(
+        password
+    );
+}
+
 function validateUserCreateForm(form) {
     clearUserClientValidation(form);
 
@@ -215,25 +221,21 @@ function validateUserCreateForm(form) {
     if (usernameValue === '') {
         showUserFieldError(
             username,
-            'Username wajib diisi.'
-        );
-        valid = false;
-    } else if (usernameValue.length < 3) {
-        showUserFieldError(
-            username,
-            'Username minimal 3 karakter.'
+            'Email wajib diisi.'
         );
         valid = false;
     } else if (usernameValue.length > 100) {
         showUserFieldError(
             username,
-            'Username maksimal 100 karakter.'
+            'Email maksimal 100 karakter.'
         );
         valid = false;
-    } else if (!/^[a-zA-Z0-9._-]+$/.test(usernameValue)) {
+    } else if (
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameValue)
+    ) {
         showUserFieldError(
             username,
-            'Username hanya boleh berisi huruf, angka, titik, garis bawah, dan tanda hubung.'
+            'Email harus menggunakan alamat email yang valid.'
         );
         valid = false;
     }
@@ -254,6 +256,12 @@ function validateUserCreateForm(form) {
         showUserFieldError(
             password,
             'Password maksimal 72 karakter.'
+        );
+        valid = false;
+            } else if (!isValidUserPassword(passwordValue)) {
+        showUserFieldError(
+            password,
+            'Password harus mengandung huruf besar, huruf kecil, angka, dan minimal 1 karakter khusus.'
         );
         valid = false;
     }
@@ -315,25 +323,21 @@ function validateUserEditForm(form) {
     if (usernameValue === '') {
         showUserFieldError(
             username,
-            'Username wajib diisi.'
-        );
-        valid = false;
-    } else if (usernameValue.length < 3) {
-        showUserFieldError(
-            username,
-            'Username minimal 3 karakter.'
+            'Email wajib diisi.'
         );
         valid = false;
     } else if (usernameValue.length > 100) {
         showUserFieldError(
             username,
-            'Username maksimal 100 karakter.'
+            'Email maksimal 100 karakter.'
         );
         valid = false;
-    } else if (!/^[a-zA-Z0-9._-]+$/.test(usernameValue)) {
+    } else if (
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameValue)
+    ) {
         showUserFieldError(
             username,
-            'Username hanya boleh berisi huruf, angka, titik, garis bawah, dan tanda hubung.'
+            'Email harus menggunakan alamat email yang valid.'
         );
         valid = false;
     }
@@ -365,6 +369,12 @@ function validateUserEditForm(form) {
             showUserFieldError(
                 password,
                 'Password maksimal 72 karakter.'
+            );
+            valid = false;
+        } else if (!isValidUserPassword(passwordValue)) {
+            showUserFieldError(
+                password,
+                'Password harus mengandung huruf besar, huruf kecil, angka, dan minimal 1 karakter khusus.'
             );
             valid = false;
         }
@@ -422,8 +432,13 @@ function validateUserResetPasswordForm(form) {
             'Password maksimal 72 karakter.'
         );
         valid = false;
+    } else if (!isValidUserPassword(passwordValue)) {
+        showUserFieldError(
+            password,
+            'Password harus mengandung huruf besar, huruf kecil, angka, dan minimal 1 karakter khusus.'
+        );
+        valid = false;
     }
-
     if (passwordConfirmValue === '') {
         showUserFieldError(
             passwordConfirm,

@@ -8,13 +8,12 @@ class AuthValidation
     {
         return [
             'username' => [
-                'label' => 'Username',
-                'rules' => 'required|min_length[3]|max_length[100]|regex_match[/^[a-zA-Z0-9._-]+$/]',
+                'label' => 'Email',
+                'rules' => 'required|valid_email|max_length[100]',
                 'errors' => [
                     'required'    => '{field} wajib diisi.',
-                    'min_length'  => '{field} minimal 3 karakter.',
+                    'valid_email' => '{field} harus menggunakan alamat email yang valid.',
                     'max_length'  => '{field} maksimal 100 karakter.',
-                    'regex_match' => '{field} hanya boleh berisi huruf, angka, titik, garis bawah, dan tanda hubung.',
                 ],
             ],
 

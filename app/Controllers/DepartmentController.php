@@ -125,6 +125,15 @@ class DepartmentController extends BaseController
             'active' => (int) $this->request->getPost('active'),
         ]);
 
+        $departmentId = $this->departmentModel->getInsertID();
+
+        $this->logActivity(
+            'create',
+            'department',
+            (int) $departmentId,
+            'Menambahkan Bagian/Departemen "' . $name . '".'
+        );
+
         return redirect()
             ->to(base_url('admin/bukutamu-departemen'))
             ->with(
@@ -218,6 +227,13 @@ class DepartmentController extends BaseController
             'active' => (int) $this->request->getPost('active'),
         ]);
 
+        $this->logActivity(
+            'update',
+            'department',
+            $id,
+            'Memperbarui Bagian/Departemen "' . $name . '".'
+        );
+
         return redirect()
             ->to(base_url('admin/bukutamu-departemen'))
             ->with(
@@ -274,6 +290,16 @@ class DepartmentController extends BaseController
         }
 
         $this->departmentModel->delete($id);
+
+        $this->logActivity(
+            'delete',
+            'department',
+            $id,
+            'Menghapus Bagian/Departemen "' .
+                $department['name'] .
+                '".'
+        );
+
 
         return redirect()
             ->to(base_url('admin/bukutamu-departemen'))

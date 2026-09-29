@@ -116,6 +116,15 @@ class InstitutionController extends BaseController
             $data
         );
 
+        $this->logActivity(
+            'update',
+            'institution',
+            (int) $institution['id'],
+            'Memperbarui identitas institusi "' .
+                $data['name'] .
+                '".'
+        );
+
         return redirect()
             ->to('/admin/bukutamu-identitas-institusi')
             ->with(

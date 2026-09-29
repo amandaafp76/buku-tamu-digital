@@ -142,9 +142,28 @@ class WakitaController extends BaseController
                 $existingSetting['id'],
                 $data
             );
+            $this->logActivity(
+                'update',
+                'wakita',
+                (int) $existingSetting['id'],
+                'Memperbarui konfigurasi WAKITA untuk institusi "' .
+                    $institution['name'] .
+                    '".'
+            );
         } else {
 
             $this->settingModel->insert($data);
+
+            $settingId = $this->settingModel->getInsertID();
+
+            $this->logActivity(
+                'create',
+                'wakita',
+                (int) $settingId,
+                'Menambahkan konfigurasi WAKITA untuk institusi "' .
+                    $institution['name'] .
+                    '".'
+            );
         }
 
 

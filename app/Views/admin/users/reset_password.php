@@ -1,3 +1,9 @@
+<?php
+$errors = $errors ?? [];
+$error  = $error ?? null;
+$formData = $formData ?? [];
+?>
+
 <div class="employee-modal-wrapper">
 
     <div class="employee-modal glass-modal">
@@ -33,13 +39,6 @@
         </div>
 
 
-        <?php
-        $errors = $errors ?? [];
-        $error  = $error ?? null;
-        $formData = $formData ?? [];
-        ?>
-
-
         <?php if (! empty($errors) || $error): ?>
 
             <div class="employee-form-alert">
@@ -68,7 +67,8 @@
         <form
             id="formResetPassword"
             action="<?= base_url('admin/bukutamu-pengguna/reset-password/' . $user['id']) ?>"
-            method="post">
+            method="post"
+            novalidate>
 
             <?= csrf_field() ?>
 
@@ -145,11 +145,12 @@
                         id="password_reset"
                         class="form-control employee-form-input <?= isset($errors['password']) ? 'is-invalid' : '' ?>"
                         placeholder="Masukkan password baru"
+                        maxlength="72"
                         autocomplete="new-password">
 
                     <?php if (isset($errors['password'])): ?>
 
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             <?= esc($errors['password']) ?>
                         </div>
 
@@ -174,11 +175,12 @@
                         id="password_confirm_reset"
                         class="form-control employee-form-input <?= isset($errors['password_confirm']) ? 'is-invalid' : '' ?>"
                         placeholder="Ulangi password baru"
+                        maxlength="72"
                         autocomplete="new-password">
 
                     <?php if (isset($errors['password_confirm'])): ?>
 
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block">
                             <?= esc($errors['password_confirm']) ?>
                         </div>
 

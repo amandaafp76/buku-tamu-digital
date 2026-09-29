@@ -255,3 +255,18 @@ $routes->post(
     'NotificationTemplateController::update/$1',
     ['filter' => ['auth', 'role:administrator']]
 );
+
+
+$routes->get(
+    'admin/bukutamu-activity-log',
+    'ActivityLogController::index',
+    ['filter' => ['auth', 'role:administrator']]
+);
+
+
+//PETUGAS
+$routes->get(
+    'petugas/bukutamu-dashboard',
+    'PetugasDashboardController::index',
+    ['filter' => ['auth', 'role:petugas']]
+);
