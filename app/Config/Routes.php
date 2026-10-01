@@ -270,3 +270,42 @@ $routes->get(
     'PetugasDashboardController::index',
     ['filter' => ['auth', 'role:petugas']]
 );
+
+
+// TAMU / KIOSK
+$routes->get(
+    'bukutamu-kiosk',
+    'GuestController::index'
+);
+
+$routes->get(
+    'bukutamu-kiosk/registrasi',
+    'GuestController::register'
+);
+$routes->post(
+    'bukutamu-kiosk/registrasi',
+    'GuestController::storeIdentity'
+);
+
+$routes->get(
+    'bukutamu-kiosk/tujuan',
+    'GuestController::purpose'
+);
+$routes->post(
+    'bukutamu-kiosk/tujuan',
+    'GuestController::storePurpose'
+);
+
+$routes->get(
+    'bukutamu-kiosk/pegawai/(:num)',
+    'GuestController::employeesByDepartment/$1'
+);
+
+$routes->get(
+    'bukutamu-kiosk/foto',
+    'GuestController::photo'
+);
+$routes->post(
+    'bukutamu-kiosk/foto',
+    'GuestController::storePhoto'
+);

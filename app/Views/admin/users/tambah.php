@@ -76,7 +76,7 @@ $formData = $formData ?? [];
                             id="username"
                             name="username"
                             class="form-control employee-form-input <?= isset($errors['username']) ? 'is-invalid' : '' ?>"
-                            placeholder="Masukkan username"
+                            placeholder="Masukkan alamat email"
                             value="<?= esc(old('username', $formData['username'] ?? '')) ?>"
                             maxlength="100"
                             autocomplete="username"
