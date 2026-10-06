@@ -307,37 +307,6 @@ $guest = $guest ?? [];
 
                     </div>
 
-
-                    <div class="register-field">
-
-                        <label
-                            for="keperluan"
-                            class="register-label">
-
-                            Detail Keperluan
-
-                            <span class="register-required">
-                                *
-                            </span>
-
-                        </label>
-
-                        <textarea
-                            id="keperluan"
-                            name="keperluan"
-                            class="register-input register-textarea <?= isset($errors['keperluan']) ? 'is-invalid' : '' ?>"
-                            placeholder="Jelaskan secara singkat keperluan kunjungan Anda"
-                            rows="4"><?= esc(old('keperluan', '')) ?></textarea>
-
-                        <p
-                            class="register-field-error <?= isset($errors['keperluan']) ? 'is-visible' : '' ?>"
-                            id="keperluanError">
-                            <?= isset($errors['keperluan']) ? esc($errors['keperluan']) : '' ?>
-                        </p>
-
-                    </div>
-
-
                     <p class="register-help">
                         Tanda <span class="register-required">*</span>
                         menunjukkan data yang wajib diisi.

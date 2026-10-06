@@ -130,8 +130,8 @@ $userRole   = session()->get('role');
             </div>
 
             <a
-                href="#"
-                class="sidebar-nav-item">
+                href="<?= base_url('admin/bukutamu-kunjungan') ?>"
+                class="sidebar-nav-item <?= url_is('admin/bukutamu-kunjungan*') ? 'active' : '' ?>">
 
                 <span class="sidebar-nav-icon">
                     <i class="bi bi-calendar2-check"></i>
@@ -273,8 +273,8 @@ $userRole   = session()->get('role');
             </a>
 
             <a
-                href="#"
-                class="sidebar-nav-item">
+                href="<?= base_url('petugas/bukutamu-kunjungan') ?>"
+                class="sidebar-nav-item <?= url_is('petugas/bukutamu-kunjungan*') ? 'active' : '' ?>">
 
                 <span class="sidebar-nav-icon">
                     <i class="bi bi-calendar2-check"></i>
@@ -287,8 +287,8 @@ $userRole   = session()->get('role');
             </a>
 
             <a
-                href="#"
-                class="sidebar-nav-item">
+                href="<?= base_url('petugas/bukutamu-scan-qr') ?>"
+                class="sidebar-nav-item <?= $currentUri === 'petugas/bukutamu-scan-qr' ? 'active' : '' ?>">
 
                 <span class="sidebar-nav-icon">
                     <i class="bi bi-qr-code-scan"></i>

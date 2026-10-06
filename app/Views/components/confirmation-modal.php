@@ -1,0 +1,66 @@
+<div
+    class="modal fade"
+    id="confirmationModal"
+    tabindex="-1"
+    aria-labelledby="confirmationModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="confirmationModalLabel">
+
+                    Konfirmasi Tindakan
+
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <p
+                    id="confirmationMessage"
+                    class="mb-0">
+                </p>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Batal
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="confirmationSubmit">
+
+                    Ya, Lanjutkan
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

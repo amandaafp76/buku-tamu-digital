@@ -15,6 +15,27 @@ $routes->get(
     ['filter' => ['auth', 'role:administrator']]
 );
 
+$routes->get(
+    'admin/bukutamu-kunjungan',
+    'AdminVisitController::index',
+    ['filter' => ['auth', 'role:administrator']]
+);
+$routes->get(
+    'admin/bukutamu-kunjungan/detail/(:num)',
+    'AdminVisitController::detail/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
+$routes->get(
+    'admin/bukutamu-kunjungan/hapus/(:num)',
+    'AdminVisitController::confirmDelete/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
+$routes->post(
+    'admin/bukutamu-kunjungan/hapus/(:num)',
+    'AdminVisitController::delete/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
+
 
 $routes->get(
     'admin/bukutamu-pegawai',
@@ -263,11 +284,79 @@ $routes->get(
     ['filter' => ['auth', 'role:administrator']]
 );
 
+$routes->get(
+    'admin/bukutamu-kunjungan/edit/(:num)',
+    'AdminVisitController::edit/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
+$routes->post(
+    'admin/bukutamu-kunjungan/update/(:num)',
+    'AdminVisitController::update/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
+
 
 //PETUGAS
 $routes->get(
     'petugas/bukutamu-dashboard',
     'PetugasDashboardController::index',
+    ['filter' => ['auth', 'role:petugas']]
+);
+
+$routes->get(
+    'petugas/bukutamu-scan-qr',
+    'PetugasScanController::index',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->post(
+    'petugas/bukutamu-scan-qr/cari',
+    'PetugasScanController::findByQr',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->post(
+    'petugas/bukutamu-scan-qr/check-out',
+    'PetugasScanController::checkOut',
+    ['filter' => ['auth', 'role:petugas']]
+);
+
+$routes->get(
+    'petugas/bukutamu-kunjungan',
+    'PetugasVisitController::index',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->get(
+    'petugas/bukutamu-kunjungan/detail/(:num)',
+    'PetugasVisitController::detail/$1',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->get(
+    'petugas/bukutamu-kunjungan/edit/(:num)',
+    'PetugasVisitController::edit/$1',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->post(
+    'petugas/bukutamu-kunjungan/update/(:num)',
+    'PetugasVisitController::update/$1',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->post(
+    'petugas/bukutamu-kunjungan/verifikasi-check-in/(:num)',
+    'PetugasVisitController::verifyAndCheckIn/$1',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->post(
+    'petugas/bukutamu-kunjungan/tolak/(:num)',
+    'PetugasVisitController::reject/$1',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->post(
+    'petugas/bukutamu-kunjungan/batalkan/(:num)',
+    'PetugasVisitController::cancel/$1',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->post(
+    'petugas/bukutamu-kunjungan/check-out-manual/(:num)',
+    'PetugasVisitController::checkOutManual/$1',
     ['filter' => ['auth', 'role:petugas']]
 );
 
@@ -308,4 +397,17 @@ $routes->get(
 $routes->post(
     'bukutamu-kiosk/foto',
     'GuestController::storePhoto'
+);
+
+$routes->get(
+    'bukutamu-kiosk/persetujuan',
+    'GuestController::consent'
+);
+$routes->post(
+    'bukutamu-kiosk/persetujuan',
+    'GuestController::storeConsent'
+);
+$routes->get(
+    'bukutamu-kiosk/konfirmasi',
+    'GuestController::confirmation'
 );

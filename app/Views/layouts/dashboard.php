@@ -89,6 +89,10 @@
     <script src="<?= base_url('assets/js/app.js') ?>"></script>
     <script src="<?= base_url('assets/js/sidebar.js') ?>"></script>
 
+    <?= $this->include('components/confirmation-modal') ?>
+
+    <script src="<?= base_url('assets/js/confirmation-modal.js') ?>"></script>
+
     <?= $this->renderSection('pageJs') ?>
 
 </body>

@@ -466,42 +466,6 @@ $guest = $guest ?? [];
                     </div>
 
 
-                    <div
-                        class="register-field"
-                        id="jenisIdentitasLainnyaField"
-                        <?= ($guest['jenis_identitas'] ?? '') !== 'LAINNYA' ? 'hidden' : '' ?>>
-
-                        <label
-                            for="jenis_identitas_lainnya"
-                            class="register-label">
-
-                            Jenis Identitas Lainnya
-                            <span class="register-required">
-                                *
-                            </span>
-
-                        </label>
-
-                        <input
-                            type="text"
-                            id="jenis_identitas_lainnya"
-                            name="jenis_identitas_lainnya"
-                            class="register-input <?= isset($errors['jenis_identitas_lainnya']) ? 'is-invalid' : '' ?>"
-                            placeholder="Contoh: Kartu Pelajar, Kartu Pegawai, atau identitas lainnya"
-                            maxlength="50"
-                            value="<?= esc($guest['jenis_identitas_lainnya'] ?? '') ?>">
-
-                        <p
-                            class="register-field-error <?= isset($errors['jenis_identitas_lainnya']) ? 'is-visible' : '' ?>"
-                            id="jenisIdentitasLainnyaError">
-
-                            <?= isset($errors['jenis_identitas_lainnya']) ? esc($errors['jenis_identitas_lainnya']) : '' ?>
-
-                        </p>
-
-                    </div>
-
-
                     <p class="register-help">
                         Tanda <span class="register-required">*</span>
                         menunjukkan data yang wajib diisi.

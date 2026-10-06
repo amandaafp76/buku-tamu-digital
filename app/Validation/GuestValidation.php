@@ -105,15 +105,6 @@ class GuestValidation
                     'is_natural_no_zero' => '{field} tidak valid.',
                 ],
             ],
-
-            'keperluan' => [
-                'label' => 'Detail Keperluan',
-                'rules' => 'required|max_length[500]',
-                'errors' => [
-                    'required'   => '{field} wajib diisi.',
-                    'max_length' => '{field} maksimal 500 karakter.',
-                ],
-            ],
         ];
     }
 }
