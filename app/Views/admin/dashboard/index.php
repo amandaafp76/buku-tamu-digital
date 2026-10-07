@@ -12,15 +12,54 @@
 
 <div class="container-fluid px-0">
 
-    <div class="mb-4">
-        <h1 class="dashboard-heading">
-            Dashboard
-        </h1>
+    <div class="dashboard-header mb-4">
 
-        <p class="dashboard-subheading">
-            Ringkasan aktivitas buku tamu hari ini.
-        </p>
+        <div>
+
+            <h1 class="dashboard-heading">
+                Dashboard
+            </h1>
+
+            <p class="dashboard-subheading">
+
+                <?php if ($isFiltered): ?>
+
+                    Ringkasan aktivitas buku tamu pada periode
+                    <?= date('d-m-Y', strtotime($filterStartDate)) ?>
+                    sampai
+                    <?= date('d-m-Y', strtotime($filterEndDate)) ?>.
+
+                <?php else: ?>
+
+                    Ringkasan aktivitas buku tamu hari ini.
+
+                <?php endif; ?>
+
+            </p>
+
+        </div>
+
+        <button
+            type="button"
+            class="btn dashboard-filter-button"
+            data-bs-toggle="modal"
+            data-bs-target="#dashboardFilterModal">
+
+            <i class="bi bi-funnel-fill"></i>
+            Filter Dashboard
+
+        </button>
+
     </div>
+
+    <?php if (! empty($filterError)): ?>
+
+        <div class="alert alert-warning mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            <?= esc($filterError) ?>
+        </div>
+
+    <?php endif; ?>
 
     <section class="mb-4">
 
@@ -30,13 +69,22 @@
             </h2>
 
             <p class="dashboard-panel-description">
-                Ringkasan jumlah tamu dan kunjungan berdasarkan periode.
+
+                <?php if ($isFiltered): ?>
+
+                    Ringkasan jumlah tamu dan kunjungan pada periode yang dipilih.
+
+                <?php else: ?>
+
+                    Ringkasan jumlah tamu dan kunjungan berdasarkan periode.
+
+                <?php endif; ?>
+
             </p>
         </div>
 
         <div class="row g-3">
 
-            <!-- Hari Ini -->
             <div class="col-12 col-md-4">
 
                 <div class="glass-card dashboard-stat-card h-100">
@@ -47,23 +95,47 @@
 
                     <div class="dashboard-stat-content">
 
-                        <span class="dashboard-stat-label">
-                            Hari Ini
-                        </span>
+                        <?php if ($isFiltered): ?>
 
-                        <strong class="dashboard-stat-value">
-                            <?= esc($todayVisits) ?>
-                        </strong>
-
-                        <span class="dashboard-stat-label">
-                            kunjungan
-                        </span>
-
-                        <div class="mt-2">
                             <span class="dashboard-stat-label">
-                                <?= esc($todayGuests) ?> tamu
+                                Periode Terpilih
                             </span>
-                        </div>
+
+                            <strong class="dashboard-stat-value">
+                                <?= esc($periodVisits) ?>
+                            </strong>
+
+                            <span class="dashboard-stat-label">
+                                kunjungan
+                            </span>
+
+                            <div class="mt-2">
+                                <span class="dashboard-stat-label">
+                                    <?= esc($periodGuests) ?> tamu
+                                </span>
+                            </div>
+
+                        <?php else: ?>
+
+                            <span class="dashboard-stat-label">
+                                Hari Ini
+                            </span>
+
+                            <strong class="dashboard-stat-value">
+                                <?= esc($todayVisits) ?>
+                            </strong>
+
+                            <span class="dashboard-stat-label">
+                                kunjungan
+                            </span>
+
+                            <div class="mt-2">
+                                <span class="dashboard-stat-label">
+                                    <?= esc($todayGuests) ?> tamu
+                                </span>
+                            </div>
+
+                        <?php endif; ?>
 
                     </div>
 
@@ -71,7 +143,6 @@
 
             </div>
 
-            <!-- Minggu Ini -->
             <div class="col-12 col-md-4">
 
                 <div class="glass-card dashboard-stat-card h-100">
@@ -106,7 +177,6 @@
 
             </div>
 
-            <!-- Bulan Ini -->
             <div class="col-12 col-md-4">
 
                 <div class="glass-card dashboard-stat-card h-100">
@@ -237,7 +307,17 @@
             </h2>
 
             <p class="dashboard-panel-description">
-                Pergerakan jumlah kunjungan selama bulan berjalan.
+
+                <?php if ($isFiltered): ?>
+
+                    Pergerakan jumlah kunjungan pada periode yang dipilih.
+
+                <?php else: ?>
+
+                    Pergerakan jumlah kunjungan selama bulan berjalan.
+
+                <?php endif; ?>
+
             </p>
 
         </div>
@@ -313,14 +393,23 @@
             </h2>
 
             <p class="dashboard-panel-description">
-                Perbandingan jumlah kunjungan berdasarkan departemen dan pegawai.
+
+                <?php if ($isFiltered): ?>
+
+                    Perbandingan jumlah kunjungan berdasarkan departemen dan pegawai pada periode yang dipilih.
+
+                <?php else: ?>
+
+                    Perbandingan jumlah kunjungan berdasarkan departemen dan pegawai.
+
+                <?php endif; ?>
+
             </p>
 
         </div>
 
         <div class="row g-3">
 
-            <!-- Berdasarkan Departemen -->
             <div class="col-12 col-xl-6">
 
                 <div class="glass-card dashboard-panel h-100">
@@ -334,7 +423,17 @@
                             </h2>
 
                             <p class="dashboard-panel-description">
-                                Lima departemen dengan jumlah kunjungan terbanyak.
+
+                                <?php if ($isFiltered): ?>
+
+                                    Lima departemen dengan jumlah kunjungan terbanyak pada periode yang dipilih.
+
+                                <?php else: ?>
+
+                                    Lima departemen dengan jumlah kunjungan terbanyak.
+
+                                <?php endif; ?>
+
                             </p>
 
                         </div>
@@ -349,7 +448,6 @@
 
             </div>
 
-            <!-- Berdasarkan Pegawai -->
             <div class="col-12 col-xl-6">
 
                 <div class="glass-card dashboard-panel h-100">
@@ -363,7 +461,17 @@
                             </h2>
 
                             <p class="dashboard-panel-description">
-                                Lima pegawai dengan jumlah kunjungan terbanyak.
+
+                                <?php if ($isFiltered): ?>
+
+                                    Lima pegawai dengan jumlah kunjungan terbanyak pada periode yang dipilih.
+
+                                <?php else: ?>
+
+                                    Lima pegawai dengan jumlah kunjungan terbanyak.
+
+                                <?php endif; ?>
+
                             </p>
 
                         </div>
@@ -391,7 +499,17 @@
             </h2>
 
             <p class="dashboard-panel-description">
-                Distribusi status seluruh kunjungan.
+
+                <?php if ($isFiltered): ?>
+
+                    Distribusi status kunjungan pada periode yang dipilih.
+
+                <?php else: ?>
+
+                    Distribusi status seluruh kunjungan.
+
+                <?php endif; ?>
+
             </p>
 
         </div>
@@ -410,7 +528,17 @@
                             </h2>
 
                             <p class="dashboard-panel-description">
-                                Perbandingan berdasarkan status kunjungan.
+
+                                <?php if ($isFiltered): ?>
+
+                                    Perbandingan status kunjungan pada periode yang dipilih.
+
+                                <?php else: ?>
+
+                                    Perbandingan berdasarkan status kunjungan.
+
+                                <?php endif; ?>
+
                             </p>
                         </div>
 
@@ -437,7 +565,17 @@
             </h2>
 
             <p class="dashboard-panel-description">
-                Pemantauan kunjungan terbaru dan kunjungan yang perlu diperhatikan.
+
+                <?php if ($isFiltered): ?>
+
+                    Pemantauan kunjungan pada periode yang dipilih dan kunjungan yang perlu diperhatikan.
+
+                <?php else: ?>
+
+                    Pemantauan kunjungan terbaru dan kunjungan yang perlu diperhatikan.
+
+                <?php endif; ?>
+
             </p>
 
         </div>
@@ -457,7 +595,17 @@
                             </h2>
 
                             <p class="dashboard-panel-description">
-                                Lima kunjungan terakhir yang tercatat dalam sistem.
+
+                                <?php if ($isFiltered): ?>
+
+                                    Lima kunjungan terakhir pada periode yang dipilih.
+
+                                <?php else: ?>
+
+                                    Lima kunjungan terakhir yang tercatat dalam sistem.
+
+                                <?php endif; ?>
+
                             </p>
 
                         </div>
@@ -673,6 +821,123 @@
         </div>
 
     </section>
+
+</div>
+
+<div
+    class="modal fade dashboard-filter-modal"
+    id="dashboardFilterModal"
+    tabindex="-1"
+    aria-labelledby="dashboardFilterModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h5
+                        class="modal-title"
+                        id="dashboardFilterModalLabel">
+
+                        <i class="bi bi-funnel-fill"></i>
+                        Filter Dashboard
+
+                    </h5>
+
+                    <p class="dashboard-filter-modal-description">
+                        Tentukan periode data yang ingin ditampilkan.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+            <form
+                method="get"
+                action="<?= current_url() ?>">
+
+                <div class="modal-body">
+
+                    <div class="dashboard-filter-field">
+
+                        <label
+                            for="startDate"
+                            class="dashboard-filter-label">
+
+                            Mulai Tanggal
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="startDate"
+                            name="start_date"
+                            class="form-control dashboard-filter-input"
+                            value="<?= esc($filterStartDate) ?>"
+                            required>
+
+                    </div>
+
+                    <div class="dashboard-filter-field">
+
+                        <label
+                            for="endDate"
+                            class="dashboard-filter-label">
+
+                            Sampai Tanggal
+
+                        </label>
+
+                        <input
+                            type="date"
+                            id="endDate"
+                            name="end_date"
+                            class="form-control dashboard-filter-input"
+                            value="<?= esc($filterEndDate) ?>"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <a
+                        href="<?= current_url() ?>"
+                        class="btn dashboard-filter-reset-button">
+
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                        Reset
+
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn dashboard-filter-apply-button">
+
+                        <i class="bi bi-check-lg"></i>
+                        Terapkan
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
 
