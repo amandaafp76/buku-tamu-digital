@@ -1,6 +1,6 @@
 📖 Buku Tamu Digital
 
-Aplikasi Buku Tamu Digital merupakan aplikasi berbasis web dan Progressive Web App (PWA) yang dirancang untuk mempermudah proses pencatatan dan pengelolaan kunjungan tamu secara digital. Aplikasi ini dikembangkan sebagai alternatif pencatatan tamu secara manual yang dapat digunakan di sekolah, kantor desa, instansi pemerintah, perusahaan, hotel, serta berbagai tempat pelayanan publik lainnya.
+Aplikasi Buku Tamu Digital merupakan aplikasi berbasis web dan Progressive Web App (PWA) yang dirancang untuk mempermudah proses pencatatan dan pengelolaan kunjungan tamu secara digital. Aplikasi ini dikembangkan sebagai alternatif pencatatan tamu secara manual yang dapat digunakan di sekolah, kantor desa, instansi pemerintah, perusahaan, gedung, hotel, serta berbagai tempat pelayanan publik lainnya.
 
 Project ini dikembangkan untuk memenuhi kebutuhan tugas magang dengan berfokus pada desain antarmuka modern bergaya iOS 26 Look / Liquid Glass, keamanan sistem, kemudahan penggunaan, serta pengalaman pengguna yang nyaman di berbagai perangkat.
 
