@@ -58,7 +58,8 @@ $formData = $formData ?? [];
         <form
             action="<?= base_url('admin/bukutamu-tujuan/edit/' . $visitPurpose['id']) ?>"
             method="post"
-            novalidate>
+            novalidate
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

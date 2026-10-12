@@ -57,7 +57,8 @@
             id="settingEditForm"
             action="<?= base_url('admin/bukutamu-konfigurasi/update') ?>"
             method="post"
-            novalidate>
+            novalidate
+            data-offline-guard>
 
             <?= csrf_field() ?>
 
@@ -371,8 +372,8 @@
                             </h3>
 
                             <p class="setting-form-section-description">
-                                Tentukan batas waktu untuk
-                                memberikan peringatan kunjungan.
+                                Tentukan batas durasi kunjungan yang digunakan
+                                untuk memberikan peringatan jika kunjungan terlalu lama.
                             </p>
                         </div>
 
@@ -384,7 +385,7 @@
                         <label
                             for="settingWarningLimit"
                             class="employee-form-label">
-                            Batas Peringatan
+                            Batas Durasi Kunjungan
                         </label>
 
                         <div>
@@ -419,7 +420,9 @@
                         </div>
 
                         <div class="form-text mt-2">
-                            Isi 0 untuk menonaktifkan peringatan.
+                            Peringatan akan ditampilkan ketika durasi kunjungan
+                            mencapai batas yang ditentukan. Isi 0 jika ingin
+                            menonaktifkan peringatan.
                         </div>
 
                     </div>

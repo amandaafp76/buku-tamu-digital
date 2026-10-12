@@ -35,6 +35,7 @@
     <div class="glass-card p-4 mb-4">
 
         <form
+            id="kunjunganFilterForm"
             action="<?= site_url('petugas/bukutamu-kunjungan') ?>"
             method="get">
 
@@ -48,6 +49,7 @@
 
                     <input
                         type="text"
+                        id="kunjunganKeyword"
                         name="keyword"
                         class="form-control"
                         value="<?= esc($keyword) ?>"
@@ -63,6 +65,7 @@
                     </label>
 
                     <select
+                        id="kunjunganStatus"
                         name="status"
                         class="form-select">
 
@@ -113,21 +116,22 @@
 
                     <input
                         type="date"
+                        id="kunjunganDate"
                         name="date"
                         class="form-control"
                         value="<?= esc($date) ?>">
 
                 </div>
 
-
                 <div class="col-md-2 d-flex align-items-end">
 
                     <button
-                        type="submit"
-                        class="btn btn-primary w-100">
+                        type="button"
+                        id="resetKunjunganFilter"
+                        class="btn btn-outline-secondary w-100">
 
-                        <i class="bi bi-search"></i>
-                        Cari
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>
+                        Reset
 
                     </button>
 
@@ -139,13 +143,35 @@
 
     </div>
 
-    <div class="glass-card p-4">
+    <div class="glass-card p-4"
+        id="kunjunganTableContainer">
 
         <?= $this->include('components/kunjungan/table', [
             'detailBaseUrl' => 'petugas/bukutamu-kunjungan',
         ]) ?>
 
     </div>
+
 </div>
+
+<div
+    class="employee-modal-overlay"
+    id="visitModalOverlay"
+    aria-hidden="true">
+
+    <div class="employee-modal-overlay-backdrop"></div>
+
+    <div
+        class="employee-modal-container"
+        id="visitModalContainer">
+    </div>
+
+</div>
+
+<?= $this->endSection() ?>
+
+<?= $this->section('pageJs') ?>
+
+<script src="<?= base_url('assets/js/kunjungan.js') ?>"></script>
 
 <?= $this->endSection() ?>

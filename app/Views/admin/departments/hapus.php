@@ -36,7 +36,8 @@
         <form
             id="formHapusDepartemen"
             action="<?= base_url('admin/bukutamu-departemen/hapus/' . $department['id']) ?>"
-            method="post">
+            method="post"
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

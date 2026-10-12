@@ -38,7 +38,64 @@ class PetugasVisitController extends BaseController
             $date
         );
 
+        if ($this->request->isAJAX()) {
+
+            return view('components/kunjungan/table', [
+                'visits' => $result['visits'],
+                'pager'  => $result['pager'],
+            ]);
+        }
+
         return view('petugas/kunjungan/index', [
+            'visits'  => $result['visits'],
+            'pager'   => $result['pager'],
+            'keyword' => $keyword,
+            'status'  => $status,
+            'date'    => $date,
+        ]);
+    }
+
+    public function history()
+    {
+        $keyword = trim(
+            (string) $this->request->getGet('keyword')
+        );
+
+        $status = trim(
+            (string) $this->request->getGet('status')
+        );
+
+        $date = trim(
+            (string) $this->request->getGet('date')
+        );
+
+        $historyStatuses = ['Selesai', 'Ditolak', 'Dibatalkan'];
+
+        if (
+            $status !== '' &&
+            in_array($status, $historyStatuses, true)
+        ) {
+            $statusFilter = $status;
+        } else {
+            $statusFilter = $historyStatuses;
+        }
+
+        $result = $this->visitService->getVisits(
+            $keyword,
+            $statusFilter,
+            $date
+        );
+
+        if ($this->request->isAJAX()) {
+
+            return view('components/kunjungan/table', [
+                'visits' => $result['visits'],
+                'pager'  => $result['pager'],
+                'isHistory' => true,
+            ]);
+        }
+
+        return view('petugas/kunjungan/riwayat', [
             'visits'  => $result['visits'],
             'pager'   => $result['pager'],
             'keyword' => $keyword,
@@ -289,7 +346,7 @@ class PetugasVisitController extends BaseController
     {
         $visitModel = new VisitModel();
 
-        $visit = $this->visitService->find($id);
+        $visit = $this->visitService->getVisitDetail($id);
 
         if (! $visit) {
             return redirect()
@@ -303,10 +360,33 @@ class PetugasVisitController extends BaseController
                 ->with('error', 'Kunjungan ini sudah diproses.');
         }
 
+        $checkInTime = date('Y-m-d H:i:s');
+
         $visitModel->update($id, [
             'status'   => 'Masih Berkunjung',
             'check_in' => date('Y-m-d H:i:s'),
         ]);
+
+        try {
+            $wakitaService = new \App\Services\WakitaService();
+
+            $visitDataForNotification = [
+                'guest_name' => $visit['guest_name'] ?? '-',
+                'phone'      => $visit['phone'] ?? '',
+                'visit_code' => $visit['visit_code'] ?? '-',
+                'check_in'   => $checkInTime,
+            ];
+
+            $wakitaService->sendToGuest(
+                $visitDataForNotification,
+                'visit_approved'
+            );
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                '[PETUGAS-VERIFY] Gagal kirim WA ke tamu: ' . $e->getMessage()
+            );
+        }
 
         return redirect()
             ->to(site_url('petugas/bukutamu-kunjungan/detail/' . $id))
@@ -371,7 +451,7 @@ class PetugasVisitController extends BaseController
     {
         $visitModel = new VisitModel();
 
-        $visit = $this->visitService->find($id);
+        $visit = $this->visitService->getVisitDetail($id);
 
         if (! $visit) {
             return redirect()
@@ -407,6 +487,27 @@ class PetugasVisitController extends BaseController
             'check_out' => $checkOutTime,
             'duration'  => $duration,
         ]);
+
+        try {
+            $wakitaService = new \App\Services\WakitaService();
+
+            $visitDataForNotification = [
+                'guest_name' => $visit['guest_name'] ?? '-',
+                'phone'      => $visit['phone'] ?? '',
+                'visit_code' => $visit['visit_code'] ?? '-',
+                'check_out'  => $checkOutTime,
+            ];
+
+            $wakitaService->sendToGuest(
+                $visitDataForNotification,
+                'visit_completed'
+            );
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                '[PETUGAS-CHECKOUT] Gagal kirim WA ke tamu: ' . $e->getMessage()
+            );
+        }
 
         return redirect()
             ->to(site_url('petugas/bukutamu-kunjungan/detail/' . $id))

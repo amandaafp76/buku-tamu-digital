@@ -31,7 +31,8 @@
         <form
             id="deleteEmployeeForm"
             action="<?= base_url('admin/bukutamu-pegawai/hapus/' . $employee['id']) ?>"
-            method="post">
+            method="post"
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

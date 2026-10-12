@@ -65,7 +65,8 @@ $active = old(
 
         <form
             action="<?= base_url('admin/bukutamu-pegawai/edit/' . $employee['id']) ?>"
-            method="post">
+            method="post"
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

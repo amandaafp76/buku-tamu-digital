@@ -47,32 +47,49 @@
 <?php endif; ?>
 
 
-<div
-    class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+<div class="dashboard-header mb-4">
 
     <div>
 
-        <h1 class="h4 fw-semibold mb-1">
+        <h1 class="dashboard-heading">
             Tujuan Kunjungan
         </h1>
 
-        <p class="text-secondary mb-0">
+        <p class="dashboard-subheading">
             Kelola data tujuan kunjungan dan jumlah kunjungan.
         </p>
 
     </div>
 
-    <button
-        type="button"
-        class="btn btn-primary glass-button-primary rounded-pill px-4"
-        id="openTambahTujuanKunjungan"
-        data-modal-url="<?= base_url('admin/bukutamu-tujuan/tambah') ?>">
+    <div class="dashboard-header-actions">
 
-        <i class="bi bi-plus-lg me-1"></i>
+        <a
+            href="<?= base_url('admin/bukutamu-tujuan' . ($showDeleted ? '' : '?show_deleted=1')) ?>"
+            class="dashboard-secondary-button">
 
-        Tambah Tujuan Kunjungan
+            <i class="bi bi-<?= $showDeleted ? 'arrow-left' : 'trash' ?>"></i>
 
-    </button>
+            <?= $showDeleted ? 'Kembali ke Data Aktif' : 'Tampilkan Terhapus' ?>
+
+        </a>
+
+        <?php if (! $showDeleted): ?>
+
+            <button
+                type="button"
+                class="dashboard-primary-button"
+                id="openTambahTujuanKunjungan"
+                data-modal-url="<?= base_url('admin/bukutamu-tujuan/tambah') ?>">
+
+                <i class="bi bi-plus-lg"></i>
+
+                Tambah Tujuan Kunjungan
+
+            </button>
+
+        <?php endif; ?>
+
+    </div>
 
 </div>
 
@@ -80,6 +97,7 @@
 <div class="glass-card employee-filter-card mb-4">
 
     <form
+        id="visitPurposeFilterForm"
         action="<?= base_url('admin/bukutamu-tujuan') ?>"
         method="get"
         class="row g-3 align-items-end">
@@ -88,7 +106,7 @@
 
             <label
                 for="purposeSearch"
-                class="form-label">
+                class="employee-filter-label">
 
                 Cari Tujuan Kunjungan
 
@@ -115,7 +133,7 @@
 
             <label
                 for="purposeStatus"
-                class="form-label">
+                class="employee-filter-label">
 
                 Status
 
@@ -154,24 +172,16 @@
         <div class="col-12 col-md-6 col-lg-2 d-flex gap-2">
 
             <button
-                type="submit"
-                class="btn glass-button-primary rounded-pill flex-grow-1">
-
-                <i class="bi bi-search me-1"></i>
-
-                Cari
-
-            </button>
-
-            <a
-                href="<?= base_url('admin/bukutamu-tujuan') ?>"
-                class="btn btn-light rounded-pill"
+                type="button"
+                id="resetVisitPurposeFilter"
+                class="employee-filter-reset"
                 title="Reset filter"
                 aria-label="Reset filter">
 
                 <i class="bi bi-arrow-counterclockwise"></i>
+                <span>Reset</span>
 
-            </a>
+            </button>
 
         </div>
 
@@ -180,178 +190,14 @@
 </div>
 
 
-<div class="glass-card employee-table-card">
-
-    <div class="table-responsive">
-
-        <table class="table table-hover align-middle mb-0">
-
-            <thead>
-
-                <tr>
-
-                    <th style="width: 70px;">
-                        No
-                    </th>
-
-                    <th>
-                        Nama Tujuan Kunjungan
-                    </th>
-
-                    <th class="text-center">
-                        Jumlah Kunjungan
-                    </th>
-
-                    <th>
-                        Status
-                    </th>
-
-                    <th class="text-end">
-                        Aksi
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody>
-
-                <?php if (! empty($visitPurposes)): ?>
-
-                    <?php foreach ($visitPurposes as $index => $visitPurpose): ?>
-
-                        <tr>
-
-                            <td>
-                                <?= $index + 1 ?>
-                            </td>
-
-
-                            <td>
-
-                                <div class="fw-semibold">
-
-                                    <?= esc($visitPurpose['purpose_name']) ?>
-
-                                </div>
-
-                            </td>
-
-
-                            <td class="text-center">
-
-                                <span class="badge rounded-pill bg-light text-dark">
-
-                                    <i class="bi bi-calendar2-check me-1"></i>
-
-                                    <?= (int) ($visitPurpose['visit_count'] ?? 0) ?>
-
-                                    Kunjungan
-
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <?php if ((bool) $visitPurpose['active']): ?>
-
-                                    <span
-                                        class="badge rounded-pill bg-success-subtle text-success-emphasis">
-
-                                        Aktif
-
-                                    </span>
-
-                                <?php else: ?>
-
-                                    <span
-                                        class="badge rounded-pill bg-secondary-subtle text-secondary">
-
-                                        Nonaktif
-
-                                    </span>
-
-                                <?php endif; ?>
-
-                            </td>
-
-
-                            <td>
-
-                                <div
-                                    class="d-flex justify-content-end gap-2">
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm employee-action-button"
-                                        data-edit-url="<?= base_url('admin/bukutamu-tujuan/edit/' . $visitPurpose['id']) ?>"
-                                        data-action="edit"
-                                        title="Edit">
-
-                                        <i class="bi bi-pencil"></i>
-
-                                        <span class="visually-hidden">
-                                            Edit <?= esc($visitPurpose['purpose_name']) ?>
-                                        </span>
-
-                                    </button>
-
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm employee-action-button employee-delete-button"
-                                        data-delete-url="<?= base_url('admin/bukutamu-tujuan/hapus/' . $visitPurpose['id']) ?>"
-                                        data-action="delete"
-                                        title="Hapus">
-
-                                        <i class="bi bi-trash"></i>
-
-                                        <span class="visually-hidden">
-                                            Hapus <?= esc($visitPurpose['purpose_name']) ?>
-                                        </span>
-
-                                    </button>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    <?php endforeach; ?>
-
-                <?php else: ?>
-
-                    <tr>
-
-                        <td
-                            colspan="5"
-                            class="text-center py-5">
-
-                            <div class="text-secondary">
-
-                                <i
-                                    class="bi bi-signpost-2 fs-3 d-block mb-2">
-                                </i>
-
-                                Belum ada data tujuan kunjungan.
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                <?php endif; ?>
-
-            </tbody>
-
-        </table>
-
-    </div>
+<div
+    class="glass-card employee-table-card"
+    id="visitPurposeTableContainer">
+
+    <?= $this->include('components/visit_purposes/table', [
+        'visitPurposes' => $visitPurposes,
+        'showDeleted'   => $showDeleted ?? false,
+    ]) ?>
 
 </div>
 

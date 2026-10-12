@@ -46,7 +46,8 @@
                 <form
                     id="deleteVisitForm"
                     action="<?= base_url('admin/bukutamu-kunjungan/hapus/' . $visit['id']) ?>"
-                    method="post">
+                    method="post"
+                    data-offline-guard>
 
                     <?= csrf_field() ?>
 

@@ -486,12 +486,9 @@ class PetugasDashboardController extends BaseController
                     'employees.id = visits.employee_id',
                     'left'
                 )
-                ->whereIn(
+                ->where(
                     'visits.status',
-                    [
-                        'Masih Berkunjung',
-                        'Belum Check-out'
-                    ]
+                    'Masih Berkunjung'
                 )
                 ->where(
                     'visits.check_in IS NOT NULL',

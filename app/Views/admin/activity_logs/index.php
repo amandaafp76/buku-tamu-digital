@@ -2,16 +2,18 @@
 
 <?= $this->section('content') ?>
 
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+<div class="dashboard-header mb-4">
 
     <div>
-        <h1 class="h4 fw-semibold mb-1">
+
+        <h1 class="dashboard-heading">
             Activity Log
         </h1>
 
-        <p class="text-secondary mb-0">
+        <p class="dashboard-subheading">
             Riwayat aktivitas pengguna dalam sistem.
         </p>
+
     </div>
 
 </div>
@@ -20,6 +22,7 @@
 <div class="glass-card employee-filter-card mb-4">
 
     <form
+        id="activityLogFilterForm"
         action="<?= base_url('admin/bukutamu-activity-log') ?>"
         method="get"
         class="row g-3 align-items-end">
@@ -28,9 +31,10 @@
 
             <label
                 for="activityLogSearch"
-                class="form-label">
+                class="employee-filter-label">
 
                 Cari Aktivitas
+
             </label>
 
             <div class="employee-search-wrapper">
@@ -54,9 +58,10 @@
 
             <label
                 for="activityLogAction"
-                class="form-label">
+                class="employee-filter-label">
 
                 Aksi
+
             </label>
 
             <select
@@ -113,9 +118,10 @@
 
             <label
                 for="activityLogEntity"
-                class="form-label">
+                class="employee-filter-label">
 
                 Data
+
             </label>
 
             <select
@@ -162,26 +168,19 @@
         </div>
 
 
-        <div class="col-12 col-lg-2 d-flex gap-2">
+        <div class="col-12 col-md-6 col-lg-2 d-flex gap-2">
 
             <button
-                type="submit"
-                class="btn glass-button-primary rounded-pill flex-grow-1">
-
-                <i class="bi bi-search me-1"></i>
-                Cari
-
-            </button>
-
-            <a
-                href="<?= base_url('admin/bukutamu-activity-log') ?>"
-                class="btn btn-light rounded-pill"
+                type="button"
+                id="resetActivityLogFilter"
+                class="employee-filter-reset"
                 title="Reset filter"
                 aria-label="Reset filter">
 
                 <i class="bi bi-arrow-counterclockwise"></i>
+                <span>Reset</span>
 
-            </a>
+            </button>
 
         </div>
 
@@ -190,183 +189,20 @@
 </div>
 
 
-<div class="glass-card employee-table-card">
-
-    <div class="table-responsive">
-
-        <table class="table table-hover align-middle mb-0">
-
-            <thead>
-
-                <tr>
-
-                    <th style="width: 70px;">
-                        No
-                    </th>
-
-                    <th>
-                        Waktu
-                    </th>
-
-                    <th>
-                        Pengguna
-                    </th>
-
-                    <th>
-                        Aksi
-                    </th>
-
-                    <th>
-                        Data
-                    </th>
-
-                    <th>
-                        Aktivitas
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody>
-
-                <?php if (! empty($activityLogs)): ?>
-
-                    <?php foreach ($activityLogs as $index => $log): ?>
-
-                        <tr>
-
-                            <td>
-                                <?= $index + 1 ?>
-                            </td>
-
-
-                            <td>
-
-                                <div class="fw-semibold">
-                                    <?= esc($log['created_at'] ?? '-') ?>
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="fw-semibold">
-                                    <?= esc($log['username'] ?? '-') ?>
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <?php
-                                $action = strtolower(
-                                    (string) ($log['action'] ?? '')
-                                );
-                                ?>
-
-                                <?php if ($action === 'create'): ?>
-
-                                    <span class="badge rounded-pill bg-success-subtle text-success-emphasis">
-                                        Tambah
-                                    </span>
-
-                                <?php elseif ($action === 'update'): ?>
-
-                                    <span class="badge rounded-pill bg-primary-subtle text-primary-emphasis">
-                                        Perbarui
-                                    </span>
-
-                                <?php elseif ($action === 'delete'): ?>
-
-                                    <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis">
-                                        Hapus
-                                    </span>
-                                <?php elseif ($action === 'restore'): ?>
-
-                                    <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">
-                                        Pulihkan
-                                    </span>
-
-                                <?php elseif ($action === 'login'): ?>
-
-                                    <span class="badge rounded-pill bg-info-subtle text-info-emphasis">
-                                        Login
-                                    </span>
-
-                                <?php elseif ($action === 'logout'): ?>
-
-                                    <span class="badge rounded-pill bg-secondary-subtle text-secondary">
-                                        Logout
-                                    </span>
-
-                                <?php else: ?>
-
-                                    <span class="badge rounded-pill bg-secondary-subtle text-secondary">
-                                        <?= esc($log['action'] ?? '-') ?>
-                                    </span>
-
-                                <?php endif; ?>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="fw-semibold">
-                                    <?= esc($log['entity'] ?? '-') ?>
-                                </div>
-
-                                <?php if (! empty($log['entity_id'])): ?>
-
-                                    <small class="text-secondary">
-                                        ID #<?= esc($log['entity_id']) ?>
-                                    </small>
-
-                                <?php endif; ?>
-
-                            </td>
-
-
-                            <td>
-
-                                <?= esc($log['activity'] ?? '-') ?>
-
-                            </td>
-
-                        </tr>
-
-                    <?php endforeach; ?>
-
-                <?php else: ?>
-
-                    <tr>
-
-                        <td
-                            colspan="6"
-                            class="text-center py-5">
-
-                            <div class="text-secondary">
-
-                                Belum ada aktivitas yang tercatat.
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                <?php endif; ?>
-
-            </tbody>
-
-        </table>
-
-    </div>
+<div
+    class="glass-card employee-table-card"
+    id="activityLogTableContainer">
+
+    <?= $this->include('components/activity_logs/table', [
+        'activityLogs' => $activityLogs,
+    ]) ?>
 
 </div>
+
+<?= $this->endSection() ?>
+
+<?= $this->section('pageJs') ?>
+
+<script src="<?= base_url('assets/js/activity_log.js') ?>"></script>
 
 <?= $this->endSection() ?>

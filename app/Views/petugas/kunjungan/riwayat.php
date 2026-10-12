@@ -1,0 +1,150 @@
+<?= $this->extend('layouts/dashboard') ?>
+
+<?= $this->section('content') ?>
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1>
+                Riwayat Kunjungan
+            </h1>
+
+            <p class="text-muted mb-0">
+                Melihat data kunjungan yang sudah selesai, ditolak, atau dibatalkan.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <?php if (session()->getFlashdata('error')): ?>
+
+        <div class="alert alert-danger">
+            <?= esc(session()->getFlashdata('error')) ?>
+        </div>
+
+    <?php endif; ?>
+
+
+    <div class="glass-card p-4 mb-4">
+
+        <form
+            id="kunjunganFilterForm"
+            action="<?= site_url('petugas/bukutamu-riwayat') ?>"
+            method="get">
+
+            <div class="row g-3">
+
+                <div class="col-md-5">
+
+                    <label class="form-label">
+                        Cari Kunjungan
+                    </label>
+
+                    <input
+                        type="text"
+                        id="kunjunganKeyword"
+                        name="keyword"
+                        class="form-control"
+                        value="<?= esc($keyword) ?>"
+                        placeholder="Nama, kode, nomor HP, bagian, atau pegawai">
+
+                </div>
+
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select
+                        id="kunjunganStatus"
+                        name="status"
+                        class="form-select">
+
+                        <option value="">
+                            Semua Status Akhir
+                        </option>
+
+                        <option
+                            value="Selesai"
+                            <?= $status === 'Selesai' ? 'selected' : '' ?>>
+                            Selesai
+                        </option>
+
+                        <option
+                            value="Ditolak"
+                            <?= $status === 'Ditolak' ? 'selected' : '' ?>>
+                            Ditolak
+                        </option>
+
+                        <option
+                            value="Dibatalkan"
+                            <?= $status === 'Dibatalkan' ? 'selected' : '' ?>>
+                            Dibatalkan
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Tanggal
+                    </label>
+
+                    <input
+                        type="date"
+                        id="kunjunganDate"
+                        name="date"
+                        class="form-control"
+                        value="<?= esc($date) ?>">
+
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+
+                    <button
+                        type="button"
+                        id="resetKunjunganFilter"
+                        class="btn btn-outline-secondary w-100">
+
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>
+                        Reset
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="glass-card p-4"
+        id="kunjunganTableContainer">
+
+        <?= $this->include('components/kunjungan/table', [
+            'detailBaseUrl' => 'petugas/bukutamu-kunjungan',
+            'isHistory'     => true,
+        ]) ?>
+
+    </div>
+
+</div>
+
+<?= $this->endSection() ?>
+
+<?= $this->section('pageJs') ?>
+
+<script src="<?= base_url('assets/js/kunjungan.js') ?>"></script>
+
+<?= $this->endSection() ?>

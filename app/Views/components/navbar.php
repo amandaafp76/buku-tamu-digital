@@ -39,6 +39,8 @@
 
         </div>
 
+        <?= $this->include('components/install-prompt') ?>
+
         <div class="navbar-user">
 
             <div class="navbar-user-avatar">

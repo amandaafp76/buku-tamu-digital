@@ -45,7 +45,8 @@ $formData = $formData ?? [];
 
         <form
             action="<?= base_url('admin/bukutamu-pegawai/tambah') ?>"
-            method="post">
+            method="post"
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

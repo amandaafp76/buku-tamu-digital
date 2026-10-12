@@ -68,7 +68,8 @@ $formData = $formData ?? [];
             id="formResetPassword"
             action="<?= base_url('admin/bukutamu-pengguna/reset-password/' . $user['id']) ?>"
             method="post"
-            novalidate>
+            novalidate
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

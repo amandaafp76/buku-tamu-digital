@@ -1106,3 +1106,148 @@ document.addEventListener(
 
     }
 );
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const form = document.getElementById('employeeFilterForm');
+    const searchInput = document.getElementById('employeeSearch');
+    const departmentInput = document.getElementById('employeeDepartment');
+    const statusInput = document.getElementById('employeeStatus');
+    const resetButton = document.getElementById('resetEmployeeFilter');
+    const tableContainer = document.getElementById('employeeTableContainer');
+
+    if (
+        !form ||
+        !searchInput ||
+        !departmentInput ||
+        !statusInput ||
+        !resetButton ||
+        !tableContainer
+    ) {
+        return;
+    }
+
+    const loadEmployees = async function () {
+
+        const params = new URLSearchParams(
+            new FormData(form)
+        );
+
+        const url =
+            form.action + '?' + params.toString();
+
+        const response = await fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(
+                'Gagal mengambil data pegawai.'
+            );
+        }
+
+        const html = await response.text();
+
+        tableContainer.innerHTML = html;
+    };
+
+        tableContainer.addEventListener(
+        'click',
+        async function (event) {
+
+            const paginationLink =
+                event.target.closest(
+                    '.admin-pagination a'
+                );
+
+            if (!paginationLink) {
+                return;
+            }
+
+            event.preventDefault();
+
+            const url =
+                paginationLink.href;
+
+            if (!url) {
+                return;
+            }
+
+            try {
+
+                const response =
+                    await fetch(
+                        url,
+                        {
+                            headers: {
+                                'X-Requested-With':
+                                    'XMLHttpRequest'
+                            }
+                        }
+                    );
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        'Gagal mengambil halaman pegawai.'
+                    );
+
+                }
+
+                const html =
+                    await response.text();
+
+                tableContainer.innerHTML =
+                    html;
+
+            } catch (error) {
+
+                console.error(
+                    'Gagal memuat pagination pegawai:',
+                    error
+                );
+
+            }
+
+        }
+    );
+
+    let searchTimeout;
+
+    searchInput.addEventListener('input', function () {
+
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(function () {
+
+            loadEmployees();
+
+        }, 400);
+
+    });
+
+    departmentInput.addEventListener('change', function () {
+
+        loadEmployees();
+
+    });
+
+    statusInput.addEventListener('change', function () {
+
+        loadEmployees();
+
+    });
+
+    resetButton.addEventListener('click', function () {
+
+        searchInput.value = '';
+        departmentInput.value = '';
+        statusInput.value = '';
+
+        loadEmployees();
+
+    });
+
+});

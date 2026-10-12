@@ -1,5 +1,3 @@
-/* Department Add Modal */
-
 const departmentModalOverlay =
     document.getElementById('departmentModalOverlay');
 
@@ -353,104 +351,105 @@ document.addEventListener(
     }
 );
 
-    /* Department Edit Modal */
+document.addEventListener(
+    'click',
+    async (event) => {
 
-document
-    .querySelectorAll(
-        '[data-edit-url]'
-    )
-    .forEach((button) => {
+        const button =
+            event.target.closest(
+                '[data-action="edit"][data-edit-url]'
+            );
 
-        button.addEventListener(
-            'click',
-            async () => {
+        if (!button) {
+            return;
+        }
 
-                const url =
-                    button.dataset.editUrl;
+        event.preventDefault();
 
-                if (
-                    !departmentModalOverlay ||
-                    !departmentModalContainer
-                ) {
-                    return;
-                }
+        const url =
+            button.dataset.editUrl;
 
-                departmentModalOverlay.classList.add(
-                    'is-open'
-                );
+        if (
+            !departmentModalOverlay ||
+            !departmentModalContainer
+        ) {
+            return;
+        }
 
-                departmentModalOverlay.setAttribute(
-                    'aria-hidden',
-                    'false'
-                );
-
-                document.body.classList.add(
-                    'employee-modal-open'
-                );
-
-                departmentModalContainer.innerHTML = `
-                    <div class="employee-modal-loading glass-card">
-
-                        <i class="bi bi-arrow-repeat"></i>
-
-                        <span>
-                            Memuat data...
-                        </span>
-
-                    </div>
-                `;
-
-                try {
-
-                    const response =
-                        await fetch(
-                            url,
-                            {
-                                headers: {
-                                    'X-Requested-With':
-                                        'XMLHttpRequest'
-                                }
-                            }
-                        );
-
-                    if (!response.ok) {
-                        throw new Error(
-                            'Gagal memuat data.'
-                        );
-                    }
-
-                    const html =
-                        await response.text();
-
-                    departmentModalContainer.innerHTML =
-                        html;
-
-                    bindDepartmentEditModal();
-
-                } catch (error) {
-
-                    console.error(
-                        'Gagal memuat edit departemen:',
-                        error
-                    );
-
-                    departmentModalContainer.innerHTML = `
-                        <div class="employee-modal-error glass-card">
-
-                            <i class="bi bi-exclamation-circle"></i>
-
-                            <p>
-                                Data bagian/departemen
-                                gagal dimuat.
-                            </p>
-
-                        </div>
-                    `;
-                }
-            }
+        departmentModalOverlay.classList.add(
+            'is-open'
         );
 
-    });
+        departmentModalOverlay.setAttribute(
+            'aria-hidden',
+            'false'
+        );
+
+        document.body.classList.add(
+            'employee-modal-open'
+        );
+
+        departmentModalContainer.innerHTML = `
+            <div class="employee-modal-loading glass-card">
+
+                <i class="bi bi-arrow-repeat"></i>
+
+                <span>
+                    Memuat data...
+                </span>
+
+            </div>
+        `;
+
+        try {
+
+            const response =
+                await fetch(
+                    url,
+                    {
+                        headers: {
+                            'X-Requested-With':
+                                'XMLHttpRequest'
+                        }
+                    }
+                );
+
+            if (!response.ok) {
+                throw new Error(
+                    'Gagal memuat data.'
+                );
+            }
+
+            const html =
+                await response.text();
+
+            departmentModalContainer.innerHTML =
+                html;
+
+            bindDepartmentEditModal();
+
+        } catch (error) {
+
+            console.error(
+                'Gagal memuat edit departemen:',
+                error
+            );
+
+            departmentModalContainer.innerHTML = `
+                <div class="employee-modal-error glass-card">
+
+                    <i class="bi bi-exclamation-circle"></i>
+
+                    <p>
+                        Data bagian/departemen
+                        gagal dimuat.
+                    </p>
+
+                </div>
+            `;
+        }
+    }
+);
 
 
 function bindDepartmentEditModal() {
@@ -629,6 +628,7 @@ function bindDepartmentEditModal() {
 }
 
 function bindDepartmentDeleteModal() {
+
     const overlay =
         document.getElementById('departmentModalOverlay');
 
@@ -638,101 +638,281 @@ function bindDepartmentDeleteModal() {
     if (!overlay || !container) {
         return;
     }
+}
 
-    const deleteButtons =
-        document.querySelectorAll(
-            '[data-action="delete"][data-delete-url]'
+document.addEventListener(
+    'click',
+    async (event) => {
+
+        const button =
+            event.target.closest(
+                '[data-action="delete"][data-delete-url]'
+            );
+
+        if (!button) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const url =
+            button.dataset.deleteUrl;
+
+        if (
+            !url ||
+            !departmentModalOverlay ||
+            !departmentModalContainer
+        ) {
+            return;
+        }
+
+        departmentModalOverlay.classList.add(
+            'is-open'
         );
 
-    deleteButtons.forEach((button) => {
+        departmentModalOverlay.setAttribute(
+            'aria-hidden',
+            'false'
+        );
 
-        button.addEventListener(
-            'click',
-            async () => {
+        document.body.classList.add(
+            'employee-modal-open'
+        );
 
-                const url =
-                    button.dataset.deleteUrl;
+        departmentModalContainer.innerHTML = `
+            <div class="employee-modal-loading glass-card">
 
-                if (!url) {
-                    return;
-                }
+                <i class="bi bi-arrow-repeat"></i>
 
-                overlay.classList.add('is-open');
+                <span>
+                    Memuat konfirmasi...
+                </span>
 
-                overlay.setAttribute(
-                    'aria-hidden',
-                    'false'
-                );
+            </div>
+        `;
 
-                document.body.classList.add(
-                    'employee-modal-open'
-                );
+        try {
 
-                container.innerHTML = `
-                    <div class="employee-modal-loading glass-card">
-
-                        <i class="bi bi-arrow-repeat"></i>
-
-                        <span>
-                            Memuat konfirmasi...
-                        </span>
-
-                    </div>
-                `;
-
-                try {
-
-                    const response =
-                        await fetch(
-                            url,
-                            {
-                                headers: {
-                                    'X-Requested-With':
-                                        'XMLHttpRequest'
-                                }
-                            }
-                        );
-
-                    if (!response.ok) {
-                        throw new Error(
-                            'Gagal memuat konfirmasi hapus.'
-                        );
+            const response =
+                await fetch(
+                    url,
+                    {
+                        headers: {
+                            'X-Requested-With':
+                                'XMLHttpRequest'
+                        }
                     }
+                );
 
-                    const html =
-                        await response.text();
+            if (!response.ok) {
+                throw new Error(
+                    'Gagal memuat konfirmasi hapus.'
+                );
+            }
 
-                    container.innerHTML =
-                        html;
+            const html =
+                await response.text();
 
-                    bindDepartmentDeleteModalActions();
+            departmentModalContainer.innerHTML =
+                html;
 
-                } catch (error) {
+            bindDepartmentDeleteModalActions();
 
-                    console.error(
-                        'Gagal memuat konfirmasi hapus departemen:',
-                        error
+        } catch (error) {
+
+            console.error(
+                'Gagal memuat konfirmasi hapus departemen:',
+                error
+            );
+
+            departmentModalContainer.innerHTML = `
+                <div class="employee-modal-error glass-card">
+
+                    <i class="bi bi-exclamation-circle"></i>
+
+                    <p>
+                        Konfirmasi hapus
+                        Bagian/Departemen
+                        gagal dimuat.
+                    </p>
+
+                </div>
+            `;
+        }
+    }
+);
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const form =
+        document.getElementById('departmentFilterForm');
+
+    const searchInput =
+        document.getElementById('departmentSearch');
+
+    const statusInput =
+        document.getElementById('departmentStatus');
+
+    const resetButton =
+        document.getElementById('resetDepartmentFilter');
+
+    const tableContainer =
+        document.getElementById('departmentTableContainer');
+
+    if (
+        !form ||
+        !searchInput ||
+        !statusInput ||
+        !resetButton ||
+        !tableContainer
+    ) {
+        return;
+    }
+
+    const loadDepartments = async function () {
+
+        const params =
+            new URLSearchParams(
+                new FormData(form)
+            );
+
+        const url =
+            form.action +
+            '?' +
+            params.toString();
+
+        const response =
+            await fetch(
+                url,
+                {
+                    headers: {
+                        'X-Requested-With':
+                            'XMLHttpRequest'
+                    }
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                'Gagal mengambil data bagian/departemen.'
+            );
+
+        }
+
+        const html =
+            await response.text();
+
+        tableContainer.innerHTML =
+            html;
+
+    };
+
+    tableContainer.addEventListener(
+        'click',
+        async function (event) {
+
+            const paginationLink =
+                event.target.closest(
+                    '.admin-pagination a'
+                );
+
+            if (!paginationLink) {
+                return;
+            }
+
+            event.preventDefault();
+
+            const url =
+                paginationLink.href;
+
+            if (!url) {
+                return;
+            }
+
+            try {
+
+                const response =
+                    await fetch(
+                        url,
+                        {
+                            headers: {
+                                'X-Requested-With':
+                                    'XMLHttpRequest'
+                            }
+                        }
                     );
 
-                    container.innerHTML = `
-                        <div class="employee-modal-error glass-card">
+                if (!response.ok) {
 
-                            <i class="bi bi-exclamation-circle"></i>
+                    throw new Error(
+                        'Gagal mengambil halaman bagian/departemen.'
+                    );
 
-                            <p>
-                                Konfirmasi hapus
-                                Bagian/Departemen
-                                gagal dimuat.
-                            </p>
-
-                        </div>
-                    `;
                 }
-            }
-        );
 
-    });
-}
+                const html =
+                    await response.text();
+
+                tableContainer.innerHTML =
+                    html;
+
+            } catch (error) {
+
+                console.error(
+                    'Gagal memuat pagination bagian/departemen:',
+                    error
+                );
+
+            }
+
+        }
+    );
+
+    let searchTimeout;
+
+    searchInput.addEventListener(
+        'input',
+        function () {
+
+            clearTimeout(searchTimeout);
+
+            searchTimeout =
+                setTimeout(
+                    function () {
+
+                        loadDepartments();
+
+                    },
+                    400
+                );
+
+        }
+    );
+
+    statusInput.addEventListener(
+        'change',
+        function () {
+
+            loadDepartments();
+
+        }
+    );
+
+    resetButton.addEventListener(
+        'click',
+        function () {
+
+            searchInput.value = '';
+
+            statusInput.value = '';
+
+            loadDepartments();
+
+        }
+    );
+
+});
 
 
 function bindDepartmentDeleteModalActions() {

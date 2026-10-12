@@ -582,6 +582,33 @@ class GuestController extends BaseController
                 ]);
         }
 
+        try {
+            $wakitaService = new \App\Services\WakitaService();
+
+            $visitDataForNotification = [
+                'guest_name'      => $guest['nama_lengkap'] ?? '-',
+                'phone'           => $guest['nomor_hp'] ?? '',
+                'institution'     => $guest['asal_instansi'] ?? '-',
+                'visit_code'      => $visitCode,
+                'employee_name'   => $employee['employee_name'] ?? '-',
+                'employee_phone'  => $employee['phone'] ?? '',
+                'department_name' => $department['name'] ?? '-',
+                'purpose_name'    => $purpose['purpose_name'] ?? '-',
+                'group_size'      => $guest['group_size'] ?? 1,
+                'arrival_time'    => date('d/m/Y H:i'),
+            ];
+
+            $wakitaService->sendToEmployee(
+                $visitDataForNotification,
+                'new_guest_arrival'
+            );
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                '[GUEST] Gagal kirim WA ke pegawai: ' . $e->getMessage()
+            );
+        }
+
         session()->set('bukutamu_visit', [
             'visit_id'   => $visitId,
             'visit_code' => $visitCode,

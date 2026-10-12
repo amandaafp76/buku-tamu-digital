@@ -22,7 +22,7 @@ class DepartmentController extends BaseController
     {
         $search = trim((string) $this->request->getGet('search'));
         $status = $this->request->getGet('status');
-
+        $showDeleted = (int) $this->request->getGet('show_deleted') === 1;
         $query = $this->departmentModel
             ->select('departments.*')
             ->select(
@@ -35,6 +35,10 @@ class DepartmentController extends BaseController
                 'left'
             )
             ->groupBy('departments.id');
+
+        if ($showDeleted) {
+            $query->onlyDeleted();
+        }
 
         if ($search !== '') {
             $query->like('departments.name', $search);
@@ -49,14 +53,27 @@ class DepartmentController extends BaseController
 
         $departments = $query
             ->orderBy('departments.name', 'ASC')
-            ->findAll();
+            ->paginate(10);
+
+        $pager = $query->pager;
+
+        if ($this->request->isAJAX()) {
+
+            return view('components/departments/table', [
+                'departments' => $departments,
+                'pager'       => $pager,
+                'showDeleted' => $showDeleted,
+            ]);
+        }
 
         return view('admin/departments/index', [
             'title'       => 'Bagian/Departemen',
             'pageTitle'   => 'Bagian/Departemen',
             'departments' => $departments,
+            'pager'       => $pager,
             'search'      => $search,
             'status'      => $status,
+            'showDeleted' => $showDeleted,
         ]);
     }
 
@@ -307,6 +324,40 @@ class DepartmentController extends BaseController
                 'success',
                 'Bagian/Departemen "' . $department['name'] .
                     '" berhasil dihapus.'
+            );
+    }
+
+    public function restore(int $id)
+    {
+        $department = $this->departmentModel
+            ->withDeleted()
+            ->find($id);
+
+        if ($department === null) {
+            return redirect()
+                ->to(base_url('admin/bukutamu-departemen'))
+                ->with('error', 'Data Bagian/Departemen tidak ditemukan.');
+        }
+
+        $this->departmentModel
+            ->db
+            ->table('departments')
+            ->where('id', $id)
+            ->update(['deleted_at' => null]);
+
+        $this->logActivity(
+            'restore',
+            'department',
+            $id,
+            'Memulihkan Bagian/Departemen "' . $department['name'] . '".'
+        );
+
+        return redirect()
+            ->to(base_url('admin/bukutamu-departemen'))
+            ->with(
+                'success',
+                'Bagian/Departemen "' . $department['name'] .
+                    '" berhasil dipulihkan.'
             );
     }
 }

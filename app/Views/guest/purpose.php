@@ -3,175 +3,190 @@ $errors = $errors ?? session()->getFlashdata('errors') ?? [];
 $guest = $guest ?? [];
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
+<?= $this->extend('layouts/kiosk') ?>
 
-<head>
+<?= $this->section('content') ?>
 
-    <meta charset="UTF-8">
+<main class="register-page">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <div class="register-shell">
 
-    <meta
-        name="theme-color"
-        content="#FBF9D1">
+        <header class="register-header">
 
-    <title>
-        Tujuan Kunjungan - Buku Tamu
-    </title>
+            <a
+                href="<?= site_url('bukutamu-kiosk') ?>"
+                class="register-back">
 
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/bootstrap-icons.css') ?>">
+                <i
+                    class="bi bi-arrow-left"
+                    aria-hidden="true">
+                </i>
 
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/kiosk.css') ?>">
+                <span>
+                    Beranda
+                </span>
 
-</head>
+            </a>
 
-<body>
+            <div class="register-title-area">
 
-    <div
-        class="register-background"
-        aria-hidden="true">
+                <div class="register-eyebrow">
+                    Buku Tamu Digital
+                </div>
 
-        <span class="register-orb register-orb-one"></span>
-        <span class="register-orb register-orb-two"></span>
-        <span class="register-orb register-orb-three"></span>
+                <h1 class="register-title">
+                    Registrasi Kunjungan
+                </h1>
 
-    </div>
+            </div>
+
+        </header>
 
 
-    <main class="register-page">
+        <nav
+            class="register-stepper"
+            aria-label="Tahapan registrasi">
 
-        <div class="register-shell">
+            <div class="register-step">
+                <div class="register-step-number">1</div>
 
-            <header class="register-header">
-
-                <a
-                    href="<?= site_url('bukutamu-kiosk') ?>"
-                    class="register-back">
-
-                    <i
-                        class="bi bi-arrow-left"
-                        aria-hidden="true">
-                    </i>
-
-                    <span>
-                        Beranda
-                    </span>
-
-                </a>
-
-                <div class="register-title-area">
-
-                    <div class="register-eyebrow">
-                        Buku Tamu Digital
+                <div class="register-step-content">
+                    <div class="register-step-label">
+                        Identitas
                     </div>
+                </div>
+            </div>
 
-                    <h1 class="register-title">
-                        Registrasi Kunjungan
-                    </h1>
+
+            <div class="register-step active">
+                <div class="register-step-number">2</div>
+
+                <div class="register-step-content">
+                    <div class="register-step-label">
+                        Tujuan
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="register-step">
+                <div class="register-step-number">3</div>
+
+                <div class="register-step-content">
+                    <div class="register-step-label">
+                        Foto
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="register-step">
+                <div class="register-step-number">4</div>
+
+                <div class="register-step-content">
+                    <div class="register-step-label">
+                        Persetujuan
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+
+
+        <section class="register-card">
+
+            <div class="register-card-header">
+
+                <div
+                    class="register-card-icon"
+                    aria-hidden="true">
+
+                    <i class="bi bi-clipboard-check"></i>
 
                 </div>
 
-            </header>
+                <h2 class="register-card-title">
+                    Tujuan Kunjungan
+                </h2>
+
+                <p class="register-card-description">
+                    Informasikan tujuan kedatangan Anda agar kunjungan
+                    dapat diproses dengan tepat.
+                </p>
+
+            </div>
+
+            <form
+                class="register-form"
+                id="guestPurposeForm"
+                action="<?= site_url('bukutamu-kiosk/tujuan') ?>"
+                method="post"
+                data-employees-url="<?= site_url('bukutamu-kiosk/pegawai') ?>"
+                data-old-employee-id="<?= esc(old('employee_id', $guest['employee_id'] ?? '')) ?>"
+                data-offline-guard>
+
+                <?= csrf_field() ?>
 
 
-            <nav
-                class="register-stepper"
-                aria-label="Tahapan registrasi">
+                <div class="register-field">
 
-                <div class="register-step">
-                    <div class="register-step-number">1</div>
+                    <label
+                        for="purpose_id"
+                        class="register-label">
 
-                    <div class="register-step-content">
-                        <div class="register-step-label">
-                            Identitas
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="register-step active">
-                    <div class="register-step-number">2</div>
-
-                    <div class="register-step-content">
-                        <div class="register-step-label">
-                            Tujuan
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="register-step">
-                    <div class="register-step-number">3</div>
-
-                    <div class="register-step-content">
-                        <div class="register-step-label">
-                            Foto
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="register-step">
-                    <div class="register-step-number">4</div>
-
-                    <div class="register-step-content">
-                        <div class="register-step-label">
-                            Persetujuan
-                        </div>
-                    </div>
-                </div>
-
-            </nav>
-
-
-            <section class="register-card">
-
-                <div class="register-card-header">
-
-                    <div
-                        class="register-card-icon"
-                        aria-hidden="true">
-
-                        <i class="bi bi-clipboard-check"></i>
-
-                    </div>
-
-                    <h2 class="register-card-title">
                         Tujuan Kunjungan
-                    </h2>
+                        <span class="register-required">
+                            *
+                        </span>
 
-                    <p class="register-card-description">
-                        Informasikan tujuan kedatangan Anda agar kunjungan
-                        dapat diproses dengan tepat.
+                    </label>
+
+                    <select
+                        id="purpose_id"
+                        name="purpose_id"
+                        class="register-select <?= isset($errors['purpose_id']) ? 'is-invalid' : '' ?>">
+
+                        <option
+                            value=""
+                            <?= old('purpose_id', $guest['purpose_id'] ?? '') ? '' : 'selected' ?>
+                            disabled>
+
+                            Pilih tujuan kunjungan
+
+                        </option>
+
+                        <?php foreach ($purposes as $purpose): ?>
+
+                            <option
+                                value="<?= esc($purpose['id']) ?>"
+                                <?= (string) old('purpose_id', $guest['purpose_id'] ?? '') === (string) $purpose['id'] ? 'selected' : '' ?>>
+
+                                <?= esc($purpose['purpose_name']) ?>
+
+                            </option>
+
+                        <?php endforeach; ?>
+
+                    </select>
+
+                    <p
+                        class="register-field-error <?= isset($errors['purpose_id']) ? 'is-visible' : '' ?>"
+                        id="purposeIdError">
+                        <?= isset($errors['purpose_id']) ? esc($errors['purpose_id']) : '' ?>
                     </p>
 
                 </div>
 
-                <form
-                    class="register-form"
-                    id="guestPurposeForm"
-                    action="<?= site_url('bukutamu-kiosk/tujuan') ?>"
-                    method="post"
-                    data-employees-url="<?= site_url('bukutamu-kiosk/pegawai') ?>"
-                    data-old-employee-id="<?= esc(old('employee_id', '')) ?>">
 
-                    <?= csrf_field() ?>
-
+                <div class="register-form-row">
 
                     <div class="register-field">
 
                         <label
-                            for="purpose_id"
+                            for="department_id"
                             class="register-label">
 
-                            Tujuan Kunjungan
+                            Bagian / Departemen
                             <span class="register-required">
                                 *
                             </span>
@@ -179,26 +194,26 @@ $guest = $guest ?? [];
                         </label>
 
                         <select
-                            id="purpose_id"
-                            name="purpose_id"
-                            class="register-select <?= isset($errors['purpose_id']) ? 'is-invalid' : '' ?>">
+                            id="department_id"
+                            name="department_id"
+                            class="register-select <?= isset($errors['department_id']) ? 'is-invalid' : '' ?>">
 
                             <option
                                 value=""
-                                <?= old('purpose_id') ? '' : 'selected' ?>
+                                <?= old('department_id', $guest['department_id'] ?? '') ? '' : 'selected' ?>
                                 disabled>
 
-                                Pilih tujuan kunjungan
+                                Pilih bagian / departemen
 
                             </option>
 
-                            <?php foreach ($purposes as $purpose): ?>
+                            <?php foreach ($departments as $department): ?>
 
                                 <option
-                                    value="<?= esc($purpose['id']) ?>"
-                                    <?= (string) old('purpose_id') === (string) $purpose['id'] ? 'selected' : '' ?>>
+                                    value="<?= esc($department['id']) ?>"
+                                    <?= (string) old('department_id', $guest['department_id'] ?? '') === (string) $department['id'] ? 'selected' : '' ?>>
 
-                                    <?= esc($purpose['purpose_name']) ?>
+                                    <?= esc($department['name']) ?>
 
                                 </option>
 
@@ -207,162 +222,112 @@ $guest = $guest ?? [];
                         </select>
 
                         <p
-                            class="register-field-error <?= isset($errors['purpose_id']) ? 'is-visible' : '' ?>"
-                            id="purposeIdError">
-                            <?= isset($errors['purpose_id']) ? esc($errors['purpose_id']) : '' ?>
+                            class="register-field-error <?= isset($errors['department_id']) ? 'is-visible' : '' ?>"
+                            id="departmentIdError">
+                            <?= isset($errors['department_id']) ? esc($errors['department_id']) : '' ?>
                         </p>
 
                     </div>
 
 
-                    <div class="register-form-row">
+                    <div class="register-field">
 
-                        <div class="register-field">
+                        <label
+                            for="employee_id"
+                            class="register-label">
 
-                            <label
-                                for="department_id"
-                                class="register-label">
+                            Pegawai yang Dituju
+                            <span class="register-required">
+                                *
+                            </span>
 
-                                Bagian / Departemen
-                                <span class="register-required">
-                                    *
-                                </span>
+                        </label>
 
-                            </label>
+                        <select
+                            id="employee_id"
+                            name="employee_id"
+                            class="register-select <?= isset($errors['employee_id']) ? 'is-invalid' : '' ?>"
+                            disabled>
 
-                            <select
-                                id="department_id"
-                                name="department_id"
-                                class="register-select <?= isset($errors['department_id']) ? 'is-invalid' : '' ?>">
-
-                                <option
-                                    value=""
-                                    <?= old('department_id') ? '' : 'selected' ?>
-                                    disabled>
-
-                                    Pilih bagian / departemen
-
-                                </option>
-
-                                <?php foreach ($departments as $department): ?>
-
-                                    <option
-                                        value="<?= esc($department['id']) ?>"
-                                        <?= (string) old('department_id') === (string) $department['id'] ? 'selected' : '' ?>>
-
-                                        <?= esc($department['name']) ?>
-
-                                    </option>
-
-                                <?php endforeach; ?>
-
-                            </select>
-
-                            <p
-                                class="register-field-error <?= isset($errors['department_id']) ? 'is-visible' : '' ?>"
-                                id="departmentIdError">
-                                <?= isset($errors['department_id']) ? esc($errors['department_id']) : '' ?>
-                            </p>
-
-                        </div>
-
-
-                        <div class="register-field">
-
-                            <label
-                                for="employee_id"
-                                class="register-label">
-
-                                Pegawai yang Dituju
-                                <span class="register-required">
-                                    *
-                                </span>
-
-                            </label>
-
-                            <select
-                                id="employee_id"
-                                name="employee_id"
-                                class="register-select <?= isset($errors['employee_id']) ? 'is-invalid' : '' ?>"
+                            <option
+                                value=""
+                                selected
                                 disabled>
 
-                                <option
-                                    value=""
-                                    selected
-                                    disabled>
+                                Pilih bagian terlebih dahulu
 
-                                    Pilih bagian terlebih dahulu
+                            </option>
 
-                                </option>
+                        </select>
 
-                            </select>
-
-                            <p
-                                class="register-field-error <?= isset($errors['employee_id']) ? 'is-visible' : '' ?>"
-                                id="employeeIdError">
-                                <?= isset($errors['employee_id']) ? esc($errors['employee_id']) : '' ?>
-                            </p>
-
-                        </div>
+                        <p
+                            class="register-field-error <?= isset($errors['employee_id']) ? 'is-visible' : '' ?>"
+                            id="employeeIdError">
+                            <?= isset($errors['employee_id']) ? esc($errors['employee_id']) : '' ?>
+                        </p>
 
                     </div>
 
-                    <p class="register-help">
-                        Tanda <span class="register-required">*</span>
-                        menunjukkan data yang wajib diisi.
-                    </p>
+                </div>
+
+                <p class="register-help">
+                    Tanda <span class="register-required">*</span>
+                    menunjukkan data yang wajib diisi.
+                </p>
 
 
-                    <div class="register-actions">
+                <div class="register-actions">
 
-                        <a
-                            href="<?= site_url('bukutamu-kiosk/registrasi') ?>"
-                            class="register-secondary">
+                    <a
+                        href="<?= site_url('bukutamu-kiosk/registrasi') ?>"
+                        class="register-secondary">
 
-                            <i
-                                class="bi bi-arrow-left"
-                                aria-hidden="true">
-                            </i>
+                        <i
+                            class="bi bi-arrow-left"
+                            aria-hidden="true">
+                        </i>
 
-                            <span>
-                                Kembali
-                            </span>
+                        <span>
+                            Kembali
+                        </span>
 
-                        </a>
+                    </a>
 
 
-                        <button
-                            type="submit"
-                            class="register-primary">
+                    <button
+                        type="submit"
+                        class="register-primary">
 
-                            <span>
-                                Lanjut
-                            </span>
+                        <span>
+                            Lanjut
+                        </span>
 
-                            <span
-                                class="register-primary-icon"
-                                aria-hidden="true">
+                        <span
+                            class="register-primary-icon"
+                            aria-hidden="true">
 
-                                <i class="bi bi-arrow-right"></i>
+                            <i class="bi bi-arrow-right"></i>
 
-                            </span>
+                        </span>
 
-                        </button>
+                    </button>
 
-                    </div>
+                </div>
 
-                </form>
+            </form>
 
-            </section>
+        </section>
 
-        </div>
+    </div>
 
-    </main>
+</main>
 
-    <script
-        src="<?= base_url('assets/js/purpose.js') ?>">
-    </script>
+<?= $this->endSection() ?>
 
-</body>
+<?= $this->section('pageJs') ?>
 
-</html>
+<script
+    src="<?= base_url('assets/js/purpose.js') ?>">
+</script>
+
+<?= $this->endSection() ?>

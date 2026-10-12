@@ -41,7 +41,8 @@
             action="<?= base_url('admin/bukutamu-identitas-institusi/update') ?>"
             method="post"
             enctype="multipart/form-data"
-            novalidate>
+            novalidate
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

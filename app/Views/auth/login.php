@@ -30,7 +30,7 @@ $errors = session()->getFlashdata('errors') ?? [];
             </div>
         <?php endif; ?>
 
-        <form action="<?= site_url('bukutamu-masuk') ?>" method="post" novalidate>
+        <form action="<?= site_url('bukutamu-masuk') ?>" method="post" novalidate data-offline-guard>
 
             <?= csrf_field() ?>
 

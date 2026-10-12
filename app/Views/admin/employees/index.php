@@ -18,32 +18,46 @@
 
 <?php endif; ?>
 
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+<div class="dashboard-header mb-4">
     <div>
-        <h1 class="h4 fw-semibold mb-1">Pegawai</h1>
-        <p class="text-secondary mb-0">
+        <h1 class="dashboard-heading">
+            Pegawai
+        </h1>
+        <p class="dashboard-subheading">
             Kelola data pegawai dan bagian/departemen.
         </p>
     </div>
 
-    <button
-        type="button"
-        class="btn btn-primary glass-button-primary rounded-pill px-4"
-        id="openTambahPegawai"
-        data-modal-url="<?= base_url('admin/bukutamu-pegawai/tambah') ?>">
-        <i class="bi bi-plus-lg me-1"></i>
-        Tambah Pegawai
-    </button>
+    <div class="dashboard-header-actions">
+        <a
+            href="<?= base_url('admin/bukutamu-pegawai' . ($showDeleted ? '' : '?show_deleted=1')) ?>"
+            class="dashboard-secondary-button">
+            <i class="bi bi-<?= $showDeleted ? 'arrow-left' : 'trash' ?>"></i>
+            <?= $showDeleted ? 'Kembali ke Data Aktif' : 'Tampilkan Terhapus' ?>
+        </a>
+
+        <?php if (! $showDeleted): ?>
+            <button
+                type="button"
+                class="dashboard-primary-button"
+                id="openTambahPegawai"
+                data-modal-url="<?= base_url('admin/bukutamu-pegawai/tambah') ?>">
+                <i class="bi bi-plus-lg"></i>
+                Tambah Pegawai
+            </button>
+        <?php endif; ?>
+    </div>
 </div>
 
 <div class="glass-card employee-filter-card mb-4">
     <form
+        id="employeeFilterForm"
         action="<?= base_url('admin/bukutamu-pegawai') ?>"
         method="get"
         class="row g-3 align-items-end">
 
         <div class="col-12 col-lg-5">
-            <label for="employeeSearch" class="form-label">
+            <label for="employeeSearch" class="employee-filter-label">
                 Cari Pegawai
             </label>
 
@@ -61,7 +75,7 @@
         </div>
 
         <div class="col-12 col-md-6 col-lg-3">
-            <label for="employeeDepartment" class="form-label">
+            <label for="employeeDepartment" class="employee-filter-label">
                 Bagian/Departemen
             </label>
 
@@ -84,7 +98,7 @@
         </div>
 
         <div class="col-12 col-md-6 col-lg-2">
-            <label for="employeeStatus" class="form-label">
+            <label for="employeeStatus" class="employee-filter-label">
                 Status
             </label>
 
@@ -111,128 +125,33 @@
         </div>
 
         <div class="col-12 col-lg-2 d-flex gap-2">
-            <button
-                type="submit"
-                class="btn glass-button-primary rounded-pill flex-grow-1">
-                <i class="bi bi-search me-1"></i>
-                Cari
-            </button>
 
-            <a
-                href="<?= base_url('admin/bukutamu-pegawai') ?>"
-                class="btn btn-light rounded-pill"
+            <button
+                type="button"
+                id="resetEmployeeFilter"
+                class="employee-filter-reset"
                 title="Reset filter"
                 aria-label="Reset filter">
-                <i class="bi bi-arrow-counterclockwise"></i>
-            </a>
+
+                <i class="bi bi-arrow-counterclockwise me-1"></i>
+                <span>Reset</span>
+
+            </button>
+
         </div>
 
     </form>
 </div>
 
-<div class="glass-card employee-table-card">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead>
-                <tr>
-                    <th style="width: 70px;">No</th>
-                    <th>Nama Pegawai</th>
-                    <th>Nomor HP</th>
-                    <th>Bagian/Departemen</th>
-                    <th>Status</th>
-                    <th class="text-end">Aksi</th>
-                </tr>
-            </thead>
+<div
+    class="glass-card employee-table-card"
+    id="employeeTableContainer">
 
-            <tbody>
-                <?php if (! empty($employees)): ?>
+    <?= $this->include('components/employees/table', [
+        'employees' => $employees,
+        'showDeleted' => $showDeleted ?? false,
+    ]) ?>
 
-                    <?php foreach ($employees as $index => $employee): ?>
-
-                        <tr>
-                            <td>
-                                <?= $index + 1 ?>
-                            </td>
-
-                            <td>
-                                <div class="fw-semibold">
-                                    <?= esc($employee['employee_name']) ?>
-                                </div>
-                            </td>
-
-                            <td>
-                                <?= esc($employee['phone'] ?? '-') ?>
-                            </td>
-
-                            <td>
-                                <?= esc($employee['department_name'] ?? '-') ?>
-                            </td>
-
-                            <td>
-                                <?php if ((bool) $employee['active']): ?>
-
-                                    <span class="badge rounded-pill bg-success-subtle text-success-emphasis">
-                                        Aktif
-                                    </span>
-
-                                <?php else: ?>
-
-                                    <span class="badge rounded-pill bg-secondary-subtle text-secondary">
-                                        Nonaktif
-                                    </span>
-
-                                <?php endif; ?>
-                            </td>
-
-                            <td>
-                                <div class="d-flex justify-content-end gap-2">
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm employee-action-button"
-                                        data-edit-url="<?= base_url('admin/bukutamu-pegawai/edit/' . $employee['id']) ?>"
-                                        data-action="edit"
-                                        title="Edit">
-                                        <i class="bi bi-pencil"></i>
-                                        <span class="visually-hidden">
-                                            Edit <?= esc($employee['employee_name']) ?>
-                                        </span>
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm employee-action-button employee-delete-button"
-                                        data-delete-url="<?= base_url('admin/bukutamu-pegawai/hapus/' . $employee['id']) ?>"
-                                        data-employee-name="<?= esc($employee['employee_name']) ?>"
-                                        data-action="delete"
-                                        title="Hapus">
-                                        <i class="bi bi-trash"></i>
-
-                                        <span class="visually-hidden">
-                                            Hapus <?= esc($employee['employee_name']) ?>
-                                        </span>
-                                    </button>
-
-                                </div>
-                            </td>
-                        </tr>
-
-                    <?php endforeach; ?>
-
-                <?php else: ?>
-
-                    <tr>
-                        <td colspan="6" class="text-center py-5">
-                            <div class="text-secondary">
-                                Belum ada data pegawai.
-                            </div>
-                        </td>
-                    </tr>
-
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
 </div>
 
 <div

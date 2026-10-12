@@ -53,7 +53,8 @@ $formData = $formData ?? [];
             id="formEditPengguna"
             action="<?= base_url('admin/bukutamu-pengguna/edit/' . $user['id']) ?>"
             method="post"
-            novalidate>
+            novalidate
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

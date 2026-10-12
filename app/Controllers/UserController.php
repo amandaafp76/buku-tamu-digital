@@ -19,11 +19,16 @@ class UserController extends BaseController
         $search = trim((string) $this->request->getGet('search'));
         $role = (string) $this->request->getGet('role');
         $status = (string) $this->request->getGet('status');
+        $showDeleted = (int) $this->request->getGet('show_deleted') === 1;
 
         $query = $this->userModel
             ->select(
                 'users.id, users.username, users.role, users.active, users.created_at, users.updated_at'
             );
+
+        if ($showDeleted) {
+            $query->onlyDeleted();
+        }
 
         if ($search !== '') {
             $query->like('users.username', $search);
@@ -42,15 +47,31 @@ class UserController extends BaseController
 
         $users = $query
             ->orderBy('users.username', 'ASC')
-            ->findAll();
+            ->paginate(10);
+
+        $pager = $query->pager;
+
+        if ($this->request->isAJAX()) {
+
+            return view(
+                'components/users/table',
+                [
+                    'users' => $users,
+                    'pager' => $pager,
+                    'showDeleted' => $showDeleted,
+                ]
+            );
+        }
 
         return view('admin/users/index', [
             'title' => 'Pengguna',
             'pageTitle' => 'Pengguna',
             'users' => $users,
+            'pager' => $pager,
             'search' => $search,
             'role' => $role,
             'status' => $status,
+            'showDeleted' => $showDeleted,
         ]);
     }
 
@@ -496,6 +517,39 @@ class UserController extends BaseController
             ->with(
                 'success',
                 'Pengguna "' . $user['username'] . '" berhasil dihapus.'
+            );
+    }
+
+    public function restore(int $id)
+    {
+        $user = $this->userModel
+            ->withDeleted()
+            ->find($id);
+
+        if ($user === null) {
+            return redirect()
+                ->to(base_url('admin/bukutamu-pengguna'))
+                ->with('error', 'Data pengguna tidak ditemukan.');
+        }
+
+        $this->userModel
+            ->db
+            ->table('users')
+            ->where('id', $id)
+            ->update(['deleted_at' => null]);
+
+        $this->logActivity(
+            'restore',
+            'user',
+            $id,
+            'Memulihkan pengguna "' . $user['username'] . '".'
+        );
+
+        return redirect()
+            ->to(base_url('admin/bukutamu-pengguna'))
+            ->with(
+                'success',
+                'Pengguna "' . $user['username'] . '" berhasil dipulihkan.'
             );
     }
 

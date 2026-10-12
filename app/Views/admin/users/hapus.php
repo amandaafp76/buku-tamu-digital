@@ -36,7 +36,8 @@
         <form
             id="deleteUserForm"
             action="<?= base_url('admin/bukutamu-pengguna/hapus/' . $user['id']) ?>"
-            method="post">
+            method="post"
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

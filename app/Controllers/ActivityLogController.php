@@ -37,12 +37,26 @@ class ActivityLogController extends BaseController
 
         $activityLogs = $query
             ->orderBy('activity_logs.created_at', 'DESC')
-            ->findAll();
+            ->paginate(10);
+
+        $pager = $query->pager;
+
+        if ($this->request->isAJAX()) {
+
+            return view(
+                'components/activity_logs/table',
+                [
+                    'activityLogs' => $activityLogs,
+                    'pager'        => $pager,
+                ]
+            );
+        }
 
         return view('admin/activity_logs/index', [
             'title'        => 'Activity Log',
             'pageTitle'    => 'Activity Log',
             'activityLogs' => $activityLogs,
+            'pager'        => $pager,
             'search'       => $search,
             'action'       => $action,
             'entity'       => $entity,

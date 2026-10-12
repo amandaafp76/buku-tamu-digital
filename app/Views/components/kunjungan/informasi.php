@@ -1,56 +1,72 @@
-<div class="row g-4">
+<div class="detail-info-grid">
 
-    <div class="col-lg-6">
+    <!-- ===== DATA TAMU ===== -->
 
-        <div class="glass-card p-4">
+    <div class="glass-card detail-info-card">
 
-            <h5 class="mb-4">
+        <div class="detail-info-header">
+
+            <div class="detail-info-icon">
+
+                <i class="bi bi-person-badge"></i>
+
+            </div>
+
+            <h2 class="detail-info-title">
                 Data Tamu
-            </h5>
+            </h2>
 
-            <div class="mb-3">
+        </div>
 
-                <small class="text-muted">
+
+        <div class="detail-info-body">
+
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Nama Lengkap
-                </small>
+                </div>
 
-                <div class="fw-semibold">
+                <div class="detail-info-value detail-info-value--strong">
                     <?= esc($visit['guest_name']) ?>
                 </div>
 
             </div>
 
-            <div class="mb-3">
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Nomor HP
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['phone']) ?>
                 </div>
 
             </div>
 
-            <div class="mb-3">
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Alamat
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['address']) ?>
                 </div>
 
             </div>
 
-            <div>
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Asal Instansi / Perusahaan
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['institution']) ?>
                 </div>
 
@@ -60,95 +76,116 @@
 
     </div>
 
-    <div class="col-lg-6">
 
-        <div class="glass-card p-4">
+    <!-- ===== DATA KUNJUNGAN ===== -->
 
-            <h5 class="mb-4">
+    <div class="glass-card detail-info-card">
+
+        <div class="detail-info-header">
+
+            <div class="detail-info-icon">
+
+                <i class="bi bi-clipboard-data"></i>
+
+            </div>
+
+            <h2 class="detail-info-title">
                 Data Kunjungan
-            </h5>
+            </h2>
 
-            <div class="mb-3">
+        </div>
 
-                <small class="text-muted">
+
+        <div class="detail-info-body">
+
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Kode Kunjungan
-                </small>
+                </div>
 
-                <div class="fw-semibold">
+                <div class="detail-info-value detail-info-value--code">
                     <?= esc($visit['visit_code']) ?>
                 </div>
 
             </div>
 
-            <div class="mb-3">
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Bagian / Departemen
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['department_name']) ?>
                 </div>
 
             </div>
 
-            <div class="mb-3">
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Pegawai Tujuan
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['employee_name']) ?>
                 </div>
 
             </div>
 
-            <div class="mb-3">
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Tujuan Kunjungan
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['purpose_name']) ?>
                 </div>
 
             </div>
 
-            <div class="mb-3">
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Jumlah Rombongan
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['group_size']) ?> orang
                 </div>
 
             </div>
 
-            <div>
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Status
-                </small>
+                </div>
 
-                <div class="mt-1">
+                <div class="detail-info-value">
 
                     <?php
-                    $statusClass = match ($visit['status']) {
-                        'Menunggu' => 'bg-warning text-dark',
-                        'Masih Berkunjung' => 'bg-success',
-                        'Selesai' => 'bg-secondary',
-                        'Ditolak' => 'bg-danger',
-                        'Dibatalkan' => 'bg-secondary',
-                        default => 'bg-secondary',
+                    $statusSlug = match ($visit['status']) {
+                        'Menunggu'         => 'waiting',
+                        'Masih Berkunjung' => 'visiting',
+                        'Selesai'          => 'completed',
+                        'Ditolak'          => 'rejected',
+                        'Dibatalkan'       => 'cancelled',
+                        default            => 'default',
                     };
                     ?>
 
-                    <span class="badge <?= $statusClass ?>">
+                    <span class="visit-status-badge visit-status-badge--<?= $statusSlug ?>">
+
                         <?= esc($visit['status']) ?>
+
                     </span>
 
                 </div>
@@ -159,33 +196,48 @@
 
     </div>
 
-    <div class="col-lg-6">
 
-        <div class="glass-card p-4">
+    <!-- ===== WAKTU KUNJUNGAN ===== -->
 
-            <h5 class="mb-4">
+    <div class="glass-card detail-info-card">
+
+        <div class="detail-info-header">
+
+            <div class="detail-info-icon">
+
+                <i class="bi bi-clock-history"></i>
+
+            </div>
+
+            <h2 class="detail-info-title">
                 Waktu Kunjungan
-            </h5>
+            </h2>
 
-            <div class="mb-3">
+        </div>
 
-                <small class="text-muted">
+
+        <div class="detail-info-body">
+
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Waktu Pengajuan
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['arrival_time']) ?>
                 </div>
 
             </div>
 
-            <div class="mb-3">
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Check-In
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= $visit['check_in']
                         ? esc($visit['check_in'])
                         : '-' ?>
@@ -193,13 +245,14 @@
 
             </div>
 
-            <div class="mb-3">
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Check-Out
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= $visit['check_out']
                         ? esc($visit['check_out'])
                         : '-' ?>
@@ -207,16 +260,19 @@
 
             </div>
 
-            <div>
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Durasi Kunjungan
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value detail-info-value--strong">
+
                     <?= $visit['duration'] !== null
                         ? esc($visit['duration']) . ' menit'
                         : '-' ?>
+
                 </div>
 
             </div>
@@ -225,56 +281,78 @@
 
     </div>
 
-    <div class="col-lg-6">
 
-        <div class="glass-card p-4">
+    <!-- ===== IDENTITAS & PERSETUJUAN ===== -->
 
-            <h5 class="mb-4">
+    <div class="glass-card detail-info-card">
+
+        <div class="detail-info-header">
+
+            <div class="detail-info-icon">
+
+                <i class="bi bi-shield-check"></i>
+
+            </div>
+
+            <h2 class="detail-info-title">
                 Identitas & Persetujuan
-            </h5>
+            </h2>
 
-            <div class="mb-3">
+        </div>
 
-                <small class="text-muted">
+
+        <div class="detail-info-body">
+
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Jenis Identitas
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['identity_type']) ?>
                 </div>
 
             </div>
 
-            <div class="mb-3">
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Nomor Identitas
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
                     <?= esc($visit['identity_no']) ?>
                 </div>
 
             </div>
 
-            <div>
 
-                <small class="text-muted">
+            <div class="detail-info-row">
+
+                <div class="detail-info-label">
                     Persetujuan Penggunaan Data
-                </small>
+                </div>
 
-                <div>
+                <div class="detail-info-value">
 
                     <?php if ((int) $visit['consent'] === 1): ?>
 
-                        <span class="badge bg-success">
+                        <span class="detail-consent-badge detail-consent-badge--approved">
+
+                            <i class="bi bi-check-circle-fill"></i>
                             Disetujui
+
                         </span>
 
                     <?php else: ?>
 
-                        <span class="badge bg-secondary">
+                        <span class="detail-consent-badge detail-consent-badge--pending">
+
+                            <i class="bi bi-x-circle-fill"></i>
                             Belum Disetujui
+
                         </span>
 
                     <?php endif; ?>

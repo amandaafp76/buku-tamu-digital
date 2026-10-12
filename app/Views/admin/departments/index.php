@@ -47,32 +47,49 @@
 <?php endif; ?>
 
 
-<div
-    class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+<div class="dashboard-header mb-4">
 
     <div>
 
-        <h1 class="h4 fw-semibold mb-1">
+        <h1 class="dashboard-heading">
             Bagian/Departemen
         </h1>
 
-        <p class="text-secondary mb-0">
+        <p class="dashboard-subheading">
             Kelola data bagian/departemen dan jumlah pegawai.
         </p>
 
     </div>
 
-    <button
-        type="button"
-        class="btn btn-primary glass-button-primary rounded-pill px-4"
-        id="openTambahDepartemen"
-        data-modal-url="<?= base_url('admin/bukutamu-departemen/tambah') ?>">
+    <div class="dashboard-header-actions">
 
-        <i class="bi bi-plus-lg me-1"></i>
+        <a
+            href="<?= base_url('admin/bukutamu-departemen' . ($showDeleted ? '' : '?show_deleted=1')) ?>"
+            class="dashboard-secondary-button">
 
-        Tambah Bagian/Departemen
+            <i class="bi bi-<?= $showDeleted ? 'arrow-left' : 'trash' ?>"></i>
 
-    </button>
+            <?= $showDeleted ? 'Kembali ke Data Aktif' : 'Tampilkan Terhapus' ?>
+
+        </a>
+
+        <?php if (! $showDeleted): ?>
+
+            <button
+                type="button"
+                class="dashboard-primary-button"
+                id="openTambahDepartemen"
+                data-modal-url="<?= base_url('admin/bukutamu-departemen/tambah') ?>">
+
+                <i class="bi bi-plus-lg"></i>
+
+                Tambah Bagian/Departemen
+
+            </button>
+
+        <?php endif; ?>
+
+    </div>
 
 </div>
 
@@ -80,6 +97,7 @@
 <div class="glass-card employee-filter-card mb-4">
 
     <form
+        id="departmentFilterForm"
         action="<?= base_url('admin/bukutamu-departemen') ?>"
         method="get"
         class="row g-3 align-items-end">
@@ -88,7 +106,7 @@
 
             <label
                 for="departmentSearch"
-                class="form-label">
+                class="employee-filter-label">
 
                 Cari Bagian/Departemen
 
@@ -115,7 +133,7 @@
 
             <label
                 for="departmentStatus"
-                class="form-label">
+                class="employee-filter-label">
 
                 Status
 
@@ -154,24 +172,16 @@
         <div class="col-12 col-md-6 col-lg-2 d-flex gap-2">
 
             <button
-                type="submit"
-                class="btn glass-button-primary rounded-pill flex-grow-1">
-
-                <i class="bi bi-search me-1"></i>
-
-                Cari
-
-            </button>
-
-            <a
-                href="<?= base_url('admin/bukutamu-departemen') ?>"
-                class="btn btn-light rounded-pill"
+                type="button"
+                id="resetDepartmentFilter"
+                class="employee-filter-reset"
                 title="Reset filter"
                 aria-label="Reset filter">
 
                 <i class="bi bi-arrow-counterclockwise"></i>
+                <span>Reset</span>
 
-            </a>
+            </button>
 
         </div>
 
@@ -179,178 +189,14 @@
 
 </div>
 
-
-<div class="glass-card employee-table-card">
-
-    <div class="table-responsive">
-
-        <table class="table table-hover align-middle mb-0">
-
-            <thead>
-
-                <tr>
-
-                    <th style="width: 70px;">
-                        No
-                    </th>
-
-                    <th>
-                        Nama Bagian/Departemen
-                    </th>
-
-                    <th class="text-center">
-                        Jumlah Pegawai
-                    </th>
-
-                    <th>
-                        Status
-                    </th>
-
-                    <th class="text-end">
-                        Aksi
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody>
-
-                <?php if (! empty($departments)): ?>
-
-                    <?php foreach ($departments as $index => $department): ?>
-
-                        <tr>
-
-                            <td>
-                                <?= $index + 1 ?>
-                            </td>
-
-
-                            <td>
-
-                                <div class="fw-semibold">
-
-                                    <?= esc($department['name']) ?>
-
-                                </div>
-
-                            </td>
-
-
-                            <td class="text-center">
-
-                                <span class="badge rounded-pill bg-light text-dark">
-
-                                    <i class="bi bi-people me-1"></i>
-
-                                    <?= (int) $department['employee_count'] ?>
-
-                                    Pegawai
-
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <?php if ((bool) $department['active']): ?>
-
-                                    <span
-                                        class="badge rounded-pill bg-success-subtle text-success-emphasis">
-
-                                        Aktif
-
-                                    </span>
-
-                                <?php else: ?>
-
-                                    <span
-                                        class="badge rounded-pill bg-secondary-subtle text-secondary">
-
-                                        Nonaktif
-
-                                    </span>
-
-                                <?php endif; ?>
-
-                            </td>
-
-
-                            <td>
-
-                                <div
-                                    class="d-flex justify-content-end gap-2">
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm employee-action-button"
-                                        data-edit-url="<?= base_url('admin/bukutamu-departemen/edit/' . $department['id']) ?>"
-                                        data-action="edit"
-                                        title="Edit">
-
-                                        <i class="bi bi-pencil"></i>
-
-                                        <span class="visually-hidden">
-                                            Edit <?= esc($department['name']) ?>
-                                        </span>
-
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm employee-action-button employee-delete-button"
-                                        data-delete-url="<?= base_url('admin/bukutamu-departemen/hapus/' . $department['id']) ?>"
-                                        data-action="delete"
-                                        title="Hapus">
-
-                                        <i class="bi bi-trash"></i>
-
-                                        <span class="visually-hidden">
-                                            Hapus <?= esc($department['name']) ?>
-                                        </span>
-
-                                    </button>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    <?php endforeach; ?>
-
-                <?php else: ?>
-
-                    <tr>
-
-                        <td
-                            colspan="5"
-                            class="text-center py-5">
-
-                            <div class="text-secondary">
-
-                                <i
-                                    class="bi bi-building fs-3 d-block mb-2">
-                                </i>
-
-                                Belum ada data bagian/departemen.
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                <?php endif; ?>
-
-            </tbody>
-
-        </table>
-
-    </div>
+<div
+    class="glass-card employee-table-card"
+    id="departmentTableContainer">
+
+    <?= $this->include('components/departments/table', [
+        'departments' => $departments,
+        'showDeleted' => $showDeleted ?? false,
+    ]) ?>
 
 </div>
 

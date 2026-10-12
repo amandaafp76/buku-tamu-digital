@@ -75,7 +75,8 @@
                             'admin/bukutamu-template-pesan/tambah'
                         ) ?>"
             method="post"
-            novalidate>
+            novalidate
+            data-offline-guard>
 
             <?= csrf_field() ?>
 
@@ -226,62 +227,47 @@
                             </option>
 
                             <option
-                                value="registration_success"
+                                value="new_guest_arrival"
                                 <?= old(
                                     'notification_type',
                                     $formData['notification_type']
                                         ?? $template['notification_type']
                                         ?? ''
-                                ) === 'registration_success'
+                                ) === 'new_guest_arrival'
                                     ? 'selected'
                                     : '' ?>>
 
-                                Registrasi Berhasil
+                                Tamu Baru untuk Pegawai
 
                             </option>
 
                             <option
-                                value="check_in"
+                                value="visit_approved"
                                 <?= old(
                                     'notification_type',
                                     $formData['notification_type']
                                         ?? $template['notification_type']
                                         ?? ''
-                                ) === 'check_in'
+                                ) === 'visit_approved'
                                     ? 'selected'
                                     : '' ?>>
 
-                                Check-in
+                                Kunjungan Disetujui
 
                             </option>
 
                             <option
-                                value="visit_warning"
+                                value="visit_completed"
                                 <?= old(
                                     'notification_type',
                                     $formData['notification_type']
                                         ?? $template['notification_type']
                                         ?? ''
-                                ) === 'visit_warning'
+                                ) === 'visit_completed'
                                     ? 'selected'
                                     : '' ?>>
 
-                                Peringatan Kunjungan
-
-                            </option>
-
-                            <option
-                                value="check_out"
-                                <?= old(
-                                    'notification_type',
-                                    $formData['notification_type']
-                                        ?? $template['notification_type']
-                                        ?? ''
-                                ) === 'check_out'
-                                    ? 'selected'
-                                    : '' ?>>
-
-                                Check-out
+                                Kunjungan Selesai
 
                             </option>
 

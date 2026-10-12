@@ -48,11 +48,23 @@ class AdminVisitController extends BaseController
             (string) $this->request->getGet('date')
         );
 
+        $showDeleted = (int) $this->request->getGet('show_deleted') === 1;
+
         $result = $this->visitService->getVisits(
             $keyword,
             $status,
-            $date
+            $date,
+            $showDeleted
         );
+
+        if ($this->request->isAJAX()) {
+
+            return view('components/kunjungan/table', [
+                'visits' => $result['visits'],
+                'pager'  => $result['pager'],
+                'showDeleted' => $showDeleted,
+            ]);
+        }
 
         return view('admin/kunjungan/index', [
             'visits'  => $result['visits'],
@@ -60,6 +72,7 @@ class AdminVisitController extends BaseController
             'keyword' => $keyword,
             'status'  => $status,
             'date'    => $date,
+            'showDeleted' => $showDeleted,
         ]);
     }
 
@@ -88,17 +101,35 @@ class AdminVisitController extends BaseController
         );
     }
 
-    public function edit(int $id): string
+    public function edit(int $id)
     {
         $visit = $this->visitService->getVisitDetail($id);
 
-        if ($visit === null) {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(
-                'Data kunjungan tidak ditemukan.'
-            );
+        if (! $visit) {
+
+            if ($this->request->isAJAX()) {
+                return $this->response
+                    ->setStatusCode(404)
+                    ->setJSON([
+                        'message' => 'Data kunjungan tidak ditemukan.'
+                    ]);
+            }
+
+            return redirect()
+                ->to(site_url('petugas/bukutamu-kunjungan'))
+                ->with('error', 'Data kunjungan tidak ditemukan.');
         }
 
         if ($visit['status'] !== 'Menunggu') {
+
+            if ($this->request->isAJAX()) {
+                return $this->response
+                    ->setStatusCode(422)
+                    ->setJSON([
+                        'message' => 'Data kunjungan hanya dapat diperbaiki saat status masih Menunggu.'
+                    ]);
+            }
+
             return redirect()
                 ->to(
                     site_url(
@@ -425,6 +456,41 @@ class AdminVisitController extends BaseController
                 'Data kunjungan "' .
                     $visit['visit_code'] .
                     '" berhasil dihapus.'
+            );
+    }
+
+    public function restore(int $id)
+    {
+        $visit = $this->visitModel
+            ->withDeleted()
+            ->find($id);
+
+        if ($visit === null) {
+            return redirect()
+                ->to(site_url('admin/bukutamu-kunjungan'))
+                ->with('error', 'Data kunjungan tidak ditemukan.');
+        }
+
+        $this->visitModel
+            ->db
+            ->table('visits')
+            ->where('id', $id)
+            ->update(['deleted_at' => null]);
+
+        $this->logActivity(
+            'restore',
+            'visit',
+            $id,
+            'Memulihkan data kunjungan dengan kode "' .
+                $visit['visit_code'] . '".'
+        );
+
+        return redirect()
+            ->to(site_url('admin/bukutamu-kunjungan'))
+            ->with(
+                'success',
+                'Data kunjungan "' . $visit['visit_code'] .
+                    '" berhasil dipulihkan.'
             );
     }
 }

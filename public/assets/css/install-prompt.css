@@ -1,0 +1,73 @@
+.install-prompt-button {
+    position: relative;
+
+    width: auto;
+    padding: 0 14px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    color: var(--color-primary, #9A3F3F);
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    animation: installPromptPulse 2s ease-in-out infinite;
+}
+
+.install-prompt-button[hidden] {
+    display: none;
+}
+
+.install-prompt-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 6px;
+    right: 6px;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--color-danger, #dc2626);
+
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+.install-prompt-label {
+    white-space: nowrap;
+}
+
+@keyframes installPromptPulse {
+
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
+
+}
+
+@media (max-width: 575.98px) {
+
+    .install-prompt-button {
+        width: 44px;
+        padding: 0;
+    }
+
+    .install-prompt-label {
+        display: none;
+    }
+
+}

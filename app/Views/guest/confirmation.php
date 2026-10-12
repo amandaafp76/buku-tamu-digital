@@ -1,169 +1,170 @@
-<!DOCTYPE html>
-<html lang="id">
+<?= $this->extend('layouts/kiosk') ?>
 
-<head>
+<?= $this->section('content') ?>
 
-    <meta charset="UTF-8">
+<main class="register-page">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <div class="register-shell">
 
-    <meta
-        name="theme-color"
-        content="#FBF9D1">
+        <section class="register-card">
 
-    <title>
-        Registrasi Berhasil - Buku Tamu
-    </title>
+            <div class="register-card-header">
 
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/bootstrap-icons.css') ?>">
+                <div
+                    class="register-card-icon"
+                    aria-hidden="true">
 
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/kiosk.css') ?>">
+                    <i class="bi bi-check2-circle"></i>
 
-</head>
+                </div>
 
-<body>
+                <h1 class="register-card-title">
+                    Registrasi Berhasil
+                </h1>
 
-    <div
-        class="register-background"
-        aria-hidden="true">
+                <p class="register-card-description">
+                    Data kunjungan Anda telah berhasil dikirim
+                    dan sedang menunggu verifikasi petugas.
+                </p>
 
-        <span class="register-orb register-orb-one"></span>
-        <span class="register-orb register-orb-two"></span>
-        <span class="register-orb register-orb-three"></span>
-
-    </div>
+            </div>
 
 
-    <main class="register-page">
+            <div class="consent-section">
 
-        <div class="register-shell">
+                <div class="consent-section-title">
 
-            <section class="register-card">
-
-                <div class="register-card-header">
-
-                    <div
-                        class="register-card-icon"
+                    <i
+                        class="bi bi-ticket-perforated"
                         aria-hidden="true">
+                    </i>
 
-                        <i class="bi bi-check2-circle"></i>
+                    <span>
+                        Kode Kunjungan
+                    </span>
 
-                    </div>
+                </div>
 
-                    <h1 class="register-card-title">
-                        Registrasi Berhasil
-                    </h1>
 
-                    <p class="register-card-description">
-                        Data kunjungan Anda telah berhasil dikirim
-                        dan sedang menunggu verifikasi petugas.
+                <div class="consent-box">
+
+                    <strong>
+                        <?= esc($visit['visit_code']) ?>
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="consent-section">
+
+                <div class="consent-section-title">
+
+                    <i
+                        class="bi bi-qr-code"
+                        aria-hidden="true">
+                    </i>
+
+                    <span>
+                        QR Kunjungan
+                    </span>
+
+                </div>
+
+
+                <div class="consent-box">
+
+                    <img
+                        src="<?= esc($qrCode) ?>"
+                        alt="QR Code Kunjungan"
+                        style="width: 280px; max-width: 100%; height: auto;">
+
+                    <p>
+                        Tunjukkan QR Code ini kepada petugas
+                        saat proses kunjungan.
                     </p>
 
                 </div>
 
-
-                <div class="consent-section">
-
-                    <div class="consent-section-title">
-
-                        <i
-                            class="bi bi-ticket-perforated"
-                            aria-hidden="true">
-                        </i>
-
-                        <span>
-                            Kode Kunjungan
-                        </span>
-
-                    </div>
+            </div>
 
 
-                    <div class="consent-box">
+            <div class="consent-section">
 
-                        <strong>
-                            <?= esc($visit['visit_code']) ?>
-                        </strong>
+                <div class="consent-section-title">
 
-                    </div>
+                    <i
+                        class="bi bi-hourglass-split"
+                        aria-hidden="true">
+                    </i>
 
-                </div>
-
-                <div class="consent-section">
-
-                    <div class="consent-section-title">
-
-                        <i
-                            class="bi bi-qr-code"
-                            aria-hidden="true">
-                        </i>
-
-                        <span>
-                            QR Kunjungan
-                        </span>
-
-                    </div>
-
-
-                    <div class="consent-box">
-
-                        <img
-                            src="<?= esc($qrCode) ?>"
-                            alt="QR Code Kunjungan"
-                            style="width: 280px; max-width: 100%; height: auto;">
-
-                        <p>
-                            Tunjukkan QR Code ini kepada petugas
-                            saat proses kunjungan.
-                        </p>
-
-                    </div>
+                    <span>
+                        Status Kunjungan
+                    </span>
 
                 </div>
 
 
-                <div class="consent-section">
+                <div class="consent-box">
 
-                    <div class="consent-section-title">
+                    <strong>
+                        Menunggu
+                    </strong>
 
-                        <i
-                            class="bi bi-hourglass-split"
-                            aria-hidden="true">
-                        </i>
-
-                        <span>
-                            Status Kunjungan
-                        </span>
-
-                    </div>
-
-
-                    <div class="consent-box">
-
-                        <strong>
-                            Menunggu
-                        </strong>
-
-                        <p>
-                            Silakan tunggu petugas melakukan verifikasi
-                            dan proses check-in.
-                        </p>
-
-                    </div>
+                    <p>
+                        Silakan tunggu petugas melakukan verifikasi
+                        dan proses check-in.
+                    </p>
 
                 </div>
 
-            </section>
+            </div>
+
+        </section>
+
+        <div class="confirmation-timer-info">
+
+            <i class="bi bi-clock-history" aria-hidden="true"></i>
+
+            <span>
+                Halaman ini akan kembali otomatis dalam
+                <strong id="confirmationCountdown">30</strong>
+                detik
+            </span>
 
         </div>
 
-    </main>
+        <div class="confirmation-actions">
 
-</body>
+            <a
+                href="<?= site_url('bukutamu-kiosk') ?>"
+                class="register-primary">
 
-</html>
+                <span>
+                    Kembali ke Beranda
+                </span>
+
+                <span
+                    class="register-primary-icon"
+                    aria-hidden="true">
+
+                    <i class="bi bi-house-door"></i>
+
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<?= $this->endSection() ?>
+
+
+<?= $this->section('pageJs') ?>
+
+<script src="<?= base_url('assets/js/confirmation.js') ?>"></script>
+
+<?= $this->endSection() ?>

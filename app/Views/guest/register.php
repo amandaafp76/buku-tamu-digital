@@ -3,212 +3,174 @@ $errors = $errors ?? session()->getFlashdata('errors') ?? [];
 $guest = $guest ?? [];
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
+<?= $this->extend('layouts/kiosk') ?>
 
-<head>
+<?= $this->section('content') ?>
 
-    <meta charset="UTF-8">
+<main class="register-page">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <div class="register-shell">
 
-    <meta
-        name="theme-color"
-        content="#FBF9D1">
+        <header class="register-header">
 
-    <title>
-        Registrasi Kunjungan - Buku Tamu
-    </title>
+            <div class="register-title-area">
 
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/bootstrap-icons.css') ?>">
-
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/kiosk.css') ?>">
-
-</head>
-
-<body>
-
-    <div
-        class="register-background"
-        aria-hidden="true">
-
-        <span
-            class="register-orb register-orb-one">
-        </span>
-
-        <span
-            class="register-orb register-orb-two">
-        </span>
-
-        <span
-            class="register-orb register-orb-three">
-        </span>
-
-    </div>
-
-
-    <main class="register-page">
-
-        <div class="register-shell">
-
-            <header class="register-header">
-
-                <a
-                    href="<?= site_url('bukutamu-kiosk') ?>"
-                    class="register-back">
-
-                    <i
-                        class="bi bi-arrow-left"
-                        aria-hidden="true">
-                    </i>
-
-                    <span>
-                        Beranda
-                    </span>
-
-                </a>
-
-                <div class="register-title-area">
-
-                    <div class="register-eyebrow">
-                        Buku Tamu Digital
-                    </div>
-
-                    <h1 class="register-title">
-                        Registrasi Kunjungan
-                    </h1>
-
+                <div class="register-eyebrow">
+                    Buku Tamu Digital
                 </div>
 
-            </header>
+                <h1 class="register-title">
+                    Registrasi Kunjungan
+                </h1>
+
+            </div>
+
+            <a
+                href="<?= site_url('bukutamu-kiosk') ?>"
+                class="register-back">
+
+                <i
+                    class="bi bi-arrow-left"
+                    aria-hidden="true">
+                </i>
+
+                <span>
+                    Beranda
+                </span>
+
+            </a>
+
+        </header>
 
 
-            <nav
-                class="register-stepper"
-                aria-label="Tahapan registrasi">
+        <nav
+            class="register-stepper"
+            aria-label="Tahapan registrasi">
 
-                <div class="register-step active">
+            <div class="register-step active">
 
-                    <div class="register-step-number">
-                        1
-                    </div>
+                <div class="register-step-number">
+                    1
+                </div>
 
-                    <div class="register-step-content">
+                <div class="register-step-content">
 
-                        <div class="register-step-label">
-                            Identitas
-                        </div>
-
+                    <div class="register-step-label">
+                        Identitas
                     </div>
 
                 </div>
 
+            </div>
 
-                <div class="register-step">
 
-                    <div class="register-step-number">
-                        2
-                    </div>
+            <div class="register-step">
 
-                    <div class="register-step-content">
+                <div class="register-step-number">
+                    2
+                </div>
 
-                        <div class="register-step-label">
-                            Tujuan
-                        </div>
+                <div class="register-step-content">
 
+                    <div class="register-step-label">
+                        Tujuan
                     </div>
 
                 </div>
 
+            </div>
 
-                <div class="register-step">
 
-                    <div class="register-step-number">
-                        3
-                    </div>
+            <div class="register-step">
 
-                    <div class="register-step-content">
+                <div class="register-step-number">
+                    3
+                </div>
 
-                        <div class="register-step-label">
-                            Foto
-                        </div>
+                <div class="register-step-content">
 
+                    <div class="register-step-label">
+                        Foto
                     </div>
 
                 </div>
 
+            </div>
 
-                <div class="register-step">
 
-                    <div class="register-step-number">
-                        4
-                    </div>
+            <div class="register-step">
 
-                    <div class="register-step-content">
+                <div class="register-step-number">
+                    4
+                </div>
 
-                        <div class="register-step-label">
-                            Persetujuan
-                        </div>
+                <div class="register-step-content">
 
+                    <div class="register-step-label">
+                        Persetujuan
                     </div>
 
                 </div>
 
-            </nav>
+            </div>
+
+        </nav>
 
 
-            <section class="register-card">
+        <section class="register-card">
 
-                <div class="register-card-header">
+            <div class="register-card-header">
 
-                    <div
-                        class="register-card-icon"
-                        aria-hidden="true">
+                <div
+                    class="register-card-icon"
+                    aria-hidden="true">
 
-                        <i class="bi bi-person-vcard"></i>
-
-                    </div>
-
-                    <h2 class="register-card-title">
-                        Kenali Anda Terlebih Dahulu
-                    </h2>
-
-                    <p class="register-card-description">
-                        Silakan isi data identitas Anda dengan benar
-                        untuk melanjutkan proses registrasi kunjungan.
-                    </p>
+                    <i class="bi bi-person-vcard"></i>
 
                 </div>
 
+                <h2 class="register-card-title">
+                    Kenali Anda Terlebih Dahulu
+                </h2>
 
-                <form
-                    class="register-form"
-                    id="guestRegisterForm"
-                    action="<?= site_url('bukutamu-kiosk/registrasi') ?>"
-                    method="post">
+                <p class="register-card-description">
+                    Silakan isi data identitas Anda dengan benar
+                    untuk melanjutkan proses registrasi kunjungan.
+                </p>
 
-                    <?= csrf_field() ?>
+            </div>
 
-                    <div class="register-form-row">
 
-                        <div class="register-field">
+            <form
+                class="register-form"
+                id="guestRegisterForm"
+                action="<?= site_url('bukutamu-kiosk/registrasi') ?>"
+                method="post"
+                data-offline-guard>
 
-                            <label
-                                for="nama_lengkap"
-                                class="register-label">
+                <?= csrf_field() ?>
 
-                                Nama Lengkap
-                                <span class="register-required">
-                                    *
-                                </span>
+                <div class="register-form-row">
 
-                            </label>
+                    <div class="register-field-card">
+
+                        <label
+                            for="nama_lengkap"
+                            class="register-label">
+
+                            Nama Lengkap
+                            <span class="register-required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <i
+                                class="register-input-icon bi bi-person"
+                                aria-hidden="true">
+                            </i>
 
                             <input
                                 type="text"
@@ -219,27 +181,36 @@ $guest = $guest ?? [];
                                 autocomplete="name"
                                 value="<?= esc($guest['nama_lengkap'] ?? '') ?>">
 
-                            <p
-                                class="register-field-error <?= isset($errors['nama_lengkap']) ? 'is-visible' : '' ?>"
-                                id="namaLengkapError">
-                                <?= isset($errors['nama_lengkap']) ? esc($errors['nama_lengkap']) : '' ?>
-                            </p>
-
                         </div>
 
+                        <p
+                            class="register-field-error <?= isset($errors['nama_lengkap']) ? 'is-visible' : '' ?>"
+                            id="namaLengkapError">
+                            <?= isset($errors['nama_lengkap']) ? esc($errors['nama_lengkap']) : '' ?>
+                        </p>
 
-                        <div class="register-field">
+                    </div>
 
-                            <label
-                                for="nomor_hp"
-                                class="register-label">
 
-                                Nomor HP
-                                <span class="register-required">
-                                    *
-                                </span>
+                    <div class="register-field-card">
 
-                            </label>
+                        <label
+                            for="nomor_hp"
+                            class="register-label">
+
+                            Nomor HP
+                            <span class="register-required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <i
+                                class="register-input-icon bi bi-telephone"
+                                aria-hidden="true">
+                            </i>
 
                             <input
                                 type="tel"
@@ -251,28 +222,37 @@ $guest = $guest ?? [];
                                 inputmode="tel"
                                 value="<?= esc($guest['nomor_hp'] ?? '') ?>">
 
-                            <p
-                                class="register-field-error <?= isset($errors['nomor_hp']) ? 'is-visible' : '' ?>"
-                                id="nomorHpError">
-                                <?= isset($errors['nomor_hp']) ? esc($errors['nomor_hp']) : '' ?>
-                            </p>
-
                         </div>
+
+                        <p
+                            class="register-field-error <?= isset($errors['nomor_hp']) ? 'is-visible' : '' ?>"
+                            id="nomorHpError">
+                            <?= isset($errors['nomor_hp']) ? esc($errors['nomor_hp']) : '' ?>
+                        </p>
 
                     </div>
 
-                    <div class="register-field">
+                </div>
 
-                        <label
-                            for="alamat"
-                            class="register-label">
+                <div class="register-field-card">
 
-                            Alamat
-                            <span class="register-required">
-                                *
-                            </span>
+                    <label
+                        for="alamat"
+                        class="register-label">
 
-                        </label>
+                        Alamat
+                        <span class="register-required">
+                            *
+                        </span>
+
+                    </label>
+
+                    <div class="register-input-wrapper register-input-wrapper--textarea">
+
+                        <i
+                            class="register-input-icon bi bi-geo-alt"
+                            aria-hidden="true">
+                        </i>
 
                         <textarea
                             id="alamat"
@@ -282,26 +262,35 @@ $guest = $guest ?? [];
                             rows="3"
                             autocomplete="street-address"><?= esc($guest['alamat'] ?? '') ?></textarea>
 
-                        <p
-                            class="register-field-error <?= isset($errors['alamat']) ? 'is-visible' : '' ?>"
-                            id="alamatError">
-                            <?= isset($errors['alamat']) ? esc($errors['alamat']) : '' ?>
-                        </p>
-
                     </div>
 
-                    <div class="register-field">
+                    <p
+                        class="register-field-error <?= isset($errors['alamat']) ? 'is-visible' : '' ?>"
+                        id="alamatError">
+                        <?= isset($errors['alamat']) ? esc($errors['alamat']) : '' ?>
+                    </p>
 
-                        <label
-                            for="asal_instansi"
-                            class="register-label">
+                </div>
 
-                            Asal Instansi / Perusahaan
-                            <span class="register-required">
-                                *
-                            </span>
+                <div class="register-field-card">
 
-                        </label>
+                    <label
+                        for="asal_instansi"
+                        class="register-label">
+
+                        Asal Instansi / Perusahaan
+                        <span class="register-required">
+                            *
+                        </span>
+
+                    </label>
+
+                    <div class="register-input-wrapper">
+
+                        <i
+                            class="register-input-icon bi bi-building"
+                            aria-hidden="true">
+                        </i>
 
                         <input
                             type="text"
@@ -312,26 +301,35 @@ $guest = $guest ?? [];
                             autocomplete="organization"
                             value="<?= esc($guest['asal_instansi'] ?? '') ?>">
 
-                        <p
-                            class="register-field-error <?= isset($errors['asal_instansi']) ? 'is-visible' : '' ?>"
-                            id="asalInstansiError">
-                            <?= isset($errors['asal_instansi']) ? esc($errors['asal_instansi']) : '' ?>
-                        </p>
-
                     </div>
 
-                    <div class="register-field">
+                    <p
+                        class="register-field-error <?= isset($errors['asal_instansi']) ? 'is-visible' : '' ?>"
+                        id="asalInstansiError">
+                        <?= isset($errors['asal_instansi']) ? esc($errors['asal_instansi']) : '' ?>
+                    </p>
 
-                        <label
-                            for="group_size"
-                            class="register-label">
+                </div>
 
-                            Jumlah Rombongan
-                            <span class="register-required">
-                                *
-                            </span>
+                <div class="register-field-card">
 
-                        </label>
+                    <label
+                        for="group_size"
+                        class="register-label">
+
+                        Jumlah Rombongan
+                        <span class="register-required">
+                            *
+                        </span>
+
+                    </label>
+
+                    <div class="register-input-wrapper">
+
+                        <i
+                            class="register-input-icon bi bi-building"
+                            aria-hidden="true">
+                        </i>
 
                         <input
                             type="number"
@@ -344,33 +342,42 @@ $guest = $guest ?? [];
                             inputmode="numeric"
                             value="<?= esc($guest['group_size'] ?? '') ?>">
 
-                        <p
-                            class="register-field-error <?= isset($errors['group_size']) ? 'is-visible' : '' ?>"
-                            id="groupSizeError">
-                            <?= isset($errors['group_size']) ? esc($errors['group_size']) : '' ?>
-                        </p>
-
-                        <p class="register-help">
-                            Masukkan jumlah seluruh orang yang datang dalam rombongan.
-                        </p>
-
-
                     </div>
 
-                    <div class="register-form-row">
+                    <p
+                        class="register-field-error <?= isset($errors['group_size']) ? 'is-visible' : '' ?>"
+                        id="groupSizeError">
+                        <?= isset($errors['group_size']) ? esc($errors['group_size']) : '' ?>
+                    </p>
 
-                        <div class="register-field">
+                    <p class="register-help">
+                        Masukkan jumlah seluruh orang yang datang dalam rombongan.
+                    </p>
 
-                            <label
-                                for="jenis_identitas"
-                                class="register-label">
 
-                                Jenis Identitas
-                                <span class="register-required">
-                                    *
-                                </span>
+                </div>
 
-                            </label>
+                <div class="register-form-row">
+
+                    <div class="register-field-card">
+
+                        <label
+                            for="jenis_identitas"
+                            class="register-label">
+
+                            Jenis Identitas
+                            <span class="register-required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <i
+                                class="register-input-icon bi bi-card-text"
+                                aria-hidden="true">
+                            </i>
 
                             <select
                                 id="jenis_identitas"
@@ -420,29 +427,38 @@ $guest = $guest ?? [];
 
                             </select>
 
-                            <p
-                                class="register-field-error <?= isset($errors['jenis_identitas']) ? 'is-visible' : '' ?>"
-                                id="jenisIdentitasError">
-
-                                <?= isset($errors['jenis_identitas']) ? esc($errors['jenis_identitas']) : '' ?>
-
-                            </p>
-
                         </div>
 
+                        <p
+                            class="register-field-error <?= isset($errors['jenis_identitas']) ? 'is-visible' : '' ?>"
+                            id="jenisIdentitasError">
 
-                        <div class="register-field">
+                            <?= isset($errors['jenis_identitas']) ? esc($errors['jenis_identitas']) : '' ?>
 
-                            <label
-                                for="nomor_identitas"
-                                class="register-label">
+                        </p>
 
-                                Nomor Identitas
-                                <span class="register-required">
-                                    *
-                                </span>
+                    </div>
 
-                            </label>
+
+                    <div class="register-field-card">
+
+                        <label
+                            for="nomor_identitas"
+                            class="register-label">
+
+                            Nomor Identitas
+                            <span class="register-required">
+                                *
+                            </span>
+
+                        </label>
+
+                        <div class="register-input-wrapper">
+
+                            <i
+                                class="register-input-icon bi bi-credit-card-2-front"
+                                aria-hidden="true">
+                            </i>
 
                             <input
                                 type="text"
@@ -453,74 +469,78 @@ $guest = $guest ?? [];
                                 autocomplete="off"
                                 value="<?= esc($guest['nomor_identitas'] ?? '') ?>">
 
-                            <p
-                                class="register-field-error <?= isset($errors['nomor_identitas']) ? 'is-visible' : '' ?>"
-                                id="nomorIdentitasError">
-
-                                <?= isset($errors['nomor_identitas']) ? esc($errors['nomor_identitas']) : '' ?>
-
-                            </p>
-
                         </div>
 
-                    </div>
+                        <p
+                            class="register-field-error <?= isset($errors['nomor_identitas']) ? 'is-visible' : '' ?>"
+                            id="nomorIdentitasError">
 
+                            <?= isset($errors['nomor_identitas']) ? esc($errors['nomor_identitas']) : '' ?>
 
-                    <p class="register-help">
-                        Tanda <span class="register-required">*</span>
-                        menunjukkan data yang wajib diisi.
-                    </p>
-
-                    <div class="register-actions">
-
-                        <a
-                            href="<?= site_url('bukutamu-kiosk') ?>"
-                            class="register-secondary">
-
-                            <i
-                                class="bi bi-arrow-left"
-                                aria-hidden="true">
-                            </i>
-
-                            <span>
-                                Kembali
-                            </span>
-
-                        </a>
-
-
-                        <button
-                            type="submit"
-                            class="register-primary">
-
-                            <span>
-                                Lanjut
-                            </span>
-
-                            <span
-                                class="register-primary-icon"
-                                aria-hidden="true">
-
-                                <i class="bi bi-arrow-right"></i>
-
-                            </span>
-
-                        </button>
+                        </p>
 
                     </div>
 
-                </form>
+                </div>
 
-            </section>
 
-        </div>
+                <p class="register-help register-help--block">
+                    Tanda <span class="register-required">*</span>
+                    menunjukkan data yang wajib diisi.
+                </p>
 
-    </main>
+                <div class="register-actions">
 
-    <script
-        src="<?= base_url('assets/js/register.js') ?>">
-    </script>
+                    <a
+                        href="<?= site_url('bukutamu-kiosk') ?>"
+                        class="register-secondary">
 
-</body>
+                        <i
+                            class="bi bi-arrow-left"
+                            aria-hidden="true">
+                        </i>
 
-</html>
+                        <span>
+                            Kembali
+                        </span>
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="register-primary">
+
+                        <span>
+                            Lanjut
+                        </span>
+
+                        <span
+                            class="register-primary-icon"
+                            aria-hidden="true">
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</main>
+
+<?= $this->endSection() ?>
+
+<?= $this->section('pageJs') ?>
+
+<script
+    src="<?= base_url('assets/js/register.js') ?>">
+</script>
+
+<?= $this->endSection() ?>

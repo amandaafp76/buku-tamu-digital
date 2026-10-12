@@ -35,6 +35,11 @@ $routes->post(
     'AdminVisitController::delete/$1',
     ['filter' => ['auth', 'role:administrator']]
 );
+$routes->post(
+    'admin/bukutamu-kunjungan/restore/(:num)',
+    'AdminVisitController::restore/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
 
 
 $routes->get(
@@ -70,6 +75,11 @@ $routes->get(
 $routes->post(
     'admin/bukutamu-pegawai/hapus/(:num)',
     'EmployeeController::delete/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
+$routes->post(
+    'admin/bukutamu-pegawai/restore/(:num)',
+    'EmployeeController::restore/$1',
     ['filter' => ['auth', 'role:administrator']]
 );
 
@@ -109,6 +119,11 @@ $routes->post(
     'DepartmentController::delete/$1',
     ['filter' => ['auth', 'role:administrator']]
 );
+$routes->post(
+    'admin/bukutamu-departemen/restore/(:num)',
+    'DepartmentController::restore/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
 
 
 $routes->get(
@@ -144,6 +159,11 @@ $routes->get(
 $routes->post(
     'admin/bukutamu-tujuan/hapus/(:num)',
     'VisitPurposeController::delete/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
+$routes->post(
+    'admin/bukutamu-tujuan/restore/(:num)',
+    'VisitPurposeController::restore/$1',
     ['filter' => ['auth', 'role:administrator']]
 );
 
@@ -196,6 +216,11 @@ $routes->get(
 $routes->post(
     'admin/bukutamu-pengguna/hapus/(:num)',
     'UserController::delete/$1',
+    ['filter' => ['auth', 'role:administrator']]
+);
+$routes->post(
+    'admin/bukutamu-pengguna/restore/(:num)',
+    'UserController::restore/$1',
     ['filter' => ['auth', 'role:administrator']]
 );
 
@@ -295,6 +320,22 @@ $routes->post(
     ['filter' => ['auth', 'role:administrator']]
 );
 
+$routes->get(
+    'admin/bukutamu-laporan',
+    'ReportController::index',
+    ['filter' => ['auth', 'role:administrator']]
+);
+$routes->get(
+    'admin/bukutamu-laporan/pdf',
+    'ReportController::pdf',
+    ['filter' => ['auth', 'role:administrator']]
+);
+$routes->get(
+    'admin/bukutamu-laporan/excel',
+    'ReportController::excel',
+    ['filter' => ['auth', 'role:administrator']]
+);
+
 
 //PETUGAS
 $routes->get(
@@ -322,6 +363,11 @@ $routes->post(
 $routes->get(
     'petugas/bukutamu-kunjungan',
     'PetugasVisitController::index',
+    ['filter' => ['auth', 'role:petugas']]
+);
+$routes->get(
+    'petugas/bukutamu-riwayat',
+    'PetugasVisitController::history',
     ['filter' => ['auth', 'role:petugas']]
 );
 $routes->get(

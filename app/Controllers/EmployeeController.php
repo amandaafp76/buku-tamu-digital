@@ -23,6 +23,7 @@ class EmployeeController extends BaseController
         $search     = trim((string) $this->request->getGet('search'));
         $department = $this->request->getGet('department');
         $status     = $this->request->getGet('status');
+        $showDeleted = (int) $this->request->getGet('show_deleted') === 1;
 
         $query = $this->employeeModel
             ->select('employees.*, departments.name AS department_name')
@@ -31,6 +32,10 @@ class EmployeeController extends BaseController
                 'departments.id = employees.department_id',
                 'left'
             );
+
+        if ($showDeleted) {
+            $query->onlyDeleted();
+        }
 
         if ($search !== '') {
             $query->groupStart()
@@ -52,7 +57,18 @@ class EmployeeController extends BaseController
 
         $employees = $query
             ->orderBy('employees.employee_name', 'ASC')
-            ->findAll();
+            ->paginate(10);
+
+        $pager = $query->pager;
+
+        if ($this->request->isAJAX()) {
+
+            return view('components/employees/table', [
+                'employees' => $employees,
+                'pager'     => $pager,
+                'showDeleted' => $showDeleted,
+            ]);
+        }
 
         $departments = $this->departmentModel
             ->orderBy('name', 'ASC')
@@ -62,10 +78,12 @@ class EmployeeController extends BaseController
             'title'       => 'Pegawai',
             'pageTitle'   => 'Pegawai',
             'employees'   => $employees,
+            'pager'       => $pager,
             'departments' => $departments,
             'search'      => $search,
             'department'  => $department,
             'status'      => $status,
+            'showDeleted' => $showDeleted,
         ]);
     }
 
@@ -315,9 +333,11 @@ class EmployeeController extends BaseController
                 ->with('error', 'Data pegawai tidak ditemukan.');
         }
 
-        $this->employeeModel->update($id, [
-            'deleted_at' => null,
-        ]);
+        $this->employeeModel
+            ->db
+            ->table('employees')
+            ->where('id', $id)
+            ->update(['deleted_at' => null]);
 
         $this->logActivity(
             'restore',

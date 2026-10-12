@@ -640,9 +640,6 @@ document.addEventListener(
                 openCameraButton.hidden =
                     true;
 
-                retakePhotoButton.hidden =
-                    true;
-
 
                 updateStatus(
                     'bi-camera',

@@ -18,7 +18,7 @@ class NotificationTemplateValidation
 
             'notification_type' => [
                 'label' => 'Jenis Notifikasi',
-                'rules' => 'required|in_list[registration_success,check_in,visit_warning,check_out]',
+                'rules' => 'required|in_list[new_guest_arrival,visit_approved,visit_completed]',
                 'errors' => [
                     'required' => '{field} wajib dipilih.',
                     'in_list'  => '{field} tidak valid.',

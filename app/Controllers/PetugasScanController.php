@@ -84,7 +84,13 @@ class PetugasScanController extends BaseController
         $visitModel = new VisitModel();
 
         $visit = $visitModel
-            ->where('id', $visitId)
+            ->select('
+            visits.*,
+            guests.guest_name,
+            guests.phone
+        ')
+            ->join('guests', 'guests.id = visits.guest_id', 'left')
+            ->where('visits.id', $visitId)
             ->first();
 
         if (! $visit) {
@@ -124,6 +130,27 @@ class PetugasScanController extends BaseController
             'check_out' => $checkOutTime,
             'duration'  => $duration,
         ]);
+
+        try {
+            $wakitaService = new \App\Services\WakitaService();
+
+            $visitDataForNotification = [
+                'guest_name' => $visit['guest_name'] ?? '-',
+                'phone'      => $visit['phone'] ?? '',
+                'visit_code' => $visit['visit_code'] ?? '-',
+                'check_out'  => $checkOutTime,
+            ];
+
+            $wakitaService->sendToGuest(
+                $visitDataForNotification,
+                'visit_completed'
+            );
+        } catch (\Throwable $e) {
+            log_message(
+                'error',
+                '[SCAN-CHECKOUT] Gagal kirim WA ke tamu: ' . $e->getMessage()
+            );
+        }
 
         return $this->response->setJSON([
             'success'  => true,

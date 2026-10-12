@@ -150,17 +150,14 @@
                 };
 
                 $notificationLabel = match ($template['notification_type']) {
-                    'registration_success'
-                    => 'Registrasi Berhasil',
+                    'new_guest_arrival'
+                    => 'Tamu Baru untuk Pegawai',
 
-                    'check_in'
-                    => 'Check-in',
+                    'visit_approved'
+                    => 'Kunjungan Disetujui',
 
-                    'visit_warning'
-                    => 'Peringatan Kunjungan',
-
-                    'check_out'
-                    => 'Check-out',
+                    'visit_completed'
+                    => 'Kunjungan Selesai',
 
                     default
                     => $template['notification_type'],

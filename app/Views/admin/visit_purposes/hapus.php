@@ -36,7 +36,8 @@
         <form
             id="formHapusTujuanKunjungan"
             action="<?= base_url('admin/bukutamu-tujuan/hapus/' . $visitPurpose['id']) ?>"
-            method="post">
+            method="post"
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

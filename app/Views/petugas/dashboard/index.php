@@ -562,7 +562,7 @@
 
                 <a
                     href="<?= site_url('petugas/bukutamu-kunjungan') ?>"
-                    class="btn btn-sm btn-outline-primary">
+                    class="dashboard-action-button">
 
                     <i class="bi bi-list-ul"></i>
                     Lihat Semua
@@ -687,7 +687,7 @@
 
                                         <a
                                             href="<?= site_url('petugas/bukutamu-kunjungan/detail/' . $visit['id']) ?>"
-                                            class="btn btn-sm btn-outline-primary">
+                                            class="dashboard-action-button">
 
                                             <i class="bi bi-eye"></i>
                                             Detail
@@ -889,7 +889,7 @@
 
                                         <a
                                             href="<?= site_url('petugas/bukutamu-kunjungan/detail/' . $visit['id']) ?>"
-                                            class="btn btn-sm btn-outline-primary">
+                                            class="dashboard-action-button">
 
                                             <i class="bi bi-eye"></i>
                                             Detail

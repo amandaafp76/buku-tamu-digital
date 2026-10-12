@@ -16,7 +16,6 @@ class EmployeeModel extends Model
         'employee_name',
         'phone',
         'active',
-        'deleted_at',
     ];
 
     protected $useTimestamps = true;

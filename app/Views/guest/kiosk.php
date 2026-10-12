@@ -1,147 +1,108 @@
-<!DOCTYPE html>
-<html lang="id">
+<?= $this->extend('layouts/kiosk') ?>
 
-<head>
+<?= $this->section('pageCss') ?>
+<style>
+    html,
+    body {
+        min-height: 100%;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+</style>
+<?= $this->endSection() ?>
 
-    <meta charset="UTF-8">
+<?= $this->section('content') ?>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<main class="kiosk-page">
 
-    <meta
-        name="theme-color"
-        content="#FBF9D1">
+    <div class="kiosk-shell">
 
-    <title>
-        Buku Tamu - Kiosk
-    </title>
+        <section class="kiosk-card">
 
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/bootstrap-icons.css') ?>">
+            <div class="kiosk-status">
 
-    <link
-        rel="stylesheet"
-        href="<?= base_url('assets/css/kiosk.css') ?>">
+                <span
+                    class="kiosk-status-dot"
+                    aria-hidden="true">
+                </span>
 
-</head>
+                <span>
+                    Sistem siap digunakan
+                </span>
+
+            </div>
+
+            <div class="kiosk-brand">
+
+                <div
+                    class="kiosk-brand-icon"
+                    aria-hidden="true">
+
+                    <i
+                        class="bi bi-journal-bookmark">
+                    </i>
+
+                </div>
+
+            </div>
+
+            <div class="kiosk-eyebrow">
+                Buku Tamu Digital
+            </div>
 
 
-<body>
+            <h1 class="kiosk-title">
+                Selamat Datang
+            </h1>
 
 
-    <div
-        class="kiosk-background"
-        aria-hidden="true">
+            <p class="kiosk-description">
 
-        <span
-            class="kiosk-orb kiosk-orb-one">
-        </span>
+                Senang menyambut kedatangan Anda.
+                Silakan isi buku tamu digital
+                untuk memulai kunjungan.
 
-        <span
-            class="kiosk-orb kiosk-orb-two">
-        </span>
+            </p>
 
-        <span
-            class="kiosk-orb kiosk-orb-three">
-        </span>
+            <a
+                href="<?= site_url('bukutamu-kiosk/registrasi') ?>"
+                class="kiosk-action">
+
+                <span>
+                    Mulai Registrasi
+                </span>
+
+                <span
+                    class="kiosk-action-icon"
+                    aria-hidden="true">
+
+                    <i
+                        class="bi bi-arrow-right">
+                    </i>
+
+                </span>
+
+            </a>
+
+            <div class="kiosk-footer">
+
+                <i
+                    class="bi bi-shield-check"
+                    aria-hidden="true">
+                </i>
+
+                <span>
+                    Data Anda diproses dengan aman
+                </span>
+
+            </div>
+
+
+        </section>
 
     </div>
 
+</main>
 
-    <main class="kiosk-page">
-
-        <div class="kiosk-shell">
-
-            <section class="kiosk-card">
-
-                <div class="kiosk-status">
-
-                    <span
-                        class="kiosk-status-dot"
-                        aria-hidden="true">
-                    </span>
-
-                    <span>
-                        Sistem siap digunakan
-                    </span>
-
-                </div>
-
-                <div class="kiosk-brand">
-
-                    <div
-                        class="kiosk-brand-icon"
-                        aria-hidden="true">
-
-                        <i
-                            class="bi bi-journal-bookmark">
-                        </i>
-
-                    </div>
-
-                </div>
-
-                <div class="kiosk-eyebrow">
-                    Buku Tamu Digital
-                </div>
-
-
-                <h1 class="kiosk-title">
-                    Selamat Datang
-                </h1>
-
-
-                <p class="kiosk-description">
-
-                    Senang menyambut kedatangan Anda.
-                    Silakan isi buku tamu digital
-                    untuk memulai kunjungan.
-
-                </p>
-
-                <a
-                    href="<?= site_url('bukutamu-kiosk/registrasi') ?>"
-                    class="kiosk-action">
-
-                    <span>
-                        Mulai Registrasi
-                    </span>
-
-                    <span
-                        class="kiosk-action-icon"
-                        aria-hidden="true">
-
-                        <i
-                            class="bi bi-arrow-right">
-                        </i>
-
-                    </span>
-
-                </a>
-
-                <div class="kiosk-footer">
-
-                    <i
-                        class="bi bi-shield-check"
-                        aria-hidden="true">
-                    </i>
-
-                    <span>
-                        Data Anda diproses dengan aman
-                    </span>
-
-                </div>
-
-
-            </section>
-
-        </div>
-
-    </main>
-
-
-</body>
-
-</html>
+<?= $this->endSection() ?>

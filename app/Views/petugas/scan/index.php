@@ -2,78 +2,87 @@
 
 <?= $this->section('content') ?>
 
-<div class="container-fluid py-4">
+<div class="scan-qr-page">
 
-    <div class="mb-4">
+    <div class="dashboard-header mb-4">
 
-        <h1>Scan QR Kunjungan</h1>
+        <div>
 
-        <p class="text-muted">
-            Scan QR Code kunjungan tamu untuk memproses check-out.
-        </p>
+            <h1 class="dashboard-heading">
+                Scan QR Kunjungan
+            </h1>
+
+            <p class="dashboard-subheading">
+                Scan QR Code kunjungan tamu untuk memproses check-out.
+            </p>
+
+        </div>
 
     </div>
 
 
-    <div class="row justify-content-center">
+    <div class="scan-qr-wrapper">
 
-        <div class="col-lg-7 col-xl-6">
+        <div class="glass-card scan-qr-card">
 
-            <div class="glass-card p-4 text-center">
+            <div class="scan-qr-header">
 
-                <div class="mb-4">
+                <div class="scan-qr-icon">
 
-                    <div class="fs-1 text-primary mb-3">
-                        <i class="bi bi-qr-code-scan"></i>
-                    </div>
-
-                    <h4 class="mb-2">
-                        Scan QR Code
-                    </h4>
-
-                    <p class="text-muted mb-0">
-                        Arahkan kamera ke QR Code kunjungan
-                        yang ditunjukkan oleh tamu.
-                    </p>
+                    <i class="bi bi-qr-code-scan"></i>
 
                 </div>
 
+                <h2 class="scan-qr-title">
+                    Scan QR Code
+                </h2>
 
-                <div
-                    id="qr-reader"
-                    class="mb-4"
-                    data-find-url="<?= site_url('petugas/bukutamu-scan-qr/cari') ?>"
-                    data-checkout-url="<?= site_url('petugas/bukutamu-scan-qr/check-out') ?>">
-                </div>
+                <p class="scan-qr-description">
+                    Arahkan kamera ke QR Code kunjungan
+                    yang ditunjukkan oleh tamu.
+                </p>
 
-                <div
-                    id="scan-result"
-                    class="alert alert-secondary d-none">
-                </div>
-
-                <button
-                    type="button"
-                    id="scan-again"
-                    class="btn btn-outline-primary d-none">
-
-                    <i class="bi bi-arrow-repeat"></i>
-                    Scan QR Lagi
-
-                </button>
-
-                <div id="scan-csrf" class="d-none">
-                    <?= csrf_field() ?>
-                </div>
+            </div>
 
 
-                <div class="alert alert-info mb-0">
+            <div
+                id="qr-reader"
+                class="scan-qr-reader"
+                data-find-url="<?= site_url('petugas/bukutamu-scan-qr/cari') ?>"
+                data-checkout-url="<?= site_url('petugas/bukutamu-scan-qr/check-out') ?>">
+            </div>
 
-                    <i class="bi bi-info-circle"></i>
 
+            <div
+                id="scan-result"
+                class="scan-qr-result d-none">
+            </div>
+
+
+            <button
+                type="button"
+                id="scan-again"
+                class="dashboard-secondary-button scan-qr-again d-none">
+
+                <i class="bi bi-arrow-repeat"></i>
+                Scan QR Lagi
+
+            </button>
+
+
+            <div id="scan-csrf" class="d-none">
+                <?= csrf_field() ?>
+            </div>
+
+
+            <div class="scan-qr-info">
+
+                <i class="bi bi-info-circle"></i>
+
+                <span>
                     Silakan izinkan akses kamera ketika
                     browser meminta izin.
-
-                </div>
+                </span>
 
             </div>
 

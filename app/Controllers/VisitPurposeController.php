@@ -19,6 +19,7 @@ class VisitPurposeController extends BaseController
     {
         $search = trim((string) $this->request->getGet('search'));
         $status = $this->request->getGet('status');
+        $showDeleted = (int) $this->request->getGet('show_deleted') === 1;
 
         $query = $this->visitPurposeModel
             ->select('visit_purposes.*')
@@ -29,6 +30,10 @@ class VisitPurposeController extends BaseController
                 'left'
             )
             ->groupBy('visit_purposes.id');
+
+        if ($showDeleted) {
+            $query->onlyDeleted();
+        }
 
         if ($search !== '') {
             $query->like(
@@ -46,14 +51,30 @@ class VisitPurposeController extends BaseController
 
         $visitPurposes = $query
             ->orderBy('visit_purposes.purpose_name', 'ASC')
-            ->findAll();
+            ->paginate(10);
+
+        $pager = $query->pager;
+
+        if ($this->request->isAJAX()) {
+
+            return view(
+                'components/visit_purposes/table',
+                [
+                    'visitPurposes' => $visitPurposes,
+                    'pager'         => $pager,
+                    'showDeleted'   => $showDeleted,
+                ]
+            );
+        }
 
         return view('admin/visit_purposes/index', [
             'title'         => 'Tujuan Kunjungan',
             'pageTitle'     => 'Tujuan Kunjungan',
             'visitPurposes' => $visitPurposes,
+            'pager'         => $pager,
             'search'        => $search,
             'status'        => $status,
+            'showDeleted'   => $showDeleted,
         ]);
     }
 
@@ -321,6 +342,40 @@ class VisitPurposeController extends BaseController
                 'success',
                 'Tujuan Kunjungan "' . $visitPurpose['purpose_name'] .
                     '" berhasil dihapus.'
+            );
+    }
+
+    public function restore(int $id)
+    {
+        $visitPurpose = $this->visitPurposeModel
+            ->withDeleted()
+            ->find($id);
+
+        if ($visitPurpose === null) {
+            return redirect()
+                ->to(base_url('admin/bukutamu-tujuan'))
+                ->with('error', 'Data Tujuan Kunjungan tidak ditemukan.');
+        }
+
+        $this->visitPurposeModel
+            ->db
+            ->table('visit_purposes')
+            ->where('id', $id)
+            ->update(['deleted_at' => null]);
+
+        $this->logActivity(
+            'restore',
+            'visit_purpose',
+            $id,
+            'Memulihkan Tujuan Kunjungan "' . $visitPurpose['purpose_name'] . '".'
+        );
+
+        return redirect()
+            ->to(base_url('admin/bukutamu-tujuan'))
+            ->with(
+                'success',
+                'Tujuan Kunjungan "' . $visitPurpose['purpose_name'] .
+                    '" berhasil dipulihkan.'
             );
     }
 }

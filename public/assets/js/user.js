@@ -1034,3 +1034,229 @@ if (
 } else {
     bindUserModalEvents();
 }
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+        const form =
+            document.getElementById(
+                'userFilterForm'
+            );
+
+        const searchInput =
+            document.getElementById(
+                'userSearch'
+            );
+
+        const roleInput =
+            document.getElementById(
+                'userRole'
+            );
+
+        const statusInput =
+            document.getElementById(
+                'userStatus'
+            );
+
+        const resetButton =
+            document.getElementById(
+                'resetUserFilter'
+            );
+
+        const tableContainer =
+            document.getElementById(
+                'userTableContainer'
+            );
+
+
+        if (
+            !form ||
+            !searchInput ||
+            !roleInput ||
+            !statusInput ||
+            !resetButton ||
+            !tableContainer
+        ) {
+            return;
+        }
+
+
+        const loadUsers =
+            async function () {
+
+                const params =
+                    new URLSearchParams(
+                        new FormData(form)
+                    );
+
+
+                const url =
+                    form.action +
+                    '?' +
+                    params.toString();
+
+
+                const response =
+                    await fetch(
+                        url,
+                        {
+                            headers: {
+                                'X-Requested-With':
+                                    'XMLHttpRequest'
+                            }
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        'Gagal mengambil data pengguna.'
+                    );
+
+                }
+
+
+                const html =
+                    await response.text();
+
+
+                tableContainer.innerHTML =
+                    html;
+
+                bindUserEditButtons();
+                bindUserDeleteButtons();
+                bindUserResetPasswordButtons();
+
+            };
+
+            tableContainer.addEventListener(
+                'click',
+                async function (event) {
+
+                    const paginationLink =
+                        event.target.closest(
+                            '.admin-pagination a'
+                        );
+
+                    if (!paginationLink) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    const url =
+                        paginationLink.href;
+
+                    if (!url) {
+                        return;
+                    }
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                url,
+                                {
+                                    headers: {
+                                        'X-Requested-With':
+                                            'XMLHttpRequest'
+                                    }
+                                }
+                            );
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                'Gagal mengambil halaman pengguna.'
+                            );
+
+                        }
+
+                        const html =
+                            await response.text();
+
+                        tableContainer.innerHTML =
+                            html;
+
+                        bindUserEditButtons();
+                        bindUserDeleteButtons();
+                        bindUserResetPasswordButtons();
+
+                    } catch (error) {
+
+                        console.error(
+                            'Gagal memuat pagination pengguna:',
+                            error
+                        );
+
+                    }
+
+                }
+            );
+
+        let searchTimeout;
+
+
+        searchInput.addEventListener(
+            'input',
+            function () {
+
+                clearTimeout(
+                    searchTimeout
+                );
+
+
+                searchTimeout =
+                    setTimeout(
+                        function () {
+
+                            loadUsers();
+
+                        },
+                        400
+                    );
+
+            }
+        );
+
+
+        roleInput.addEventListener(
+            'change',
+            function () {
+
+                loadUsers();
+
+            }
+        );
+
+
+        statusInput.addEventListener(
+            'change',
+            function () {
+
+                loadUsers();
+
+            }
+        );
+
+
+        resetButton.addEventListener(
+            'click',
+            function () {
+
+                searchInput.value = '';
+
+                roleInput.value = '';
+
+                statusInput.value = '';
+
+
+                loadUsers();
+
+            }
+        );
+
+    }
+);

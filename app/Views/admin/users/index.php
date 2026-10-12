@@ -48,33 +48,49 @@
 <?php endif; ?>
 
 
-<div
-    class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+<div class="dashboard-header mb-4">
 
     <div>
 
-        <h1 class="h4 fw-semibold mb-1">
+        <h1 class="dashboard-heading">
             Pengguna
         </h1>
 
-        <p class="text-secondary mb-0">
+        <p class="dashboard-subheading">
             Kelola akun pengguna, role, dan status akses sistem.
         </p>
 
     </div>
 
+    <div class="dashboard-header-actions">
 
-    <button
-        type="button"
-        class="btn btn-primary glass-button-primary rounded-pill px-4"
-        id="openTambahPengguna"
-        data-modal-url="<?= base_url('admin/bukutamu-pengguna/tambah') ?>">
+        <a
+            href="<?= base_url('admin/bukutamu-pengguna' . ($showDeleted ? '' : '?show_deleted=1')) ?>"
+            class="dashboard-secondary-button">
 
-        <i class="bi bi-plus-lg me-1"></i>
+            <i class="bi bi-<?= $showDeleted ? 'arrow-left' : 'trash' ?>"></i>
 
-        Tambah Pengguna
+            <?= $showDeleted ? 'Kembali ke Data Aktif' : 'Tampilkan Terhapus' ?>
 
-    </button>
+        </a>
+
+        <?php if (! $showDeleted): ?>
+
+            <button
+                type="button"
+                class="dashboard-primary-button"
+                id="openTambahPengguna"
+                data-modal-url="<?= base_url('admin/bukutamu-pengguna/tambah') ?>">
+
+                <i class="bi bi-plus-lg"></i>
+
+                Tambah Pengguna
+
+            </button>
+
+        <?php endif; ?>
+
+    </div>
 
 </div>
 
@@ -82,6 +98,7 @@
 <div class="glass-card employee-filter-card mb-4">
 
     <form
+        id="userFilterForm"
         action="<?= base_url('admin/bukutamu-pengguna') ?>"
         method="get"
         class="row g-3 align-items-end">
@@ -90,7 +107,7 @@
 
             <label
                 for="userSearch"
-                class="form-label">
+                class="employee-filter-label">
 
                 Cari Pengguna
 
@@ -117,7 +134,7 @@
 
             <label
                 for="userRole"
-                class="form-label">
+                class="employee-filter-label">
 
                 Role
 
@@ -156,7 +173,7 @@
 
             <label
                 for="userStatus"
-                class="form-label">
+                class="employee-filter-label">
 
                 Status
 
@@ -195,25 +212,16 @@
         <div class="col-12 col-md-6 col-lg-2 d-flex gap-2">
 
             <button
-                type="submit"
-                class="btn glass-button-primary rounded-pill flex-grow-1">
-
-                <i class="bi bi-search me-1"></i>
-
-                Cari
-
-            </button>
-
-
-            <a
-                href="<?= base_url('admin/bukutamu-pengguna') ?>"
-                class="btn btn-light rounded-pill"
+                type="button"
+                id="resetUserFilter"
+                class="employee-filter-reset"
                 title="Reset filter"
                 aria-label="Reset filter">
 
                 <i class="bi bi-arrow-counterclockwise"></i>
+                <span>Reset</span>
 
-            </a>
+            </button>
 
         </div>
 
@@ -222,246 +230,14 @@
 </div>
 
 
-<div class="glass-card employee-table-card">
-
-    <div class="table-responsive">
-
-        <table class="table table-hover align-middle mb-0">
-
-            <thead>
-
-                <tr>
-
-                    <th style="width: 70px;">
-                        No
-                    </th>
-
-                    <th>
-                        Username
-                    </th>
-
-                    <th>
-                        Role
-                    </th>
-
-                    <th>
-                        Status
-                    </th>
-
-                    <th class="text-end">
-                        Aksi
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody>
-
-                <?php if (! empty($users)): ?>
-
-                    <?php foreach ($users as $index => $user): ?>
-
-                        <tr>
-
-                            <td>
-                                <?= $index + 1 ?>
-                            </td>
-
-
-                            <td>
-
-                                <div class="d-flex align-items-center gap-3">
-
-                                    <div class="employee-avatar">
-
-                                        <i class="bi bi-person"></i>
-
-                                    </div>
-
-                                    <div>
-
-                                        <div class="fw-semibold">
-
-                                            <?= esc($user['username']) ?>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <?php if ($user['role'] === 'administrator'): ?>
-
-                                    <span
-                                        class="badge rounded-pill bg-primary-subtle text-primary-emphasis">
-
-                                        <i class="bi bi-shield-check me-1"></i>
-
-                                        Administrator
-
-                                    </span>
-
-                                <?php else: ?>
-
-                                    <span
-                                        class="badge rounded-pill bg-light text-dark">
-
-                                        <i class="bi bi-person-badge me-1"></i>
-
-                                        Petugas
-
-                                    </span>
-
-                                <?php endif; ?>
-
-                            </td>
-
-
-                            <td>
-
-                                <?php if ((bool) $user['active']): ?>
-
-                                    <span
-                                        class="badge rounded-pill bg-success-subtle text-success-emphasis">
-
-                                        Aktif
-
-                                    </span>
-
-                                <?php else: ?>
-
-                                    <span
-                                        class="badge rounded-pill bg-secondary-subtle text-secondary">
-
-                                        Nonaktif
-
-                                    </span>
-
-                                <?php endif; ?>
-
-                            </td>
-
-
-                            <td>
-
-                                <div
-                                    class="d-flex justify-content-end gap-2 flex-wrap">
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm employee-action-button"
-                                        data-user-action="edit"
-                                        data-user-edit-url="<?= base_url('admin/bukutamu-pengguna/edit/' . $user['id']) ?>"
-                                        title="Edit">
-                                        <i class="bi bi-pencil"></i>
-                                        <span class="visually-hidden">
-                                            Edit <?= esc($user['username']) ?>
-                                        </span>
-                                    </button>
-
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm employee-action-button"
-                                        data-reset-password-url="<?= base_url('admin/bukutamu-pengguna/reset-password/' . $user['id']) ?>"
-                                        data-action="reset-password"
-                                        title="Reset Password">
-
-                                        <i class="bi bi-key"></i>
-
-                                        <span class="visually-hidden">
-                                            Reset password <?= esc($user['username']) ?>
-                                        </span>
-
-                                    </button>
-
-
-                                    <form
-                                        action="<?= base_url('admin/bukutamu-pengguna/status/' . $user['id']) ?>"
-                                        method="post"
-                                        class="d-inline">
-
-                                        <?= csrf_field() ?>
-
-                                        <button
-                                            type="submit"
-                                            class="btn btn-sm employee-action-button"
-                                            title="<?= (bool) $user['active'] ? 'Nonaktifkan' : 'Aktifkan' ?>"
-                                            aria-label="<?= (bool) $user['active'] ? 'Nonaktifkan' : 'Aktifkan' ?>">
-
-                                            <?php if ((bool) $user['active']): ?>
-
-                                                <i class="bi bi-person-dash"></i>
-
-                                            <?php else: ?>
-
-                                                <i class="bi bi-person-check"></i>
-
-                                            <?php endif; ?>
-
-                                        </button>
-
-                                    </form>
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm employee-action-button employee-delete-button"
-                                        data-user-action="delete"
-                                        data-user-delete-url="<?= base_url('admin/bukutamu-pengguna/hapus/' . $user['id']) ?>"
-                                        title="Hapus">
-
-                                        <i class="bi bi-trash"></i>
-
-                                        <span class="visually-hidden">
-                                            Hapus <?= esc($user['username']) ?>
-                                        </span>
-
-                                    </button>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    <?php endforeach; ?>
-
-                <?php else: ?>
-
-                    <tr>
-
-                        <td
-                            colspan="5"
-                            class="text-center py-5">
-
-                            <div class="text-secondary">
-
-                                <i
-                                    class="bi bi-people fs-3 d-block mb-2">
-                                </i>
-
-                                Belum ada data pengguna.
-
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                <?php endif; ?>
-
-            </tbody>
-
-        </table>
-
-    </div>
+<div
+    class="glass-card employee-table-card"
+    id="userTableContainer">
+
+    <?= $this->include('components/users/table', [
+        'users' => $users,
+        'showDeleted' => $showDeleted ?? false,
+    ]) ?>
 
 </div>
 

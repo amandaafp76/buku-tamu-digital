@@ -44,6 +44,24 @@
         rel="stylesheet"
         href="<?= base_url('assets/css/login.css') ?>">
 
+    <link rel="stylesheet" href="<?= base_url('assets/css/pwa.css') ?>">
+
+    <?php
+    $primaryColor = $settings['primary_color'] ?? '#9A3F3F';
+    ?>
+
+    <style>
+        :root {
+            --color-primary: <?= esc($primaryColor) ?>;
+        }
+    </style>
+
+    <link rel="manifest" href="<?= base_url('manifest.json') ?>">
+    <meta name="theme-color" content="<?= esc($primaryColor ?? '#9A3F3F') ?>">
+    <link rel="apple-touch-icon" href="<?= base_url('assets/icons/icon-192x192.png') ?>">
+
+    <?= $this->include('components/splash-links') ?>
+
     <?= $this->renderSection('pageCss') ?>
 
 </head>
@@ -53,6 +71,10 @@
     <?= $this->renderSection('content') ?>
 
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
+
+    <script src="<?= base_url('assets/js/pwa.js') ?>"></script>
+
+    <script src="<?= base_url('assets/js/form-guard.js') ?>"></script>
 
     <?= $this->renderSection('pageJs') ?>
 

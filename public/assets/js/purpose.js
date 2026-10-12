@@ -5,12 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const purposeSelect = document.getElementById('purpose_id');
     const departmentSelect = document.getElementById('department_id');
     const employeeSelect = document.getElementById('employee_id');
-    const keperluanInput = document.getElementById('keperluan');
 
     const purposeError = document.getElementById('purposeIdError');
     const departmentError = document.getElementById('departmentIdError');
     const employeeError = document.getElementById('employeeIdError');
-    const keperluanError = document.getElementById('keperluanError');
 
     const employeesUrl = form.dataset.employeesUrl;
     const oldEmployeeId = form.dataset.oldEmployeeId || '';
@@ -319,57 +317,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     );
 
+form.addEventListener(
+    'submit',
+    function(event) {
 
-    keperluanInput.addEventListener(
-        'input',
-        function() {
+        const purposeValid =
+            validatePurpose();
 
-            validateKeperluan();
+        const departmentValid =
+            validateDepartment();
 
-        }
-    );
+        const employeeValid =
+            validateEmployee();
 
+        if (
+            !purposeValid ||
+            !departmentValid ||
+            !employeeValid
+        ) {
 
-    form.addEventListener(
-        'submit',
-        function(event) {
+            event.preventDefault();
 
-            const purposeValid =
-                validatePurpose();
+            const firstInvalid =
+                form.querySelector('.is-invalid');
 
-            const departmentValid =
-                validateDepartment();
+            if (firstInvalid) {
 
-            const employeeValid =
-                validateEmployee();
-
-            const keperluanValid =
-                validateKeperluan();
-
-
-            if (
-                !purposeValid ||
-                !departmentValid ||
-                !employeeValid ||
-                !keperluanValid
-            ) {
-
-                event.preventDefault();
-
-                const firstInvalid =
-                    form.querySelector('.is-invalid');
-
-                if (firstInvalid) {
-
-                    firstInvalid.focus();
-
-                }
+                firstInvalid.focus();
 
             }
 
         }
-    );
 
+    }
+);
 
     const currentDepartmentId =
         departmentSelect.value;

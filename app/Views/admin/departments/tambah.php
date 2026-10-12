@@ -56,7 +56,8 @@ $formData = $formData ?? [];
         <form
             action="<?= base_url('admin/bukutamu-departemen/tambah') ?>"
             method="post"
-            novalidate>
+            novalidate
+            data-offline-guard>
 
             <?= csrf_field() ?>
 

@@ -4,23 +4,7 @@ body {
     justify-content: center;
     padding: 24px;
 
-    background:
-        radial-gradient(
-            circle at 15% 15%,
-            rgba(193, 133, 109, 0.42),
-            transparent 34%
-        ),
-        radial-gradient(
-            circle at 85% 80%,
-            rgba(230, 207, 169, 0.75),
-            transparent 38%
-        ),
-        linear-gradient(
-            135deg,
-            #FBF9D1 0%,
-            #F7EBCF 48%,
-            #E6CFA9 100%
-        );
+    background: var(--color-background, #F8F9FB);
 }
 
 body::before,
@@ -37,7 +21,7 @@ body::before {
     height: 220px;
     top: -70px;
     right: -50px;
-    background: rgba(154, 63, 63, 0.18);
+    background: color-mix(in srgb, var(--color-primary) 18%, transparent);
 }
 
 body::after {
@@ -78,14 +62,14 @@ body::after {
 
     border-radius: 20px;
 
-    background: rgba(154, 63, 63, 0.92);
+    background: var(--color-primary);
     color: #fff;
 
     font-size: 26px;
     font-weight: 700;
 
     box-shadow:
-        0 12px 24px rgba(154, 63, 63, 0.22),
+        0 12px 24px color-mix(in srgb, var(--color-primary) 22%, transparent),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
@@ -109,11 +93,9 @@ body::after {
     margin-bottom: 20px;
     padding: 13px 15px;
 
-    border: 1px solid rgba(154, 63, 63, 0.16);
-    border-radius: 16px;
-
-    background: rgba(154, 63, 63, 0.09);
-    color: var(--color-primary);
+    border: 1px solid var(--color-danger-soft, rgba(220, 38, 38, 0.14));
+    background: var(--color-danger-soft, rgba(220, 38, 38, 0.10));
+    color: var(--color-danger, #dc2626);
 
     font-size: 13px;
     line-height: 1.5;
@@ -179,7 +161,7 @@ body::after {
 }
 
 .password-toggle:hover {
-    background: rgba(154, 63, 63, 0.08);
+    background: var(--color-primary-ultra-soft);
     color: var(--color-primary);
 }
 
@@ -187,7 +169,7 @@ body::after {
     outline: none;
 
     box-shadow:
-        0 0 0 3px rgba(154, 63, 63, 0.12);
+        0 0 0 3px var(--color-primary-ultra-soft);
 }
 
 .password-toggle-icon {
@@ -214,7 +196,7 @@ body::after {
     cursor: pointer;
 
     box-shadow:
-        0 12px 24px rgba(154, 63, 63, 0.22),
+        0 12px 24px color-mix(in srgb, var(--color-primary) 22%, transparent),
         inset 0 1px 0 rgba(255, 255, 255, 0.18);
 
     transition:
@@ -224,12 +206,12 @@ body::after {
 }
 
 .login-button:hover {
-    background: #873737;
+    background: var(--color-primary-dark);
 
     transform: translateY(-1px);
 
     box-shadow:
-        0 15px 28px rgba(154, 63, 63, 0.26);
+        0 15px 28px color-mix(in srgb, var(--color-primary) 26%, transparent);
 }
 
 .login-button:active {

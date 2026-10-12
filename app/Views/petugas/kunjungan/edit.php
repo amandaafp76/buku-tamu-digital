@@ -1,385 +1,180 @@
-<?= $this->extend('layouts/dashboard') ?>
+<?php
+$errors = $errors ?? session()->getFlashdata('errors') ?? [];
+$error  = $error ?? session()->getFlashdata('error');
+?>
 
-<?= $this->section('content') ?>
+<div class="employee-modal-wrapper">
 
-<div class="container-fluid py-4">
+    <div class="employee-modal glass-modal">
 
-    <div class="mb-4">
+        <div class="employee-modal-header">
 
-        <a
-            href="<?= site_url(
-                        'petugas/bukutamu-kunjungan/detail/' . $visit['id']
-                    ) ?>"
-            class="btn btn-sm btn-outline-secondary mb-3">
+            <div class="employee-modal-icon">
+                <i class="bi-clipboard-check"></i>
+            </div>
 
-            <i class="bi bi-arrow-left"></i>
-            Kembali
+            <div class="employee-modal-heading">
+                <h1 class="employee-modal-title">
+                    Edit Data Kunjungan
+                </h1>
 
-        </a>
+                <p class="employee-modal-description">
+                    Perbaiki data kunjungan
+                </p>
+            </div>
 
-        <h1>
-            Perbaiki Data Kunjungan
-        </h1>
-
-        <p class="text-muted">
-            Perbaiki data kunjungan yang diperlukan sebelum
-            proses verifikasi dan check-in.
-        </p>
-
-    </div>
-
-
-    <?php if (session()->getFlashdata('error')): ?>
-
-        <div class="alert alert-danger">
-
-            <?= esc(
-                session()->getFlashdata('error')
-            ) ?>
+            <button
+                type="button"
+                class="employee-modal-close"
+                id="closeEditKunjunganPetugas"
+                aria-label="Tutup">
+                <i class="bi bi-x-lg"></i>
+            </button>
 
         </div>
 
-    <?php endif; ?>
-
-
-    <?php if (session()->getFlashdata('errors')): ?>
-
-        <div class="alert alert-danger">
-
-            <ul class="mb-0">
-
-                <?php foreach (
-                    session()->getFlashdata('errors')
-                    as $error
-                ): ?>
-
-                    <li>
-                        <?= esc($error) ?>
-                    </li>
-
-                <?php endforeach; ?>
-
-            </ul>
-
-        </div>
-
-    <?php endif; ?>
-
-
-    <div class="glass-card p-4">
-
-        <div class="mb-4">
-
-            <h5 class="mb-1">
-                Data yang Dapat Diperbaiki
-            </h5>
-
-            <p class="text-muted mb-0">
-                Petugas hanya dapat mengubah bagian/departemen,
-                pegawai tujuan, keperluan kunjungan, dan jumlah rombongan.
-            </p>
-
-        </div>
-
+        <?php if ($error): ?>
+            <div class="employee-form-alert">
+                <i class="bi bi-exclamation-circle"></i>
+                <span><?= esc($error) ?></span>
+            </div>
+        <?php endif; ?>
 
         <form
-            action="<?= site_url(
-                        'petugas/bukutamu-kunjungan/update/' . $visit['id']
-                    ) ?>"
-            method="post">
+            action="<?= site_url('petugas/bukutamu-kunjungan/update/' . $visit['id']) ?>"
+            method="post"
+            data-offline-guard>
 
             <?= csrf_field() ?>
 
+            <div class="employee-modal-body">
 
-            <div class="row g-4">
+                <h3 class="employee-modal-section-title mt-4">Data Kunjungan</h3>
+                <p class="text-muted small mb-3">Tujuan dan informasi kunjungan.</p>
 
+                <div class="row g-3">
 
-                <div class="col-md-6">
+                    <div class="col-12 col-md-6">
+                        <label for="department_id" class="form-label employee-form-label">
+                            Bagian / Departemen
+                        </label>
+                        <select
+                            name="department_id"
+                            id="department_id"
+                            class="form-select employee-form-input <?= isset($errors['department_id']) ? 'is-invalid' : '' ?>"
+                            required>
 
-                    <label
-                        for="department_id"
-                        class="form-label">
+                            <option value="">Pilih Bagian / Departemen</option>
 
-                        Bagian / Departemen
+                            <?php foreach ($departments as $department): ?>
+                                <option
+                                    value="<?= esc($department['id']) ?>"
+                                    <?= (int) old('department_id', $visit['department_id']) === (int) $department['id'] ? 'selected' : '' ?>>
+                                    <?= esc($department['name']) ?>
+                                </option>
+                            <?php endforeach; ?>
 
-                    </label>
+                        </select>
+                        <?php if (isset($errors['department_id'])): ?>
+                            <div class="invalid-feedback"><?= esc($errors['department_id']) ?></div>
+                        <?php endif; ?>
+                    </div>
 
-                    <select
-                        name="department_id"
-                        id="department_id"
-                        class="form-select"
-                        required>
+                    <div class="col-12 col-md-6">
+                        <label for="employee_id" class="form-label employee-form-label">
+                            Pegawai Tujuan
+                        </label>
+                        <select
+                            name="employee_id"
+                            id="employee_id"
+                            class="form-select employee-form-input <?= isset($errors['employee_id']) ? 'is-invalid' : '' ?>"
+                            required>
 
-                        <option value="">
-                            Pilih Bagian / Departemen
-                        </option>
+                            <option value="">Pilih Pegawai Tujuan</option>
 
-                        <?php foreach (
-                            $departments as $department
-                        ): ?>
+                            <?php foreach ($employees as $employee): ?>
+                                <option
+                                    value="<?= esc($employee['id']) ?>"
+                                    data-department="<?= esc($employee['department_id']) ?>"
+                                    <?= (int) old('employee_id', $visit['employee_id']) === (int) $employee['id'] ? 'selected' : '' ?>>
+                                    <?= esc($employee['employee_name']) ?>
+                                </option>
+                            <?php endforeach; ?>
 
-                            <option
-                                value="<?= esc($department['id']) ?>"
-                                <?= (int) old(
-                                    'department_id',
-                                    $visit['department_id']
-                                ) === (int) $department['id']
-                                    ? 'selected'
-                                    : '' ?>>
+                        </select>
+                        <?php if (isset($errors['employee_id'])): ?>
+                            <div class="invalid-feedback"><?= esc($errors['employee_id']) ?></div>
+                        <?php endif; ?>
+                    </div>
 
-                                <?= esc($department['name']) ?>
+                    <div class="col-12 col-md-6">
+                        <label for="purpose_id" class="form-label employee-form-label">
+                            Keperluan Kunjungan
+                        </label>
+                        <select
+                            name="purpose_id"
+                            id="purpose_id"
+                            class="form-select employee-form-input <?= isset($errors['purpose_id']) ? 'is-invalid' : '' ?>"
+                            required>
 
-                            </option>
+                            <option value="">Pilih Keperluan Kunjungan</option>
 
-                        <?php endforeach; ?>
+                            <?php foreach ($purposes as $purpose): ?>
+                                <option
+                                    value="<?= esc($purpose['id']) ?>"
+                                    <?= (int) old('purpose_id', $visit['purpose_id']) === (int) $purpose['id'] ? 'selected' : '' ?>>
+                                    <?= esc($purpose['purpose_name']) ?>
+                                </option>
+                            <?php endforeach; ?>
 
-                    </select>
+                        </select>
+                        <?php if (isset($errors['purpose_id'])): ?>
+                            <div class="invalid-feedback"><?= esc($errors['purpose_id']) ?></div>
+                        <?php endif; ?>
+                    </div>
 
-                </div>
-
-
-                <div class="col-md-6">
-
-                    <label
-                        for="employee_id"
-                        class="form-label">
-
-                        Pegawai Tujuan
-
-                    </label>
-
-                    <select
-                        name="employee_id"
-                        id="employee_id"
-                        class="form-select"
-                        required>
-
-                        <option value="">
-                            Pilih Pegawai Tujuan
-                        </option>
-
-                        <?php foreach (
-                            $employees as $employee
-                        ): ?>
-
-                            <option
-                                value="<?= esc($employee['id']) ?>"
-                                data-department="<?= esc(
-                                                        $employee['department_id']
-                                                    ) ?>"
-                                <?= (int) old(
-                                    'employee_id',
-                                    $visit['employee_id']
-                                ) === (int) $employee['id']
-                                    ? 'selected'
-                                    : '' ?>>
-
-                                <?= esc(
-                                    $employee['employee_name']
-                                ) ?>
-
-                            </option>
-
-                        <?php endforeach; ?>
-
-                    </select>
-
-                </div>
-
-
-                <div class="col-md-6">
-
-                    <label
-                        for="purpose_id"
-                        class="form-label">
-
-                        Keperluan Kunjungan
-
-                    </label>
-
-                    <select
-                        name="purpose_id"
-                        id="purpose_id"
-                        class="form-select"
-                        required>
-
-                        <option value="">
-                            Pilih Keperluan Kunjungan
-                        </option>
-
-                        <?php foreach (
-                            $purposes as $purpose
-                        ): ?>
-
-                            <option
-                                value="<?= esc($purpose['id']) ?>"
-                                <?= (int) old(
-                                    'purpose_id',
-                                    $visit['purpose_id']
-                                ) === (int) $purpose['id']
-                                    ? 'selected'
-                                    : '' ?>>
-
-                                <?= esc(
-                                    $purpose['purpose_name']
-                                ) ?>
-
-                            </option>
-
-                        <?php endforeach; ?>
-
-                    </select>
+                    <div class="col-12 col-md-6">
+                        <label for="group_size" class="form-label employee-form-label">
+                            Jumlah Rombongan
+                        </label>
+                        <input
+                            type="number"
+                            name="group_size"
+                            id="group_size"
+                            class="form-control employee-form-input <?= isset($errors['group_size']) ? 'is-invalid' : '' ?>"
+                            min="1"
+                            max="100"
+                            value="<?= esc(old('group_size', $visit['group_size'])) ?>"
+                            required>
+                        <?php if (isset($errors['group_size'])): ?>
+                            <div class="invalid-feedback"><?= esc($errors['group_size']) ?></div>
+                        <?php endif; ?>
+                    </div>
 
                 </div>
-
-
-                <div class="col-md-6">
-
-                    <label
-                        for="group_size"
-                        class="form-label">
-
-                        Jumlah Rombongan
-
-                    </label>
-
-                    <input
-                        type="number"
-                        name="group_size"
-                        id="group_size"
-                        class="form-control"
-                        min="1"
-                        max="100"
-                        value="<?= esc(
-                                    old(
-                                        'group_size',
-                                        $visit['group_size']
-                                    )
-                                ) ?>"
-                        required>
-
-                </div>
-
 
             </div>
 
+            <div class="employee-modal-footer">
 
-            <div class="d-flex justify-content-end gap-2 mt-4">
-
-                <a
-                    href="<?= site_url(
-                                'petugas/bukutamu-kunjungan/detail/' . $visit['id']
-                            ) ?>"
-                    class="btn btn-outline-secondary">
-
+                <button
+                    type="button"
+                    class="btn employee-button-secondary rounded-pill"
+                    id="cancelEditKunjunganPetugas">
                     Batal
-
-                </a>
+                </button>
 
                 <button
                     type="submit"
-                    class="btn btn-primary">
-
-                    <i class="bi bi-save me-1"></i>
+                    class="btn employee-button-primary rounded-pill">
+                    <i class="bi bi-check-lg me-1"></i>
                     Simpan Perubahan
-
                 </button>
 
             </div>
-
 
         </form>
 
     </div>
 
 </div>
-
-<?= $this->endSection() ?>
-
-
-<?= $this->section('pageJs') ?>
-
-<script>
-    document.addEventListener(
-        'DOMContentLoaded',
-        function() {
-
-            const departmentSelect =
-                document.getElementById(
-                    'department_id'
-                );
-
-            const employeeSelect =
-                document.getElementById(
-                    'employee_id'
-                );
-
-            if (
-                !departmentSelect ||
-                !employeeSelect
-            ) {
-                return;
-            }
-
-
-            function filterEmployees() {
-
-                const selectedDepartment =
-                    departmentSelect.value;
-
-                const currentEmployee =
-                    employeeSelect.value;
-
-
-                Array.from(
-                    employeeSelect.options
-                ).forEach(function(option) {
-
-                    if (!option.value) {
-                        return;
-                    }
-
-                    const employeeDepartment =
-                        option.dataset.department;
-
-                    const visible =
-                        employeeDepartment ===
-                        selectedDepartment;
-
-                    option.hidden = !visible;
-
-                });
-
-
-                const selectedOption =
-                    employeeSelect.options[
-                        employeeSelect.selectedIndex
-                    ];
-
-
-                if (
-                    selectedOption &&
-                    selectedOption.value &&
-                    selectedOption.hidden
-                ) {
-
-                    employeeSelect.value = '';
-
-                }
-
-            }
-
-
-            departmentSelect.addEventListener(
-                'change',
-                filterEmployees
-            );
-
-
-            filterEmployees();
-
-        }
-    );
-</script>
-
-<?= $this->endSection() ?>

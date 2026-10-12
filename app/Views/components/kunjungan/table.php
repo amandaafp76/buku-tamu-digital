@@ -1,26 +1,58 @@
 <?php
 
+$isAdmin = url_is('admin/bukutamu-kunjungan*');
+
+$isHistoryMode = ! empty($isHistory);
+
 $detailBaseUrl = url_is('admin/bukutamu-kunjungan*')
     ? 'admin/bukutamu-kunjungan'
     : 'petugas/bukutamu-kunjungan';
+
+$showDeletedMode = $isAdmin && ! empty($showDeleted);
 
 ?>
 
 <div class="table-responsive">
 
-    <table class="table align-middle">
+    <table class="visit-table align-middle mb-0">
 
         <thead>
 
             <tr>
 
-                <th>No</th>
-                <th>Kode Kunjungan</th>
-                <th>Tamu</th>
-                <th>Tujuan</th>
-                <th>Waktu</th>
-                <th>Status</th>
-                <th>Aksi</th>
+                <th class="visit-table-no">
+                    No
+                </th>
+
+                <th>
+                    Kode Kunjungan
+                </th>
+
+                <th>
+                    Tamu
+                </th>
+
+                <th>
+                    Tujuan
+                </th>
+
+                <th>
+                    Waktu
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+                <?php if ($showDeletedMode): ?>
+                    <th>
+                        Dihapus Pada
+                    </th>
+                <?php endif; ?>
+
+                <th class="text-end">
+                    Aksi
+                </th>
 
             </tr>
 
@@ -68,63 +100,90 @@ $detailBaseUrl = url_is('admin/bukutamu-kunjungan*')
 
                         $durationText = implode(' ', $parts);
                     }
+
+                    $statusSlug = match ($visit['status']) {
+                        'Menunggu'         => 'waiting',
+                        'Masih Berkunjung' => 'visiting',
+                        'Selesai'          => 'completed',
+                        'Ditolak'          => 'rejected',
+                        'Dibatalkan'       => 'cancelled',
+                        default            => 'default',
+                    };
                     ?>
 
                     <tr>
 
-                        <td>
+                        <td class="visit-table-no">
                             <?= $no++ ?>
                         </td>
 
+
                         <td>
 
-                            <strong>
+                            <strong class="visit-table-code">
                                 <?= esc($visit['visit_code']) ?>
                             </strong>
 
                         </td>
 
-                        <td>
-
-                            <strong>
-                                <?= esc($visit['guest_name']) ?>
-                            </strong>
-
-                            <br>
-
-                            <?php
-                            $phone = (string) ($visit['phone'] ?? '-');
-
-                            if (
-                                $phone !== '-'
-                                && strlen($phone) > 8
-                            ) {
-                                $maskedPhone =
-                                    substr($phone, 0, 4)
-                                    . '****'
-                                    . substr($phone, -4);
-                            } else {
-                                $maskedPhone = $phone;
-                            }
-                            ?>
-
-                            <small class="text-muted">
-                                <?= esc($maskedPhone) ?>
-                            </small>
-
-                        </td>
 
                         <td>
 
-                            <?= esc($visit['department_name']) ?>
+                            <div class="visit-table-guest">
 
-                            <br>
+                                <div class="visit-table-guest-name">
 
-                            <small class="text-muted">
-                                <?= esc($visit['employee_name']) ?>
-                            </small>
+                                    <?= esc($visit['guest_name']) ?>
+
+                                </div>
+
+                                <?php
+                                $phone = (string) ($visit['phone'] ?? '-');
+
+                                if (
+                                    $phone !== '-'
+                                    && strlen($phone) > 8
+                                ) {
+                                    $maskedPhone =
+                                        substr($phone, 0, 4)
+                                        . '****'
+                                        . substr($phone, -4);
+                                } else {
+                                    $maskedPhone = $phone;
+                                }
+                                ?>
+
+                                <div class="visit-table-guest-phone">
+
+                                    <?= esc($maskedPhone) ?>
+
+                                </div>
+
+                            </div>
 
                         </td>
+
+
+                        <td>
+
+                            <div class="visit-table-purpose">
+
+                                <div class="visit-table-purpose-dept">
+
+                                    <?= esc($visit['department_name']) ?>
+
+                                </div>
+
+                                <div class="visit-table-purpose-emp">
+
+                                    <?= esc($visit['employee_name']) ?>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
 
                         <td>
 
@@ -133,114 +192,158 @@ $detailBaseUrl = url_is('admin/bukutamu-kunjungan*')
                                 && ! empty($visit['check_in'])
                             ): ?>
 
-                                <?= date(
-                                    'd/m/Y',
-                                    strtotime($visit['check_in'])
-                                ) ?>
+                                <div class="visit-table-time">
 
-                                <br>
+                                    <div class="visit-table-time-date">
 
-                                <small class="text-muted">
+                                        <?= date(
+                                            'd/m/Y',
+                                            strtotime($visit['check_in'])
+                                        ) ?>
 
-                                    Check-in:
-                                    <?= date(
-                                        'H:i',
-                                        strtotime($visit['check_in'])
-                                    ) ?>
+                                    </div>
 
-                                </small>
+                                    <div class="visit-table-time-detail">
 
-                                <?php if ($durationText): ?>
+                                        Check-in:
+                                        <?= date(
+                                            'H:i',
+                                            strtotime($visit['check_in'])
+                                        ) ?>
 
-                                    <br>
+                                    </div>
 
-                                    <small class="text-primary">
+                                    <?php if ($durationText): ?>
 
-                                        <i class="bi bi-clock"></i>
+                                        <div class="visit-table-time-duration">
 
-                                        <?= esc($durationText) ?>
+                                            <i class="bi bi-clock"></i>
 
-                                    </small>
+                                            <?= esc($durationText) ?>
+
+                                        </div>
+
+                                    <?php endif; ?>
+
+                                </div>
+
+                            <?php else: ?>
+
+                                <div class="visit-table-time">
+
+                                    <div class="visit-table-time-date">
+
+                                        <?= date(
+                                            'd/m/Y',
+                                            strtotime($visit['arrival_time'])
+                                        ) ?>
+
+                                    </div>
+
+                                    <div class="visit-table-time-detail">
+
+                                        Pengajuan:
+                                        <?= date(
+                                            'H:i',
+                                            strtotime($visit['arrival_time'])
+                                        ) ?>
+
+                                    </div>
+
+                                </div>
+
+                            <?php endif; ?>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="visit-status-badge visit-status-badge--<?= $statusSlug ?>">
+
+                                <?= esc($visit['status']) ?>
+
+                            </span>
+
+                        </td>
+
+
+                        <?php if ($showDeletedMode): ?>
+
+                            <td>
+                                <span class="visit-table-deleted-at">
+                                    <?= esc($visit['deleted_at'] ?? '-') ?>
+                                </span>
+                            </td>
+
+                        <?php endif; ?>
+
+
+                        <td>
+
+                            <div class="employee-table-actions">
+
+                                <a
+                                    href="<?= site_url(
+                                                $detailBaseUrl . '/detail/' . $visit['id']
+                                            ) ?>"
+                                    class="employee-action-button"
+                                    title="Detail">
+
+                                    <i class="bi bi-eye"></i>
+
+                                    <span class="visually-hidden">
+                                        Detail <?= esc($visit['visit_code']) ?>
+                                    </span>
+
+                                </a>
+
+
+                                <?php if ($showDeletedMode): ?>
+
+                                    <form
+                                        action="<?= site_url('admin/bukutamu-kunjungan/restore/' . $visit['id']) ?>"
+                                        method="post"
+                                        class="d-inline"
+                                        data-offline-guard>
+
+                                        <?= csrf_field() ?>
+
+                                        <button
+                                            type="submit"
+                                            class="employee-action-button employee-action-button--success"
+                                            title="Pulihkan">
+
+                                            <i class="bi bi-arrow-counterclockwise"></i>
+
+                                            <span class="visually-hidden">
+                                                Pulihkan <?= esc($visit['visit_code']) ?>
+                                            </span>
+
+                                        </button>
+
+                                    </form>
+
+                                <?php elseif (! $isHistoryMode && $visit['status'] === 'Menunggu'): ?>
+
+                                    <button
+                                        type="button"
+                                        class="employee-action-button employee-action-button--warning"
+                                        data-edit-visit-url="<?= site_url($detailBaseUrl . '/edit/' . $visit['id']) ?>"
+                                        data-edit-visit-id="<?= esc($visit['id']) ?>"
+                                        title="Edit">
+
+                                        <i class="bi bi-pencil"></i>
+
+                                        <span class="visually-hidden">
+                                            Edit <?= esc($visit['visit_code']) ?>
+                                        </span>
+
+                                    </button>
 
                                 <?php endif; ?>
 
-                            <?php else: ?>
-
-                                <?= date(
-                                    'd/m/Y',
-                                    strtotime($visit['arrival_time'])
-                                ) ?>
-
-                                <br>
-
-                                <small class="text-muted">
-
-                                    Pengajuan:
-                                    <?= date(
-                                        'H:i',
-                                        strtotime($visit['arrival_time'])
-                                    ) ?>
-
-                                </small>
-
-                            <?php endif; ?>
-
-                        </td>
-
-                        <td>
-
-                            <?php if ($visit['status'] === 'Menunggu'): ?>
-
-                                <span class="badge bg-warning text-dark">
-                                    Menunggu
-                                </span>
-
-                            <?php elseif ($visit['status'] === 'Masih Berkunjung'): ?>
-
-                                <span class="badge bg-primary">
-                                    Masih Berkunjung
-                                </span>
-
-                            <?php elseif ($visit['status'] === 'Selesai'): ?>
-
-                                <span class="badge bg-success">
-                                    Selesai
-                                </span>
-
-                            <?php elseif ($visit['status'] === 'Ditolak'): ?>
-
-                                <span class="badge bg-danger">
-                                    Ditolak
-                                </span>
-
-                            <?php elseif ($visit['status'] === 'Dibatalkan'): ?>
-
-                                <span class="badge bg-secondary">
-                                    Dibatalkan
-                                </span>
-
-                            <?php else: ?>
-
-                                <span class="badge bg-secondary">
-                                    <?= esc($visit['status']) ?>
-                                </span>
-
-                            <?php endif; ?>
-
-                        </td>
-
-                        <td>
-
-                            <a
-                                href="<?= site_url(
-                                            $detailBaseUrl . '/detail/' . $visit['id']
-                                        ) ?>"
-                                class="btn btn-sm btn-outline-primary">
-
-                                <i class="bi bi-eye"></i>
-                                Detail
-
-                            </a>
+                            </div>
 
                         </td>
 
@@ -252,11 +355,15 @@ $detailBaseUrl = url_is('admin/bukutamu-kunjungan*')
 
                 <tr>
 
-                    <td
-                        colspan="7"
-                        class="text-center text-muted py-4">
+                    <td colspan="<?= $showDeletedMode ? 8 : 7 ?>">
 
-                        Belum ada data kunjungan.
+                        <div class="employee-table-empty">
+
+                            <i class="bi bi-calendar2-x"></i>
+
+                            <p>Belum ada data kunjungan.</p>
+
+                        </div>
 
                     </td>
 
@@ -269,3 +376,13 @@ $detailBaseUrl = url_is('admin/bukutamu-kunjungan*')
     </table>
 
 </div>
+
+<?php if (isset($pager)): ?>
+
+    <div class="admin-pagination mt-3">
+
+        <?= $pager->links() ?>
+
+    </div>
+
+<?php endif; ?>

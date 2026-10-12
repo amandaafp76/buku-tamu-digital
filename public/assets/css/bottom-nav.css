@@ -1,0 +1,131 @@
+.bottom-nav {
+    display: none;
+}
+
+
+@media (max-width: 991.98px) {
+
+    .bottom-nav {
+        display: flex;
+
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        z-index: 1000;
+
+        align-items: stretch;
+        justify-content: space-around;
+
+        min-height: 64px;
+
+        padding-bottom: env(safe-area-inset-bottom);
+
+        background: rgba(255, 255, 255, 0.82);
+
+        backdrop-filter: blur(24px) saturate(140%);
+        -webkit-backdrop-filter: blur(24px) saturate(140%);
+
+        border-top: 1px solid rgba(255, 255, 255, 0.9);
+
+        box-shadow:
+            0 -1px 3px rgba(50, 40, 40, 0.04),
+            0 -8px 24px rgba(50, 40, 40, 0.06);
+    }
+
+}
+
+.bottom-nav-item {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    min-height: 56px;
+    min-width: 44px;
+
+    padding: 8px 4px;
+
+    color: var(--text-secondary, #6F6663);
+    text-decoration: none;
+
+    font-size: 0.7rem;
+    font-weight: 500;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        color 180ms ease,
+        transform 180ms ease;
+}
+
+
+.bottom-nav-item i {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+
+.bottom-nav-item span {
+    line-height: 1.2;
+}
+
+.bottom-nav-item.active {
+    color: var(--color-primary);
+}
+
+
+.bottom-nav-item.active i {
+    transform: scale(1.05);
+}
+
+@media (hover: hover) {
+
+    .bottom-nav-item:hover {
+        color: var(--color-primary);
+    }
+
+}
+
+.bottom-nav-item:active {
+    transform: scale(0.94);
+}
+
+.bottom-nav-item--logout {
+    color: var(--color-danger, #dc2626);
+}
+
+.bottom-nav-item--logout:hover {
+     color: color-mix(in srgb, var(--color-danger, #dc2626) 82%, #000);
+}
+
+@media (max-width: 991.98px) {
+
+    .dashboard-content {
+        padding-bottom: calc(88px + env(safe-area-inset-bottom));
+    }
+
+}
+
+@media (max-width: 575.98px) {
+
+    .bottom-nav {
+        min-height: 60px;
+    }
+
+    .bottom-nav-item {
+        font-size: 0.66rem;
+        gap: 3px;
+    }
+
+    .bottom-nav-item i {
+        font-size: 1.25rem;
+    }
+
+}

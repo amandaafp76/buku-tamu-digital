@@ -773,24 +773,23 @@ function validateVisitPurposeActive(
 }
 
 
-const visitPurposeEditButtons =
-    document.querySelectorAll(
-        '[data-action="edit"][data-edit-url]'
-    );
+document.addEventListener(
+    'click',
+    function (event) {
 
+        const button =
+            event.target.closest(
+                '[data-action="edit"][data-edit-url]'
+            );
 
-visitPurposeEditButtons.forEach(
-    (button) => {
+        if (!button) {
+            return;
+        }
 
-        button.addEventListener(
-            'click',
-            () => {
+        event.preventDefault();
 
-                openVisitPurposeEditModal(
-                    button.dataset.editUrl
-                );
-
-            }
+        openVisitPurposeEditModal(
+            button.dataset.editUrl
         );
 
     }
@@ -1039,22 +1038,221 @@ function bindVisitPurposeDeleteModal() {
 }
 
 
-const visitPurposeDeleteButtons =
-    document.querySelectorAll(
-        '[data-action="delete"][data-delete-url]'
-    );
+document.addEventListener(
+    'click',
+    function (event) {
+
+        const button =
+            event.target.closest(
+                '[data-action="delete"][data-delete-url]'
+            );
+
+        if (!button) {
+            return;
+        }
+
+        event.preventDefault();
+
+        openVisitPurposeDeleteModal(
+            button.dataset.deleteUrl
+        );
+
+    }
+);
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+        const form =
+            document.getElementById(
+                'visitPurposeFilterForm'
+            );
+
+        const searchInput =
+            document.getElementById(
+                'purposeSearch'
+            );
+
+        const statusInput =
+            document.getElementById(
+                'purposeStatus'
+            );
+
+        const resetButton =
+            document.getElementById(
+                'resetVisitPurposeFilter'
+            );
+
+        const tableContainer =
+            document.getElementById(
+                'visitPurposeTableContainer'
+            );
 
 
-visitPurposeDeleteButtons.forEach(
-    (button) => {
+        if (
+            !form ||
+            !searchInput ||
+            !statusInput ||
+            !resetButton ||
+            !tableContainer
+        ) {
+            return;
+        }
 
-        button.addEventListener(
-            'click',
-            () => {
 
-                openVisitPurposeDeleteModal(
-                    button.dataset.deleteUrl
+        const loadVisitPurposes =
+            async function () {
+
+                const params =
+                    new URLSearchParams(
+                        new FormData(form)
+                    );
+
+
+                const url =
+                    form.action +
+                    '?' +
+                    params.toString();
+
+
+                const response =
+                    await fetch(
+                        url,
+                        {
+                            headers: {
+                                'X-Requested-With':
+                                    'XMLHttpRequest'
+                            }
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        'Gagal mengambil data tujuan kunjungan.'
+                    );
+
+                }
+
+
+                const html =
+                    await response.text();
+
+
+                tableContainer.innerHTML =
+                    html;
+
+            };
+
+            tableContainer.addEventListener(
+                'click',
+                async function (event) {
+
+                    const paginationLink =
+                        event.target.closest(
+                            '.admin-pagination a'
+                        );
+
+                    if (!paginationLink) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    const url =
+                        paginationLink.href;
+
+                    if (!url) {
+                        return;
+                    }
+
+                    try {
+
+                        const response =
+                            await fetch(
+                                url,
+                                {
+                                    headers: {
+                                        'X-Requested-With':
+                                            'XMLHttpRequest'
+                                    }
+                                }
+                            );
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                'Gagal mengambil halaman tujuan kunjungan.'
+                            );
+
+                        }
+
+                        const html =
+                            await response.text();
+
+                        tableContainer.innerHTML =
+                            html;
+
+                    } catch (error) {
+
+                        console.error(
+                            'Gagal memuat pagination tujuan kunjungan:',
+                            error
+                        );
+
+                    }
+
+                }
+            );
+
+
+        let searchTimeout;
+
+
+        searchInput.addEventListener(
+            'input',
+            function () {
+
+                clearTimeout(
+                    searchTimeout
                 );
+
+
+                searchTimeout =
+                    setTimeout(
+                        function () {
+
+                            loadVisitPurposes();
+
+                        },
+                        400
+                    );
+
+            }
+        );
+
+
+        statusInput.addEventListener(
+            'change',
+            function () {
+
+                loadVisitPurposes();
+
+            }
+        );
+
+
+        resetButton.addEventListener(
+            'click',
+            function () {
+
+                searchInput.value = '';
+
+                statusInput.value = '';
+
+                loadVisitPurposes();
 
             }
         );
