@@ -53,16 +53,16 @@ $guest = $guest ?? [];
                     1
                 </div>
 
-                <div class="register-step-content">
-
-                    <div class="register-step-label">
-                        Identitas
-                    </div>
-
+                <div class="register-step-label">
+                    Identitas
                 </div>
 
             </div>
 
+            <div
+                class="register-step-line"
+                aria-hidden="true">
+            </div>
 
             <div class="register-step">
 
@@ -70,16 +70,16 @@ $guest = $guest ?? [];
                     2
                 </div>
 
-                <div class="register-step-content">
-
-                    <div class="register-step-label">
-                        Tujuan
-                    </div>
-
+                <div class="register-step-label">
+                    Tujuan
                 </div>
 
             </div>
 
+            <div
+                class="register-step-line"
+                aria-hidden="true">
+            </div>
 
             <div class="register-step">
 
@@ -87,16 +87,16 @@ $guest = $guest ?? [];
                     3
                 </div>
 
-                <div class="register-step-content">
-
-                    <div class="register-step-label">
-                        Foto
-                    </div>
-
+                <div class="register-step-label">
+                    Foto
                 </div>
 
             </div>
 
+            <div
+                class="register-step-line"
+                aria-hidden="true">
+            </div>
 
             <div class="register-step">
 
@@ -104,12 +104,8 @@ $guest = $guest ?? [];
                     4
                 </div>
 
-                <div class="register-step-content">
-
-                    <div class="register-step-label">
-                        Persetujuan
-                    </div>
-
+                <div class="register-step-label">
+                    Persetujuan
                 </div>
 
             </div>
@@ -327,7 +323,7 @@ $guest = $guest ?? [];
                     <div class="register-input-wrapper">
 
                         <i
-                            class="register-input-icon bi bi-building"
+                            class="register-input-icon bi bi-people"
                             aria-hidden="true">
                         </i>
 

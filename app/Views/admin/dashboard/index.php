@@ -10,45 +10,49 @@
 
 <?= $this->section('content') ?>
 
-<div class="container-fluid px-0">
+<div class="container-fluid py-4">
 
     <div class="dashboard-header mb-4">
 
-        <div>
+        <div class="dashboard-header-text">
 
-            <h1 class="dashboard-heading">
-                Dashboard
-            </h1>
+            <div>
 
-            <p class="dashboard-subheading">
+                <h1 class="dashboard-heading">
+                    Dashboard Admin
+                </h1>
 
-                <?php if ($isFiltered): ?>
+                <p class="dashboard-subheading">
 
-                    Ringkasan aktivitas buku tamu pada periode
-                    <?= date('d-m-Y', strtotime($filterStartDate)) ?>
-                    sampai
-                    <?= date('d-m-Y', strtotime($filterEndDate)) ?>.
+                    <?php if ($isFiltered): ?>
 
-                <?php else: ?>
+                        Ringkasan aktivitas buku tamu pada periode
+                        <?= date('d-m-Y', strtotime($filterStartDate)) ?>
+                        sampai
+                        <?= date('d-m-Y', strtotime($filterEndDate)) ?>.
 
-                    Ringkasan aktivitas buku tamu hari ini.
+                    <?php else: ?>
 
-                <?php endif; ?>
+                        Ringkasan aktivitas buku tamu hari ini.
 
-            </p>
+                    <?php endif; ?>
+
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn dashboard-filter-button"
+                data-bs-toggle="modal"
+                data-bs-target="#dashboardFilterModal">
+
+                <i class="bi bi-funnel-fill"></i>
+                Filter Dashboard
+
+            </button>
 
         </div>
-
-        <button
-            type="button"
-            class="btn dashboard-filter-button"
-            data-bs-toggle="modal"
-            data-bs-target="#dashboardFilterModal">
-
-            <i class="bi bi-funnel-fill"></i>
-            Filter Dashboard
-
-        </button>
 
     </div>
 
@@ -61,26 +65,30 @@
 
     <?php endif; ?>
 
-    <section class="mb-4">
+    <section class="glass-card dashboard-panel dashboard-statistics-panel mb-4">
 
-        <div class="mb-3">
-            <h2 class="dashboard-section-title">
-                Statistik Kunjungan
-            </h2>
+        <div class="dashboard-panel-header dashboard-statistics-header">
+            <div>
+                <h2 class="dashboard-section-title">
+                    Statistik Kunjungan
+                </h2>
 
-            <p class="dashboard-panel-description">
+                <p class="dashboard-panel-description">
 
-                <?php if ($isFiltered): ?>
+                    <?php if ($isFiltered): ?>
 
-                    Ringkasan jumlah tamu dan kunjungan pada periode yang dipilih.
+                        Ringkasan jumlah tamu dan kunjungan pada periode yang dipilih.
 
-                <?php else: ?>
+                    <?php else: ?>
 
-                    Ringkasan jumlah tamu dan kunjungan berdasarkan periode.
+                        Ringkasan jumlah tamu dan kunjungan berdasarkan periode.
 
-                <?php endif; ?>
+                    <?php endif; ?>
 
-            </p>
+                </p>
+
+            </div>
+
         </div>
 
         <div class="row g-3">
@@ -223,38 +231,31 @@
                 Data Master
             </h2>
 
+            <p class="dashboard-panel-description">
+                Ringkasan data utama yang dikelola dalam sistem.
+            </p>
+
         </div>
 
         <div class="row g-3">
 
             <div class="col-12 col-sm-6 col-xl-3">
 
-                <div class="glass-card dashboard-master-card">
+                <div class="glass-card dashboard-stat-card h-100">
+                    <div class="dashboard-stat-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
 
-                    <span class="dashboard-master-label">
-                        Pegawai
-                    </span>
+                    <div class="dashboard-stat-content">
+                        <span class="dashboard-stat-label">
+                            Pegawai
+                        </span>
 
-                    <strong class="dashboard-master-value">
-                        <?= esc($totalEmployees) ?>
-                    </strong>
+                        <strong class="dashboard-stat-value">
+                            <?= esc($totalEmployees) ?>
+                        </strong>
 
-                </div>
-
-            </div>
-
-
-            <div class="col-12 col-sm-6 col-xl-3">
-
-                <div class="glass-card dashboard-master-card">
-
-                    <span class="dashboard-master-label">
-                        Departemen
-                    </span>
-
-                    <strong class="dashboard-master-value">
-                        <?= esc($totalDepartments) ?>
-                    </strong>
+                    </div>
 
                 </div>
 
@@ -263,15 +264,22 @@
 
             <div class="col-12 col-sm-6 col-xl-3">
 
-                <div class="glass-card dashboard-master-card">
+                <div class="glass-card dashboard-stat-card h-100">
 
-                    <span class="dashboard-master-label">
-                        Tujuan Kunjungan
-                    </span>
+                    <div class="dashboard-stat-icon">
+                        <i class="bi bi-building"></i>
+                    </div>
 
-                    <strong class="dashboard-master-value">
-                        <?= esc($totalPurposes) ?>
-                    </strong>
+                    <div class="dashboard-stat-content">
+                        <span class="dashboard-stat-label">
+                            Departemen
+                        </span>
+
+                        <strong class="dashboard-stat-value">
+                            <?= esc($totalDepartments) ?>
+                        </strong>
+
+                    </div>
 
                 </div>
 
@@ -280,15 +288,46 @@
 
             <div class="col-12 col-sm-6 col-xl-3">
 
-                <div class="glass-card dashboard-master-card">
+                <div class="glass-card dashboard-stat-card h-100">
 
-                    <span class="dashboard-master-label">
-                        Pengguna
-                    </span>
+                    <div class="dashboard-stat-icon">
+                        <i class="bi bi-clipboard-check"></i>
+                    </div>
 
-                    <strong class="dashboard-master-value">
-                        <?= esc($totalUsers) ?>
-                    </strong>
+                    <div class="dashboard-stat-content">
+                        <span class="dashboard-stat-label">
+                            Tujuan
+                        </span>
+
+                        <strong class="dashboard-stat-value">
+                            <?= esc($totalPurposes) ?>
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="glass-card dashboard-stat-card h-100 ">
+
+                    <div class="dashboard-stat-icon">
+                        <i class="bi bi-person-lock"></i>
+                    </div>
+
+                    <div class="dashboard-stat-content">
+                        <span class="dashboard-stat-label">
+                            Pengguna
+                        </span>
+
+                        <strong class="dashboard-stat-value">
+                            <?= esc($totalUsers) ?>
+                        </strong>
+
+                    </div>
 
                 </div>
 
@@ -322,7 +361,7 @@
 
         </div>
 
-        <div class="row g-3">
+        <div class="row g-3 mb-3">
 
             <div class="col-12 col-xl-7">
 
@@ -352,9 +391,39 @@
 
             </div>
 
+            <div class="col-12 col-xl-5">
+                <div class="glass-card dashboard-panel h-100">
+
+                    <div class="dashboard-panel-header">
+                        <div>
+                            <h2 class="dashboard-section-title mb-1">
+                                Distribusi Status
+                            </h2>
+
+                            <p class="dashboard-panel-description">
+                                <?php if ($isFiltered): ?>
+                                    Perbandingan status kunjungan pada periode yang dipilih.
+                                <?php else: ?>
+                                    Perbandingan berdasarkan status kunjungan.
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-chart-wrapper dashboard-chart-wrapper--donut">
+                        <canvas id="statusVisitsChart"></canvas>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row g-3">
+
             <div class="col-12">
 
-                <div class="glass-card dashboard-panel h-100">
+                <div class="glass-card dashboard-panel">
 
                     <div class="dashboard-panel-header">
 
@@ -381,6 +450,7 @@
             </div>
 
         </div>
+
 
     </section>
 
@@ -480,72 +550,6 @@
 
                     <div class="dashboard-chart-wrapper dashboard-chart-wrapper--bar">
                         <canvas id="employeeVisitsChart"></canvas>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="mb-4">
-
-        <div class="mb-3">
-
-            <h2 class="dashboard-section-title">
-                Status Kunjungan
-            </h2>
-
-            <p class="dashboard-panel-description">
-
-                <?php if ($isFiltered): ?>
-
-                    Distribusi status kunjungan pada periode yang dipilih.
-
-                <?php else: ?>
-
-                    Distribusi status seluruh kunjungan.
-
-                <?php endif; ?>
-
-            </p>
-
-        </div>
-
-        <div class="row g-3">
-
-            <div class="col-12">
-
-                <div class="glass-card dashboard-panel h-100">
-
-                    <div class="dashboard-panel-header">
-
-                        <div>
-                            <h2 class="dashboard-section-title mb-1">
-                                Distribusi Status
-                            </h2>
-
-                            <p class="dashboard-panel-description">
-
-                                <?php if ($isFiltered): ?>
-
-                                    Perbandingan status kunjungan pada periode yang dipilih.
-
-                                <?php else: ?>
-
-                                    Perbandingan berdasarkan status kunjungan.
-
-                                <?php endif; ?>
-
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div class="dashboard-chart-wrapper dashboard-chart-wrapper--donut">
-                        <canvas id="statusVisitsChart"></canvas>
                     </div>
 
                 </div>

@@ -8,59 +8,166 @@
         * {
             font-family: 'DejaVu Sans', sans-serif;
             font-size: 10px;
+            box-sizing: border-box;
         }
 
         body {
-            margin: 20px;
-            color: #111;
+            margin: 20px 24px;
+            color: #1a1a1a;
+            background: #FFFFFF;
         }
 
-        h1 {
-            font-size: 16px;
+        .kop-surat {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 6px;
+        }
+
+        .kop-surat td {
+            vertical-align: middle;
+            border: 0;
+            padding: 0;
+        }
+
+        .kop-surat .logo-cell {
+            width: 70px;
+            text-align: left;
+            padding-right: 14px;
+        }
+
+        .kop-surat .logo-cell img {
+            width: 58px;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        .kop-surat .info-cell {
+            text-align: left;
+        }
+
+        .kop-surat .institution-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: #111;
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .kop-surat .institution-address {
+            font-size: 9px;
+            color: #666;
+            margin: 3px 0 0;
+            line-height: 1.4;
+        }
+
+        .kop-divider {
+            border: 0;
+            border-top: 2px solid <?= esc($primaryColor) ?>;
+            border-bottom: 1px solid #e5e5e5;
+            height: 4px;
+            margin: 0 0 14px;
+        }
+
+        h1.report-title {
+            font-size: 15px;
             margin: 0 0 4px 0;
             text-align: center;
+            letter-spacing: 0.04em;
+            color: #111;
+            font-weight: bold;
         }
 
         .subtitle {
             text-align: center;
-            font-size: 11px;
-            margin-bottom: 12px;
-            color: #444;
+            font-size: 10px;
+            margin-bottom: 16px;
+            color: #555;
         }
 
         .summary {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 12px;
+            border-spacing: 8px 0;
+            margin-bottom: 16px;
         }
 
         .summary td {
-            border: 1px solid #999;
-            padding: 6px;
+            padding: 10px 14px;
+            background: #fafafa;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            vertical-align: middle;
         }
 
         .summary .label {
-            background: #f2f2f2;
+            background: transparent;
+            border: 0;
+            padding: 0;
+            font-size: 9px;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .summary .value {
+            background: transparent;
+            border: 0;
+            padding: 0;
+            font-size: 13px;
+            color: #111;
             font-weight: bold;
-            width: 18%;
+            text-align: left;
         }
 
         table.data {
             width: 100%;
             border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e5e5e5;
         }
 
         table.data th,
         table.data td {
-            border: 1px solid #999;
-            padding: 5px 6px;
+            padding: 7px 8px;
             vertical-align: top;
+            border-bottom: 1px solid #f0f0f0;
         }
 
         table.data th {
-            background: #4F46E5;
+            background: <?= esc($primaryColor) ?>;
             color: #fff;
             text-align: center;
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 0.02em;
+            border-bottom: 0;
+        }
+
+        table.data th:first-child {
+            border-top-left-radius: 12px;
+        }
+
+        table.data th:last-child {
+            border-top-right-radius: 12px;
+        }
+
+        table.data td {
+            font-size: 9px;
+            color: #333;
+            background: #FFFFFF;
+        }
+
+        table.data tr:last-child td {
+            border-bottom: 0;
+        }
+
+        table.data tr:nth-child(even) td {
+            background: #fafafa;
         }
 
         .text-center {
@@ -68,42 +175,116 @@
         }
 
         .footer {
-            margin-top: 14px;
-            font-size: 9px;
+            margin-top: 20px;
+            padding-top: 8px;
+            border-top: 1px solid #e5e5e5;
+            font-size: 8px;
             text-align: right;
-            color: #555;
+            color: #888;
+            letter-spacing: 0.02em;
         }
 
         .section-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
-            margin: 18px 0 6px 0;
-            color: #4F46E5;
+            margin: 20px 0 8px 0;
+            color: #111;
+            letter-spacing: 0.02em;
+            padding-left: 10px;
+            border-left: 3px solid <?= esc($primaryColor) ?>;
         }
 
         table.rekap {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 8px;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 10px;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         table.rekap th,
         table.rekap td {
-            border: 1px solid #999;
-            padding: 4px 6px;
+            padding: 6px 8px;
             vertical-align: top;
+            border-bottom: 1px solid #f0f0f0;
         }
 
         table.rekap th {
-            background: #e5e7eb;
+            background: #f5f5f5;
             color: #111;
             text-align: center;
             font-weight: bold;
+            font-size: 9px;
+            letter-spacing: 0.02em;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        table.rekap td {
+            font-size: 9px;
+            color: #333;
+            background: #FFFFFF;
+        }
+
+        table.rekap tr:last-child td {
+            border-bottom: 0;
+        }
+
+        table.rekap tr:nth-child(even) td {
+            background: #fafafa;
         }
     </style>
 </head>
 
 <body>
+    <?php if (! empty($institution)): ?>
+
+        <table class="kop-surat">
+            <tr>
+
+                <?php if (! empty($logoBase64)): ?>
+                    <td class="logo-cell">
+                        <img src="<?= $logoBase64 ?>" alt="Logo">
+                    </td>
+                <?php endif; ?>
+
+                <td class="info-cell">
+                    <div class="institution-name">
+                        <?= esc($institution['name'] ?? 'Institusi') ?>
+                    </div>
+
+                    <?php if (! empty($institution['address'])): ?>
+                        <div class="institution-address">
+                            <?= esc($institution['address']) ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php
+                    $contact = [];
+
+                    if (! empty($institution['phone'])) {
+                        $contact[] = 'Telp: ' . $institution['phone'];
+                    }
+
+                    if (! empty($institution['email'])) {
+                        $contact[] = 'Email: ' . $institution['email'];
+                    }
+
+                    if (! empty($contact)): ?>
+
+                        <div class="institution-address">
+                            <?= esc(implode(' · ', $contact)) ?>
+                        </div>
+
+                    <?php endif; ?>
+                </td>
+            </tr>
+        </table>
+
+        <hr class="kop-divider">
+
+    <?php endif; ?>
 
     <h1>LAPORAN BUKU TAMU DIGITAL</h1>
 
@@ -124,19 +305,27 @@
 
     <table class="summary">
         <tr>
-            <td class="label">Total Kunjungan</td>
-            <td><?= esc($reportSummary['total_visits']) ?> kunjungan</td>
-
-            <td class="label">Total Durasi</td>
-            <td>
-                <?= esc((int) floor($reportSummary['total_duration'] / 60)) ?> jam
-                <?= esc($reportSummary['total_duration'] % 60) ?> menit
+            <td style="width: 33%;">
+                <div class="label">Total Kunjungan</div>
+                <div class="value">
+                    <?= esc($reportSummary['total_visits']) ?> kunjungan
+                </div>
             </td>
 
-            <td class="label">Rata-rata Durasi</td>
-            <td>
-                <?= esc((int) floor($reportSummary['average_duration'] / 60)) ?> jam
-                <?= esc($reportSummary['average_duration'] % 60) ?> menit
+            <td style="width: 33%;">
+                <div class="label">Total Durasi</div>
+                <div class="value">
+                    <?= esc((int) floor($reportSummary['total_duration'] / 60)) ?> jam
+                    <?= esc($reportSummary['total_duration'] % 60) ?> menit
+                </div>
+            </td>
+
+            <td style="width: 33%;">
+                <div class="label">Rata-rata Durasi</div>
+                <div class="value">
+                    <?= esc((int) floor($reportSummary['average_duration'] / 60)) ?> jam
+                    <?= esc($reportSummary['average_duration'] % 60) ?> menit
+                </div>
             </td>
         </tr>
     </table>
@@ -285,6 +474,8 @@
 
     <div class="footer">
         Dicetak pada: <?= esc($printedAt) ?>
+        &nbsp;·&nbsp;
+        Halaman {PAGE_NUM} dari {PAGE_COUNT}
     </div>
 
 </body>

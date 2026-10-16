@@ -1,28 +1,41 @@
 <?= $this->extend('layouts/dashboard.php') ?>
 
+<?= $this->section('pageCss') ?>
+
+<link
+    rel="stylesheet"
+    href="<?= base_url('assets/css/dashboard.css') ?>">
+
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 
-<div class="dashboard-header mb-4">
+<div class="visit-page">
 
-    <div>
+    <div class="dashboard-header mb-4">
 
-        <h1 class="dashboard-heading">
-            Activity Log
-        </h1>
+        <div class="dashboard-header-text">
 
-        <p class="dashboard-subheading">
-            Riwayat aktivitas pengguna dalam sistem.
-        </p>
+            <div>
+
+                <h1 class="dashboard-heading">
+                    Activity Log
+                </h1>
+
+                <p class="dashboard-subheading">
+                    Riwayat aktivitas pengguna dalam sistem.
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 
-</div>
+    <div class="glass-card dashboard-panel dashboard-visit-filter mb-4"">
 
-
-<div class="glass-card employee-filter-card mb-4">
-
-    <form
-        id="activityLogFilterForm"
+        <form
+            id=" activityLogFilterForm"
         action="<?= base_url('admin/bukutamu-activity-log') ?>"
         method="get"
         class="row g-3 align-items-end">
@@ -184,18 +197,20 @@
 
         </div>
 
-    </form>
+        </form>
 
-</div>
+    </div>
 
 
-<div
-    class="glass-card employee-table-card"
-    id="activityLogTableContainer">
+    <div
+        class="glass-card p-4"
+        id="activityLogTableContainer">
 
-    <?= $this->include('components/activity_logs/table', [
-        'activityLogs' => $activityLogs,
-    ]) ?>
+        <?= $this->include('components/activity_logs/table', [
+            'activityLogs' => $activityLogs,
+        ]) ?>
+
+    </div>
 
 </div>
 

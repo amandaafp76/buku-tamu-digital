@@ -7,6 +7,7 @@ use App\Models\DepartmentModel;
 use App\Models\EmployeeModel;
 use App\Services\VisitService;
 use App\Services\ReportExportService;
+use App\Models\InstitutionModel;
 
 class ReportController extends BaseController
 {
@@ -56,11 +57,22 @@ class ReportController extends BaseController
         $reportSummary = $this->visitService->getReportSummary($reportData);
         $reportGrouping = $this->visitService->getReportGrouping($reportData);
 
+        $primaryColor = $this->settings['primary_color'] ?? '#9A3F3F';
+
+        $institution = null;
+
+        if (! empty($this->settings['institution_id'])) {
+            $institution = (new \App\Models\InstitutionModel())
+                ->find((int) $this->settings['institution_id']);
+        }
+
         $pdf = $this->exportService->generatePdf(
             $filters,
             $reportData,
             $reportSummary,
-            $reportGrouping
+            $reportGrouping,
+            $primaryColor,
+            $institution
         );
 
         $filename = 'laporan-buku-tamu-' . date('Ymd-His') . '.pdf';
@@ -81,11 +93,14 @@ class ReportController extends BaseController
         $reportSummary = $this->visitService->getReportSummary($reportData);
         $reportGrouping = $this->visitService->getReportGrouping($reportData);
 
+        $primaryColor = $this->settings['primary_color'] ?? '#9A3F3F';
+
         $spreadsheet = $this->exportService->generateExcel(
             $filters,
             $reportData,
             $reportSummary,
-            $reportGrouping
+            $reportGrouping,
+            $primaryColor
         );
 
         $filename = 'laporan-buku-tamu-' . date('Ymd-His') . '.xlsx';

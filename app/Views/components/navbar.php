@@ -24,21 +24,6 @@
 
     <div class="navbar-right">
 
-        <div class="navbar-search">
-
-            <i
-                class="bi bi-search navbar-search-icon"
-                aria-hidden="true">
-            </i>
-
-            <input
-                type="search"
-                class="navbar-search-input"
-                placeholder="Cari..."
-                aria-label="Cari">
-
-        </div>
-
         <?= $this->include('components/install-prompt') ?>
 
         <div class="navbar-user">

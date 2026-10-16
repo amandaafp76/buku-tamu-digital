@@ -14,26 +14,29 @@
 
     <div class="dashboard-header mb-4">
 
-        <div>
-            <h1 class="dashboard-heading">
-                Dashboard Petugas
-            </h1>
+        <div class="dashboard-header-text">
+            <div>
+                <h1 class="dashboard-heading">
+                    Dashboard Petugas
+                </h1>
 
-            <p class="dashboard-subheading">
-                Pantau aktivitas kunjungan tamu secara langsung.
-            </p>
+                <p class="dashboard-subheading">
+                    Pantau aktivitas kunjungan tamu secara langsung.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="btn dashboard-filter-button"
+                data-bs-toggle="modal"
+                data-bs-target="#dashboardFilterModal">
+
+                <i class="bi bi-funnel-fill"></i>
+                Filter Dashboard
+
+            </button>
+
         </div>
-
-        <button
-            type="button"
-            class="btn dashboard-filter-button"
-            data-bs-toggle="modal"
-            data-bs-target="#dashboardFilterModal">
-
-            <i class="bi bi-funnel-fill"></i>
-            Filter Dashboard
-
-        </button>
 
     </div>
 
@@ -49,9 +52,9 @@
 
     <?php endif; ?>
 
-    <div class="mb-4">
+    <div class="glass-card dashboard-panel dashboard-statistics-panel mb-4">
 
-        <div class="mb-3">
+        <div class="dashboard-panel-header dashboard-statistics-header">
 
             <h2 class="dashboard-section-title">
                 Statistik Kunjungan
