@@ -16,7 +16,9 @@ class ReportExportService
         array $filters,
         array $reportData,
         array $reportSummary,
-        array $reportGrouping
+        array $reportGrouping,
+        string $primaryColor = '#9A3F3F',
+        ?array $institution = null
     ): string {
         $options = new Options();
         $options->set('isRemoteEnabled', false);
@@ -25,12 +27,33 @@ class ReportExportService
 
         $dompdf = new Dompdf($options);
 
+        $logoBase64 = null;
+
+        if (! empty($institution['logo'])) {
+            $logoFile = $institution['logo'];
+
+            if (str_contains($logoFile, '/')) {
+                $logoPath = FCPATH . ltrim($logoFile, '/');
+            } else {
+                $logoPath = FCPATH . 'uploads/institusi/' . $logoFile;
+            }
+
+            if (is_file($logoPath)) {
+                $mime = mime_content_type($logoPath) ?: 'image/png';
+                $logoBase64 = 'data:' . $mime . ';base64,' .
+                    base64_encode(file_get_contents($logoPath));
+            }
+        }
+
         $html = view('admin/laporan/pdf', [
             'filters'       => $filters,
             'reportData'    => $reportData,
             'reportSummary' => $reportSummary,
             'reportGrouping' => $reportGrouping,
             'printedAt'     => date('d-m-Y H:i:s'),
+            'primaryColor'  => $primaryColor,
+            'institution'   => $institution,
+            'logoBase64'    => $logoBase64,
         ]);
 
         $dompdf->loadHtml($html);
@@ -44,7 +67,8 @@ class ReportExportService
         array $filters,
         array $reportData,
         array $reportSummary,
-        array $reportGrouping
+        array $reportGrouping,
+        string $primaryColor = '#9A3F3F'
     ): Spreadsheet {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -99,7 +123,7 @@ class ReportExportService
             ],
             'fill' => [
                 'fillType'   => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => '4F46E5'],
+                'startColor' => ['rgb' => ltrim($primaryColor, '#')],
             ],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
@@ -161,7 +185,8 @@ class ReportExportService
             [
                 'name_key' => 'department_name',
                 'show_avg' => true,
-            ]
+            ],
+            $primaryColor
         );
 
         $row += 2;
@@ -182,7 +207,8 @@ class ReportExportService
                 'name_key'  => 'employee_name',
                 'extra_key' => 'department_name',
                 'show_avg'  => false,
-            ]
+            ],
+            $primaryColor
         );
 
         $row += 2;
@@ -201,7 +227,8 @@ class ReportExportService
             [
                 'name_key' => 'institution',
                 'show_avg' => false,
-            ]
+            ],
+            $primaryColor
         );
 
         return $spreadsheet;
@@ -213,7 +240,8 @@ class ReportExportService
         string $title,
         array $columns,
         array $rows,
-        array $options = []
+        array $options = [],
+        string $primaryColor = '#9A3F3F'
     ): int {
 
         $sheet->setCellValue('A' . $startRow, $title);
@@ -235,7 +263,7 @@ class ReportExportService
             'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
             'fill' => [
                 'fillType'   => Fill::FILL_SOLID,
-                'startColor' => ['rgb' => '4F46E5'],
+                'startColor' => ['rgb' => ltrim($primaryColor, '#')],
             ],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,

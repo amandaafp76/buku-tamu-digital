@@ -150,7 +150,7 @@ body.sidebar-closed .dashboard-shell {
 }
 
 .dashboard-content {
-    padding: 24px 0 40px;
+    padding: 108px 0 40px;
 }
 
 @media (max-width: 991.98px) {
@@ -164,7 +164,7 @@ body.sidebar-closed .dashboard-shell {
     }
 
     .dashboard-content {
-        padding: 16px 0 calc(88px + env(safe-area-inset-bottom));
+        padding: 88px 0 calc(88px + env(safe-area-inset-bottom));
     }
 
 }

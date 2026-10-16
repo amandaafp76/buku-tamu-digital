@@ -1,20 +1,30 @@
 <?= $this->extend('layouts/dashboard') ?>
 
+<?= $this->section('pageCss') ?>
+
+<link
+    rel="stylesheet"
+    href="<?= base_url('assets/css/dashboard.css') ?>">
+
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 
 <div class="scan-qr-page">
 
     <div class="dashboard-header mb-4">
 
-        <div>
+        <div class="dashboard-header-text">
 
-            <h1 class="dashboard-heading">
-                Scan QR Kunjungan
-            </h1>
+            <div>
+                <h1 class="dashboard-heading">
+                    Scan QR Kunjungan
+                </h1>
 
-            <p class="dashboard-subheading">
-                Scan QR Code kunjungan tamu untuk memproses check-out.
-            </p>
+                <p class="dashboard-subheading">
+                    Scan QR Code untuk proses check-out.
+                </p>
+            </div>
 
         </div>
 

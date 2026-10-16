@@ -15,6 +15,18 @@ $photoSize    = $photoSize ?? 500;
 
         <header class="register-header">
 
+            <div class="register-title-area">
+
+                <div class="register-eyebrow">
+                    Buku Tamu Digital
+                </div>
+
+                <h1 class="register-title">
+                    Foto Pengunjung
+                </h1>
+
+            </div>
+
             <a
                 href="<?= site_url('bukutamu-kiosk') ?>"
                 class="register-back">
@@ -30,18 +42,6 @@ $photoSize    = $photoSize ?? 500;
 
             </a>
 
-            <div class="register-title-area">
-
-                <div class="register-eyebrow">
-                    Buku Tamu Digital
-                </div>
-
-                <h1 class="register-title">
-                    Foto Pengunjung
-                </h1>
-
-            </div>
-
         </header>
 
 
@@ -52,36 +52,30 @@ $photoSize    = $photoSize ?? 500;
             <div class="register-step completed">
 
                 <div class="register-step-number">
-                    <i class="bi bi-check"></i>
+                    <i class="bi bi-check" aria-hidden="true"></i>
                 </div>
 
-                <div class="register-step-content">
-
-                    <div class="register-step-label">
-                        Identitas
-                    </div>
-
+                <div class="register-step-label">
+                    Identitas
                 </div>
 
             </div>
 
+            <div class="register-step-line active" aria-hidden="true"></div>
 
             <div class="register-step completed">
 
                 <div class="register-step-number">
-                    <i class="bi bi-check"></i>
+                    <i class="bi bi-check" aria-hidden="true"></i>
                 </div>
 
-                <div class="register-step-content">
-
-                    <div class="register-step-label">
-                        Tujuan
-                    </div>
-
+                <div class="register-step-label">
+                    Tujuan
                 </div>
 
             </div>
 
+            <div class="register-step-line active" aria-hidden="true"></div>
 
             <div class="register-step active">
 
@@ -89,16 +83,13 @@ $photoSize    = $photoSize ?? 500;
                     3
                 </div>
 
-                <div class="register-step-content">
-
-                    <div class="register-step-label">
-                        Foto
-                    </div>
-
+                <div class="register-step-label">
+                    Foto
                 </div>
 
             </div>
 
+            <div class="register-step-line" aria-hidden="true"></div>
 
             <div class="register-step">
 
@@ -106,12 +97,8 @@ $photoSize    = $photoSize ?? 500;
                     4
                 </div>
 
-                <div class="register-step-content">
-
-                    <div class="register-step-label">
-                        Persetujuan
-                    </div>
-
+                <div class="register-step-label">
+                    Persetujuan
                 </div>
 
             </div>
@@ -152,7 +139,8 @@ $photoSize    = $photoSize ?? 500;
             <div
                 id="photoError"
                 class="register-alert photo-alert"
-                hidden>
+                hidden
+                role="alert">
 
                 <div
                     class="register-alert-icon"
@@ -185,196 +173,201 @@ $photoSize    = $photoSize ?? 500;
 
                 <?= csrf_field() ?>
 
+                <div class="register-field-card photo-camera-field">
 
-                <div class="photo-camera-area">
-
-                    <div
-                        class="photo-preview-container"
-                        id="photoPreviewContainer">
+                    <div class="photo-camera-area">
 
                         <div
-                            class="photo-placeholder"
-                            id="photoPlaceholder">
+                            class="photo-preview-container"
+                            id="photoPreviewContainer">
+
+                            <div
+                                class="photo-placeholder"
+                                id="photoPlaceholder">
+
+                                <i
+                                    class="bi bi-camera"
+                                    aria-hidden="true">
+                                </i>
+
+                                <span>
+                                    Kamera belum dibuka
+                                </span>
+
+                            </div>
+
+                            <video
+                                id="cameraPreview"
+                                class="photo-camera-preview"
+                                autoplay
+                                playsinline
+                                muted
+                                hidden>
+                            </video>
+
+                        </div>
+
+
+                        <canvas
+                            id="photoCanvas"
+                            hidden>
+                        </canvas>
+
+
+                        <div
+                            class="photo-status"
+                            id="cameraStatus">
 
                             <i
-                                class="bi bi-camera"
+                                class="bi bi-info-circle"
                                 aria-hidden="true">
                             </i>
 
                             <span>
-                                Kamera belum dibuka
+                                Kamera belum digunakan.
                             </span>
 
                         </div>
 
-                        <video
-                            id="cameraPreview"
-                            class="photo-camera-preview"
-                            autoplay
-                            playsinline
-                            muted
-                            hidden>
-                        </video>
+
+                        <div class="photo-actions">
+
+                            <button
+                                type="button"
+                                class="register-primary photo-button"
+                                id="openCameraButton">
+
+                                <span>
+                                    Buka Kamera
+                                </span>
+
+                                <span
+                                    class="register-primary-icon"
+                                    aria-hidden="true">
+
+                                    <i class="bi bi-camera"></i>
+
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="register-secondary photo-button"
+                                id="capturePhotoButton"
+                                hidden>
+
+                                <i
+                                    class="bi bi-camera-fill"
+                                    aria-hidden="true">
+                                </i>
+
+                                <span>
+                                    Ambil Foto
+                                </span>
+
+                            </button>
+
+                        </div>
 
                     </div>
 
 
-                    <canvas
-                        id="photoCanvas"
-                        hidden>
-                    </canvas>
-
-
                     <div
-                        class="photo-status"
-                        id="cameraStatus">
-
-                        <i
-                            class="bi bi-info-circle"
-                            aria-hidden="true">
-                        </i>
+                        class="photo-upload-divider"
+                        id="photoUploadDivider"
+                        hidden>
 
                         <span>
-                            Kamera belum digunakan.
+                            atau pilih foto dari perangkat
                         </span>
 
                     </div>
 
-
-                    <div class="photo-actions">
-
-                        <button
-                            type="button"
-                            class="register-primary photo-button"
-                            id="openCameraButton">
-
-                            <span>
-                                Buka Kamera
-                            </span>
-
-                            <span
-                                class="register-primary-icon"
-                                aria-hidden="true">
-
-                                <i class="bi bi-camera"></i>
-
-                            </span>
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="register-secondary photo-button"
-                            id="capturePhotoButton"
+                    <div class="register-field-card photo-upload-field">
+                        <div
+                            class="photo-upload-area"
+                            id="photoUploadArea"
                             hidden>
 
+                            <div class="photo-upload-title">
+                                Kamera tidak dapat digunakan
+                            </div>
+
+                            <p class="photo-upload-description">
+                                Anda dapat memilih foto dari perangkat sebagai alternatif.
+                            </p>
+
+                            <label
+                                for="photoInput"
+                                class="photo-upload-label">
+
+                                <i
+                                    class="bi bi-upload"
+                                    aria-hidden="true">
+                                </i>
+
+                                <span>
+                                    Pilih Foto dari Perangkat
+                                </span>
+
+                            </label>
+
+                            <input
+                                type="file"
+                                id="photoInput"
+                                name="photo"
+                                accept="image/jpeg,image/png,image/webp"
+                                hidden>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="register-actions">
+
+                        <a
+                            href="<?= site_url('bukutamu-kiosk/tujuan') ?>"
+                            class="register-secondary">
+
                             <i
-                                class="bi bi-camera-fill"
+                                class="bi bi-arrow-left"
                                 aria-hidden="true">
                             </i>
 
                             <span>
-                                Ambil Foto
+                                Kembali
                             </span>
 
-                        </button>
+                        </a>
+
+
+                        <?php if ($requirePhoto === 0): ?>
+
+                            <button
+                                type="submit"
+                                class="register-primary"
+                                id="photoContinueButton">
+
+                                <span>
+                                    Lanjut Tanpa Foto
+                                </span>
+
+                                <span
+                                    class="register-primary-icon"
+                                    aria-hidden="true">
+
+                                    <i class="bi bi-arrow-right"></i>
+
+                                </span>
+
+                            </button>
+
+                        <?php endif; ?>
 
                     </div>
-
-                </div>
-
-
-                <div
-                    class="photo-upload-divider"
-                    id="photoUploadDivider"
-                    hidden>
-
-                    <span>
-                        atau pilih foto dari perangkat
-                    </span>
-
-                </div>
-
-
-                <div
-                    class="photo-upload-area"
-                    id="photoUploadArea"
-                    hidden>
-
-                    <div class="photo-upload-title">
-                        Kamera tidak dapat digunakan
-                    </div>
-
-                    <p class="photo-upload-description">
-                        Anda dapat memilih foto dari perangkat sebagai alternatif.
-                    </p>
-
-                    <label
-                        for="photoInput"
-                        class="photo-upload-label">
-
-                        <i
-                            class="bi bi-upload"
-                            aria-hidden="true">
-                        </i>
-
-                        <span>
-                            Pilih Foto dari Perangkat
-                        </span>
-
-                    </label>
-
-                    <input
-                        type="file"
-                        id="photoInput"
-                        name="photo"
-                        accept="image/jpeg,image/png,image/webp"
-                        hidden>
-
-                </div>
-
-
-                <div class="register-actions">
-
-                    <a
-                        href="<?= site_url('bukutamu-kiosk/tujuan') ?>"
-                        class="register-secondary">
-
-                        <i
-                            class="bi bi-arrow-left"
-                            aria-hidden="true">
-                        </i>
-
-                        <span>
-                            Kembali
-                        </span>
-
-                    </a>
-
-
-                    <?php if ($requirePhoto === 0): ?>
-
-                        <button
-                            type="submit"
-                            class="register-primary"
-                            id="photoContinueButton">
-
-                            <span>
-                                Lanjut Tanpa Foto
-                            </span>
-
-                            <span
-                                class="register-primary-icon"
-                                aria-hidden="true">
-
-                                <i class="bi bi-arrow-right"></i>
-
-                            </span>
-
-                        </button>
-
-                    <?php endif; ?>
 
                 </div>
 

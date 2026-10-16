@@ -1,20 +1,30 @@
 <?= $this->extend('layouts/dashboard') ?>
 
+<?= $this->section('pageCss') ?>
+
+<link
+    rel="stylesheet"
+    href="<?= base_url('assets/css/dashboard.css') ?>">
+
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 
-<div class="container-fluid py-4">
+<div class="visit-page">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="dashboard-header mb-4">
 
-        <div>
+        <div class="dashboard-header-text">
 
-            <h1>
-                Riwayat Kunjungan
-            </h1>
+            <div>
+                <h1 class="dashboard-heading">
+                    Riwayat Kunjungan
+                </h1>
 
-            <p class="text-muted mb-0">
-                Melihat data kunjungan yang sudah selesai, ditolak, atau dibatalkan.
-            </p>
+                <p class="dashboard-subheading">
+                    Melihat data riwayat kunjungan.
+                </p>
+            </div>
 
         </div>
 
@@ -30,7 +40,7 @@
     <?php endif; ?>
 
 
-    <div class="glass-card p-4 mb-4">
+    <div class="glass-card dashboard-panel dashboard-visit-filter mb-4">
 
         <form
             id="kunjunganFilterForm"
@@ -114,7 +124,7 @@
                     <button
                         type="button"
                         id="resetKunjunganFilter"
-                        class="btn btn-outline-secondary w-100">
+                        class="btn dashboard-visit-reset w-100">
 
                         <i class="bi bi-arrow-counterclockwise me-1"></i>
                         Reset

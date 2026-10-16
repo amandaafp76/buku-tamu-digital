@@ -4,43 +4,55 @@
 
 <link
     rel="stylesheet"
+    href="<?= base_url('assets/css/dashboard.css') ?>">
+
+<link
+    rel="stylesheet"
     href="<?= base_url('assets/css/setting.css') ?>">
 
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 
-<div class="container-fluid px-0">
+<div class="visit-page">
 
-    <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 mb-4">
+    <div class="container-fluid px-0">
 
-        <div>
-            <h1 class="h4 mb-1 fw-semibold setting-page-title">
-                WAKITA
-            </h1>
+        <div class="dashboard-header mb-4">
 
-            <p class="mb-0 text-muted small">
-                Kelola status dan konfigurasi koneksi WAKITA.
-            </p>
-        </div>
+            <div class="dashboard-header-text">
 
-        <?php if ($institution && $setting): ?>
+                <div>
+                    <h1 class="dashboard-heading">
+                        WAKITA
+                    </h1>
 
-            <button
-                type="button"
-                class="btn glass-button-primary rounded-pill px-4"
-                id="openWakitaEdit"
-                data-modal-url="<?= base_url('admin/bukutamu-wakita/edit') ?>">
+                    <p class="dashboard-subheading">
+                        Kelola status dan konfigurasi koneksi WAKITA.
+                    </p>
+                </div>
 
-                <i
-                    class="bi bi-pencil-square me-2"
-                    aria-hidden="true"></i>
+                <?php if ($institution && $setting): ?>
 
-                Edit Konfigurasi WAKITA
+                    <button
+                        type="button"
+                        class="btn glass-button-primary rounded-pill px-4"
+                        id="openWakitaEdit"
+                        data-modal-url="<?= base_url('admin/bukutamu-wakita/edit') ?>">
 
-            </button>
+                        <i
+                            class="bi bi-pencil-square me-2"
+                            aria-hidden="true"></i>
+
+                        Edit Konfigurasi WAKITA
+
+                    </button>
+
+            </div>
 
         <?php endif; ?>
+
+        </div>
 
     </div>
 
@@ -325,7 +337,6 @@
     </div>
 
 </div>
-
 
 <?= $this->endSection() ?>
 

@@ -1,17 +1,21 @@
 .dashboard-navbar {
-    position: sticky;
+    position: fixed;
 
     top: 20px;
+    left: 280px;
+    right: 20px;
+    width: auto;
 
     min-height: 68px;
 
-    margin: 20px 20px 0 0;
+    margin: 20px 0 0;
     padding: 10px 16px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
+    box-sizing: border-box;
 
     border: 1px solid var(--glass-border);
     border-radius: 22px;
@@ -26,6 +30,11 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.72);
 
     z-index: 1020;
+}
+
+body.sidebar-closed .dashboard-navbar {
+    left: 20px;
+    right: 20px;
 }
 
 .navbar-left,
@@ -185,9 +194,8 @@
 @media (max-width: 991.98px) {
 
     .dashboard-navbar {
-        padding: 8px 12px;
-        gap: 10px;
-        border-radius: 18px;
+         left: 16px;
+        right: 16px;
     }
 
     .navbar-search {
@@ -239,11 +247,8 @@
 @media (max-width: 575.98px) {
 
     .dashboard-navbar {
-        top: 12px;
-        margin: 12px 12px 0;
-        padding: 6px 10px;
-        min-height: 56px;
-        border-radius: 16px;
+        left: 12px;
+        right: 12px;
     }
 
     .navbar-menu-toggle,
@@ -260,5 +265,4 @@
         width: 30px;
         height: 30px;
     }
-
 }

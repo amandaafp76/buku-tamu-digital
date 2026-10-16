@@ -13,6 +13,18 @@ $guest = $guest ?? [];
 
         <header class="register-header">
 
+            <div class="register-title-area">
+
+                <div class="register-eyebrow">
+                    Buku Tamu Digital
+                </div>
+
+                <h1 class="register-title">
+                    Registrasi Kunjungan
+                </h1>
+
+            </div>
+
             <a
                 href="<?= site_url('bukutamu-kiosk') ?>"
                 class="register-back">
@@ -28,18 +40,6 @@ $guest = $guest ?? [];
 
             </a>
 
-            <div class="register-title-area">
-
-                <div class="register-eyebrow">
-                    Buku Tamu Digital
-                </div>
-
-                <h1 class="register-title">
-                    Registrasi Kunjungan
-                </h1>
-
-            </div>
-
         </header>
 
 
@@ -47,46 +47,39 @@ $guest = $guest ?? [];
             class="register-stepper"
             aria-label="Tahapan registrasi">
 
-            <div class="register-step">
-                <div class="register-step-number">1</div>
-
-                <div class="register-step-content">
-                    <div class="register-step-label">
-                        Identitas
-                    </div>
+            <div class="register-step completed">
+                <div class="register-step-number">
+                    <i class="bi bi-check" aria-hidden="true"></i>
+                </div>
+                <div class="register-step-label">
+                    Identitas
                 </div>
             </div>
 
+            <div class="register-step-line" aria-hidden="true"></div>
 
             <div class="register-step active">
                 <div class="register-step-number">2</div>
-
-                <div class="register-step-content">
-                    <div class="register-step-label">
-                        Tujuan
-                    </div>
+                <div class="register-step-label">
+                    Tujuan
                 </div>
             </div>
 
+            <div class="register-step-line" aria-hidden="true"></div>
 
             <div class="register-step">
                 <div class="register-step-number">3</div>
-
-                <div class="register-step-content">
-                    <div class="register-step-label">
-                        Foto
-                    </div>
+                <div class="register-step-label">
+                    Foto
                 </div>
             </div>
 
+            <div class="register-step-line" aria-hidden="true"></div>
 
             <div class="register-step">
                 <div class="register-step-number">4</div>
-
-                <div class="register-step-content">
-                    <div class="register-step-label">
-                        Persetujuan
-                    </div>
+                <div class="register-step-label">
+                    Persetujuan
                 </div>
             </div>
 
@@ -128,7 +121,7 @@ $guest = $guest ?? [];
                 <?= csrf_field() ?>
 
 
-                <div class="register-field">
+                <div class="register-field-card">
 
                     <label
                         for="purpose_id"
@@ -141,33 +134,42 @@ $guest = $guest ?? [];
 
                     </label>
 
-                    <select
-                        id="purpose_id"
-                        name="purpose_id"
-                        class="register-select <?= isset($errors['purpose_id']) ? 'is-invalid' : '' ?>">
+                    <div class="register-input-wrapper">
 
-                        <option
-                            value=""
-                            <?= old('purpose_id', $guest['purpose_id'] ?? '') ? '' : 'selected' ?>
-                            disabled>
+                        <i
+                            class="register-input-icon bi bi-bullseye"
+                            aria-hidden="true">
+                        </i>
 
-                            Pilih tujuan kunjungan
-
-                        </option>
-
-                        <?php foreach ($purposes as $purpose): ?>
+                        <select
+                            id="purpose_id"
+                            name="purpose_id"
+                            class="register-select <?= isset($errors['purpose_id']) ? 'is-invalid' : '' ?>">
 
                             <option
-                                value="<?= esc($purpose['id']) ?>"
-                                <?= (string) old('purpose_id', $guest['purpose_id'] ?? '') === (string) $purpose['id'] ? 'selected' : '' ?>>
+                                value=""
+                                <?= old('purpose_id', $guest['purpose_id'] ?? '') ? '' : 'selected' ?>
+                                disabled>
 
-                                <?= esc($purpose['purpose_name']) ?>
+                                Pilih tujuan kunjungan
 
                             </option>
 
-                        <?php endforeach; ?>
+                            <?php foreach ($purposes as $purpose): ?>
 
-                    </select>
+                                <option
+                                    value="<?= esc($purpose['id']) ?>"
+                                    <?= (string) old('purpose_id', $guest['purpose_id'] ?? '') === (string) $purpose['id'] ? 'selected' : '' ?>>
+
+                                    <?= esc($purpose['purpose_name']) ?>
+
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </select>
+
+                    </div>
 
                     <p
                         class="register-field-error <?= isset($errors['purpose_id']) ? 'is-visible' : '' ?>"
@@ -180,7 +182,7 @@ $guest = $guest ?? [];
 
                 <div class="register-form-row">
 
-                    <div class="register-field">
+                    <div class="register-field-card">
 
                         <label
                             for="department_id"
@@ -193,33 +195,42 @@ $guest = $guest ?? [];
 
                         </label>
 
-                        <select
-                            id="department_id"
-                            name="department_id"
-                            class="register-select <?= isset($errors['department_id']) ? 'is-invalid' : '' ?>">
+                        <div class="register-input-wrapper">
 
-                            <option
-                                value=""
-                                <?= old('department_id', $guest['department_id'] ?? '') ? '' : 'selected' ?>
-                                disabled>
+                            <i
+                                class="register-input-icon bi bi-diagram-3"
+                                aria-hidden="true">
+                            </i>
 
-                                Pilih bagian / departemen
-
-                            </option>
-
-                            <?php foreach ($departments as $department): ?>
+                            <select
+                                id="department_id"
+                                name="department_id"
+                                class="register-select <?= isset($errors['department_id']) ? 'is-invalid' : '' ?>">
 
                                 <option
-                                    value="<?= esc($department['id']) ?>"
-                                    <?= (string) old('department_id', $guest['department_id'] ?? '') === (string) $department['id'] ? 'selected' : '' ?>>
+                                    value=""
+                                    <?= old('department_id', $guest['department_id'] ?? '') ? '' : 'selected' ?>
+                                    disabled>
 
-                                    <?= esc($department['name']) ?>
+                                    Pilih bagian / departemen
 
                                 </option>
 
-                            <?php endforeach; ?>
+                                <?php foreach ($departments as $department): ?>
 
-                        </select>
+                                    <option
+                                        value="<?= esc($department['id']) ?>"
+                                        <?= (string) old('department_id', $guest['department_id'] ?? '') === (string) $department['id'] ? 'selected' : '' ?>>
+
+                                        <?= esc($department['name']) ?>
+
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+                        </div>
 
                         <p
                             class="register-field-error <?= isset($errors['department_id']) ? 'is-visible' : '' ?>"
@@ -230,7 +241,7 @@ $guest = $guest ?? [];
                     </div>
 
 
-                    <div class="register-field">
+                    <div class="register-field-card">
 
                         <label
                             for="employee_id"
@@ -243,22 +254,31 @@ $guest = $guest ?? [];
 
                         </label>
 
-                        <select
-                            id="employee_id"
-                            name="employee_id"
-                            class="register-select <?= isset($errors['employee_id']) ? 'is-invalid' : '' ?>"
-                            disabled>
+                        <div class="register-input-wrapper">
 
-                            <option
-                                value=""
-                                selected
+                            <i
+                                class="register-input-icon bi bi-person-badge"
+                                aria-hidden="true">
+                            </i>
+
+                            <select
+                                id="employee_id"
+                                name="employee_id"
+                                class="register-select <?= isset($errors['employee_id']) ? 'is-invalid' : '' ?>"
                                 disabled>
 
-                                Pilih bagian terlebih dahulu
+                                <option
+                                    value=""
+                                    selected
+                                    disabled>
 
-                            </option>
+                                    Pilih bagian terlebih dahulu
 
-                        </select>
+                                </option>
+
+                            </select>
+
+                        </div>
 
                         <p
                             class="register-field-error <?= isset($errors['employee_id']) ? 'is-visible' : '' ?>"
@@ -270,7 +290,7 @@ $guest = $guest ?? [];
 
                 </div>
 
-                <p class="register-help">
+                <p class="register-help register-help--block">
                     Tanda <span class="register-required">*</span>
                     menunjukkan data yang wajib diisi.
                 </p>

@@ -6,6 +6,22 @@
 
     <div class="register-shell">
 
+        <header class="register-header">
+
+            <div class="register-title-area">
+
+                <div class="register-eyebrow">
+                    Buku Tamu Digital
+                </div>
+
+                <h1 class="register-title">
+                    Registrasi Kunjungan
+                </h1>
+
+            </div>
+
+        </header>
+
         <section class="register-card">
 
             <div class="register-card-header">
@@ -29,95 +45,99 @@
 
             </div>
 
+            <div class="register-field-card">
+                <div class="consent-section">
 
-            <div class="consent-section">
+                    <div class="consent-section-title">
 
-                <div class="consent-section-title">
+                        <i
+                            class="bi bi-ticket-perforated"
+                            aria-hidden="true">
+                        </i>
 
-                    <i
-                        class="bi bi-ticket-perforated"
-                        aria-hidden="true">
-                    </i>
+                        <span>
+                            Kode Kunjungan
+                        </span>
 
-                    <span>
-                        Kode Kunjungan
-                    </span>
+                    </div>
+
+
+                    <div class="consent-box">
+
+                        <strong>
+                            <?= esc($visit['visit_code']) ?>
+                        </strong>
+
+                    </div>
 
                 </div>
-
-
-                <div class="consent-box">
-
-                    <strong>
-                        <?= esc($visit['visit_code']) ?>
-                    </strong>
-
-                </div>
-
             </div>
 
-            <div class="consent-section">
+            <div class="register-field-card">
+                <div class="consent-section">
 
-                <div class="consent-section-title">
+                    <div class="consent-section-title">
 
-                    <i
-                        class="bi bi-qr-code"
-                        aria-hidden="true">
-                    </i>
+                        <i
+                            class="bi bi-qr-code"
+                            aria-hidden="true">
+                        </i>
 
-                    <span>
-                        QR Kunjungan
-                    </span>
+                        <span>
+                            QR Kunjungan
+                        </span>
+
+                    </div>
+
+
+                    <div class="consent-box">
+
+                        <img
+                            src="<?= esc($qrCode) ?>"
+                            alt="QR Code Kunjungan"
+                            class="confirmation-qr-image">
+
+                        <p>
+                            Tunjukkan QR Code ini kepada petugas
+                            saat proses kunjungan.
+                        </p>
+
+                    </div>
 
                 </div>
-
-
-                <div class="consent-box">
-
-                    <img
-                        src="<?= esc($qrCode) ?>"
-                        alt="QR Code Kunjungan"
-                        style="width: 280px; max-width: 100%; height: auto;">
-
-                    <p>
-                        Tunjukkan QR Code ini kepada petugas
-                        saat proses kunjungan.
-                    </p>
-
-                </div>
-
             </div>
 
+            <div class="register-field-card">
+                <div class="consent-section">
 
-            <div class="consent-section">
+                    <div class="consent-section-title">
 
-                <div class="consent-section-title">
+                        <i
+                            class="bi bi-hourglass-split"
+                            aria-hidden="true">
+                        </i>
 
-                    <i
-                        class="bi bi-hourglass-split"
-                        aria-hidden="true">
-                    </i>
+                        <span>
+                            Status Kunjungan
+                        </span>
 
-                    <span>
-                        Status Kunjungan
-                    </span>
+                    </div>
+
+
+                    <div class="consent-box">
+
+                        <span class="confirmation-status-badge">
+                            Menunggu
+                        </span>
+
+                        <p>
+                            Silakan tunggu petugas melakukan verifikasi
+                            dan proses check-in.
+                        </p>
+
+                    </div>
 
                 </div>
-
-
-                <div class="consent-box">
-
-                    <strong>
-                        Menunggu
-                    </strong>
-
-                    <p>
-                        Silakan tunggu petugas melakukan verifikasi
-                        dan proses check-in.
-                    </p>
-
-                </div>
-
             </div>
 
         </section>
