@@ -54,7 +54,6 @@
 
                     <div class="employee-delete-summary">
 
-                        <!-- Username -->
 
                         <div class="employee-delete-summary-item">
 
@@ -79,7 +78,6 @@
                         </div>
 
 
-                        <!-- Role -->
 
                         <div class="employee-delete-summary-item">
 
@@ -115,8 +113,6 @@
 
                         </div>
 
-
-                        <!-- Status -->
 
                         <div class="employee-delete-summary-item">
 
@@ -177,7 +173,7 @@
 
                 <button
                     type="submit"
-                    class="btn employee-button-danger rounded-pill">
+                    class="btn employee-button-primary rounded-pill">
 
                     <i class="bi bi-trash3 me-1"></i>
 

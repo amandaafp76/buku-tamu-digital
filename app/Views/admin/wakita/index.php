@@ -217,8 +217,6 @@
             </div>
 
 
-            <!-- KONFIGURASI KONEKSI -->
-
             <div class="col-12">
 
                 <div class="glass-card h-100 p-4">

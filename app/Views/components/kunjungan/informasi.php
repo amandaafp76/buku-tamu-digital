@@ -1,7 +1,5 @@
 <div class="detail-info-grid">
 
-    <!-- ===== DATA TAMU ===== -->
-
     <div class="glass-card detail-info-card">
 
         <div class="detail-info-header">
@@ -76,8 +74,6 @@
 
     </div>
 
-
-    <!-- ===== DATA KUNJUNGAN ===== -->
 
     <div class="glass-card detail-info-card">
 
@@ -197,8 +193,6 @@
     </div>
 
 
-    <!-- ===== WAKTU KUNJUNGAN ===== -->
-
     <div class="glass-card detail-info-card">
 
         <div class="detail-info-header">
@@ -280,9 +274,6 @@
         </div>
 
     </div>
-
-
-    <!-- ===== IDENTITAS & PERSETUJUAN ===== -->
 
     <div class="glass-card detail-info-card">
 
