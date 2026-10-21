@@ -73,19 +73,19 @@
 
             </div>
 
-        </div>
+            <div class="dashboard-header-actions">
 
-        <div class="dashboard-header-actions">
+                <a
+                    href="<?= site_url('admin/bukutamu-kunjungan' . ($showDeleted ? '' : '?show_deleted=1')) ?>"
+                    class="dashboard-secondary-button">
 
-            <a
-                href="<?= site_url('admin/bukutamu-kunjungan' . ($showDeleted ? '' : '?show_deleted=1')) ?>"
-                class="dashboard-secondary-button">
+                    <i class="bi bi-<?= $showDeleted ? 'arrow-left' : 'trash' ?>"></i>
 
-                <i class="bi bi-<?= $showDeleted ? 'arrow-left' : 'trash' ?>"></i>
+                    <?= $showDeleted ? 'Kembali ke Data Aktif' : 'Tampilkan Terhapus' ?>
 
-                <?= $showDeleted ? 'Kembali ke Data Aktif' : 'Tampilkan Terhapus' ?>
+                </a>
 
-            </a>
+            </div>
 
         </div>
 

@@ -1,25 +1,34 @@
 <?= $this->extend('layouts/dashboard') ?>
 
+<?= $this->section('pageCss') ?>
+
+<link
+    rel="stylesheet"
+    href="<?= base_url('assets/css/dashboard.css') ?>">
+
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 
-<div class="container-fluid py-4">
+<div class="visit-page">
 
-    <div class="mb-4">
+    <div class="dashboard-header mb-4">
 
-        <a
-            href="<?= site_url('petugas/bukutamu-kunjungan') ?>"
-            class="btn btn-sm btn-outline-secondary mb-3">
+        <div class="dashboard-header-text">
 
-            <i class="bi bi-arrow-left"></i>
-            Kembali
+            <div>
 
-        </a>
+                <h1 class="dashboard-heading">
+                    Detail Kunjungan
+                </h1>
 
-        <h1>Detail Kunjungan</h1>
+                <p class="dashboard-subheading">
+                    Informasi lengkap data kunjungan tamu.
+                </p>
 
-        <p class="text-muted">
-            Informasi lengkap data kunjungan tamu.
-        </p>
+            </div>
+
+        </div>
 
     </div>
 
@@ -27,33 +36,34 @@
 
     <?php if ($visit['status'] === 'Menunggu'): ?>
 
-        <div class="col-12">
+        <div class="glass-card detail-action-card">
 
-            <div class="glass-card p-4">
+            <div class="detail-action-header">
 
-                <h5 class="mb-3">
-                    Aksi Kunjungan
-                </h5>
+                <div class="detail-action-icon">
+                    <i class="bi bi-gear"></i>
+                </div>
 
-                <p class="text-muted mb-3">
-                    Periksa data kunjungan sebelum menentukan tindakan.
-                    Jika data sudah sesuai, lakukan verifikasi dan check-in.
-                    Jika kunjungan tidak dapat diterima atau dibatalkan,
-                    pilih tindakan yang sesuai.
-                </p>
+                <div>
 
-                <div class="d-flex flex-wrap gap-2">
+                    <h2 class="detail-action-title">
+                        Aksi Kunjungan
+                    </h2>
 
-                    <a
-                        href="<?= site_url(
-                                    'petugas/bukutamu-kunjungan/edit/' . $visit['id']
-                                ) ?>"
-                        class="btn btn-outline-primary">
+                    <p class="detail-action-description">
+                        Periksa data kunjungan sebelum menentukan tindakan.
+                        Jika data sudah sesuai, lakukan verifikasi dan check-in.
+                        Jika kunjungan tidak dapat diterima atau dibatalkan,
+                        pilih tindakan yang sesuai.
+                    </p>
 
-                        <i class="bi bi-pencil-square"></i>
-                        Edit Data
+                </div>
 
-                    </a>
+            </div>
+
+            <div class="detail-action-buttons">
+
+                <div class="detail-action-primary-group">
 
                     <form
                         id="form-verifikasi-check-in"
@@ -64,7 +74,7 @@
 
                         <button
                             type="submit"
-                            class="btn btn-primary"
+                            class="dashboard-primary-button"
                             data-confirm-form="form-verifikasi-check-in"
                             data-confirm-title="Konfirmasi Verifikasi & Check-In"
                             data-confirm-message="Apakah Anda yakin data kunjungan ini sudah sesuai dan ingin melakukan verifikasi serta check-in?"
@@ -121,6 +131,30 @@
 
                     </form>
 
+                    <a
+                        href="<?= site_url(
+                                    'petugas/bukutamu-kunjungan/edit/' . $visit['id']
+                                ) ?>"
+                        class="dashboard-secondary-button">
+
+                        <i class="bi bi-pencil-square"></i>
+                        Edit Data
+
+                    </a>
+
+                </div>
+
+                <div class="detail-action-navigation">
+
+                    <a
+                        href="<?= site_url('petugas/bukutamu-kunjungan') ?>"
+                        class="detail-danger-button">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Kembali
+
+                    </a>
+
                 </div>
 
             </div>
@@ -131,41 +165,70 @@
 
     <?php if ($visit['status'] === 'Masih Berkunjung'): ?>
 
-        <div class="col-12">
+        <div class="glass-card detail-action-card">
 
-            <div class="glass-card p-4">
+            <div class="detail-action-header">
 
-                <h5 class="mb-3">
-                    Aksi Kunjungan
-                </h5>
+                <div class="detail-action-icon">
+                    <i class="bi bi-gear"></i>
+                </div>
 
-                <p class="text-muted mb-3">
-                    Tamu masih tercatat sedang berkunjung.
-                    Jika tamu telah selesai berkunjung dan QR tidak dapat digunakan,
-                    lakukan check-out secara manual.
-                </p>
+                <div>
 
-                <form
-                    id="form-checkout-manual"
-                    action="<?= site_url('petugas/bukutamu-kunjungan/check-out-manual/' . $visit['id']) ?>"
-                    method="post">
+                    <h2 class="detail-action-title">
+                        Aksi Kunjungan
+                    </h2>
 
-                    <?= csrf_field() ?>
+                    <p class="detail-action-description">
+                        Tamu masih tercatat sedang berkunjung.
+                        Jika tamu telah selesai berkunjung dan QR tidak dapat digunakan,
+                        lakukan check-out secara manual.
+                    </p>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                        data-confirm-form="form-checkout-manual"
-                        data-confirm-title="Konfirmasi Check-Out"
-                        data-confirm-message="Apakah Anda yakin ingin melakukan check-out manual untuk kunjungan ini?"
-                        data-confirm-submit="Ya, Check-Out">
+                </div>
 
-                        <i class="bi bi-box-arrow-right"></i>
-                        Check-Out Manual
+            </div>
 
-                    </button>
+            <div class="detail-action-buttons">
 
-                </form>
+                <div class="detail-action-primary-group">
+
+                    <form
+                        id="form-checkout-manual"
+                        action="<?= site_url('petugas/bukutamu-kunjungan/check-out-manual/' . $visit['id']) ?>"
+                        method="post">
+
+                        <?= csrf_field() ?>
+
+                        <button
+                            type="submit"
+                            class="dashboard-primary-button"
+                            data-confirm-form="form-checkout-manual"
+                            data-confirm-title="Konfirmasi Check-Out"
+                            data-confirm-message="Apakah Anda yakin ingin melakukan check-out manual untuk kunjungan ini?"
+                            data-confirm-submit="Ya, Check-Out">
+
+                            <i class="bi bi-box-arrow-right"></i>
+                            Check-Out Manual
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="detail-action-navigation">
+
+                    <a
+                        href="<?= site_url('petugas/bukutamu-kunjungan') ?>"
+                        class="detail-danger-button">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Kembali
+
+                    </a>
+
+                </div>
 
             </div>
 

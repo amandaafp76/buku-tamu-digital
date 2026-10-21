@@ -1,29 +1,32 @@
 <?= $this->extend('layouts/dashboard') ?>
 
+<?= $this->section('pageCss') ?>
+
+<link
+    rel="stylesheet"
+    href="<?= base_url('assets/css/dashboard.css') ?>">
+
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 
-<div class="detail-page">
+<div class="visit-page">
 
     <div class="dashboard-header mb-4">
 
-        <div>
+        <div class="dashboard-header-text">
 
-            <a
-                href="<?= site_url('admin/bukutamu-kunjungan') ?>"
-                class="detail-back-button">
+            <div>
 
-                <i class="bi bi-arrow-left"></i>
-                Kembali
+                <h1 class="dashboard-heading">
+                    Detail Kunjungan
+                </h1>
 
-            </a>
+                <p class="dashboard-subheading">
+                    Informasi lengkap data kunjungan tamu.
+                </p>
 
-            <h1 class="dashboard-heading detail-page-heading">
-                Detail Kunjungan
-            </h1>
-
-            <p class="dashboard-subheading">
-                Informasi lengkap data kunjungan tamu.
-            </p>
+            </div>
 
         </div>
 
@@ -80,6 +83,15 @@
 
                 <i class="bi bi-trash"></i>
                 Hapus Kunjungan
+
+            </a>
+
+            <a
+                href="<?= site_url('admin/bukutamu-kunjungan') ?>"
+                class="detail-danger-button">
+
+                <i class="bi bi-arrow-left"></i>
+                <span>Kembali</span>
 
             </a>
 

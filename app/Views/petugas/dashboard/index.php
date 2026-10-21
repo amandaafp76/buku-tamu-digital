@@ -937,9 +937,6 @@
 
     </div>
 
-
-    <!-- Modal Filter Dashboard -->
-
     <div
         class="modal fade dashboard-filter-modal"
         id="dashboardFilterModal"
